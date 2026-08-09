@@ -22,7 +22,7 @@ ausdrücklich als **offen** markiert.
 ### Begründung der Einzelentscheidungen
 
 - **Eiche statt Eiche bianco:** warme, ruhige Maserung zum Fischgrätparkett.
-- **20 cm Füße statt 25 cm:** Roboter braucht 10–12 cm; 25 cmträfen die
+- **20 cm Füße statt 25 cm:** Roboter braucht 10–12 cm; 25 cm trieben die
   Einstiegshöhe auf 61 cm.
 - **Head-Plus +13 statt +9:** ergibt 31 cm Kopfteil über der Matratze statt
   27 cm. Ohne Adapter wären es 18 cm.
