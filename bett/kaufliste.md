@@ -185,22 +185,33 @@ https://www.wohnen-shop.at/holzbett-eiche-massivholz-ohne-kopfteil-jenny.html
 
 https://www.moebel24.at/moebel/matratzen-lattenroste/matratzen/federkernmatratzen?data-sheet=592c744388258e827260075fa806b740
 
+Vollständig verifiziert auf der Händler-Produktseite von Zurbrüggen:
+https://www.zurbrueggen.de/novel-taschenfederkernmatratze-h3-ortho-star-plus-t/1230289
+
 | Merkmal | Wert | Quelle |
 |---|---|---|
-| Preis | **ab 319,20 €**; XXXLutz 369,15 € inkl. Versand; home24 369,99 € (399,98 € inkl. Versand) | moebel24.at |
-| Größe / Härtegrad | 100 × 200, H3 | moebel24.at |
-| Höhe | **ca. 26 cm** | XXXLutz-Beschreibung via Suchergebnis |
-| Zonen | 7 | XXXLutz-Beschreibung via Suchergebnis |
-| Bezug | abnehmbar/waschbar | moebel24.at |
+| Federkern | **Tonnentaschenfederkern**, 7 Zonen | zurbrueggen.de |
+| **Federanzahl** | **1000 Federn auf 100 × 200** | zurbrueggen.de |
+| Höhe | **26 cm** | zurbrueggen.de |
+| **Gewichtsbereich** | **70–100 kg bei H3** | zurbrueggen.de |
+| Bezug | Reißverschluss, bis 60 °C waschbar | zurbrueggen.de |
+| Größen | u. a. 100 × 200 | zurbrueggen.de |
+| Preis | XXXLutz 369,15 € inkl. Versand; home24 369,99 €; Zurbrüggen 402,86 € | moebel24.at, zurbrueggen.de |
 | Sonstiges | Made in Germany, OEKO-TEX 100, wendbar, Tragegriffe | moebel24.at |
 
-26 cm sind für 94 kg sehr gut – mehr als die geforderten 22–24 cm.
-**Zwei Stück: 738,30 €.**
+**Alle offenen Punkte zu dieser Matratze sind damit geklärt:**
 
-- Die "Höhe 3 cm" im Preisvergleich ist ein offensichtlicher Datenfehler.
-- Die Bezeichnung schwankt zwischen "Taschenfederkern" und
-  "Tonnentaschenfederkern Ortho Star Plus T". Beim Probeliegen klären –
-  Tonnentaschenfederkern ist die für dieses Paar richtige Variante.
+- Es ist tatsächlich ein **Tonnentaschenfederkern**, nicht der einfachere
+  Taschenfederkern – die für dieses Paar richtige Variante.
+- Die "Höhe 3 cm" im Preisvergleich war ein Datenfehler, es sind 26 cm.
+- Der angegebene Gewichtsbereich 70–100 kg deckt **beide Personen**
+  (94 kg und 80 kg) mit demselben Härtegrad H3 ab. Das bestätigt die
+  Härtegradwahl unabhängig.
+- 1000 Federn auf 100 × 200 ist eine hohe Federdichte; der Standard liegt
+  bei 500 pro m².
+
+**Zwei Stück bei XXXLutz: 738,30 €.** Zurbrüggen ist mit 402,86 € pro Stück
+deutlich teurer.
 
 ### Alternativen (geprüft)
 
@@ -291,6 +302,36 @@ Marktplatz und ist kein Herstellerpreis.
 
 ---
 
+## Liebesbrücke
+
+Marktpreise 16,90 – 29,99 € für 200 cm. Empfehlung:
+
+**PROCAVE Doppelbettbrücke mit Frottee-Bezug – 23,95 €** (statt 34,95 €).
+Der abnehmbare, waschbare Frottee-Bezug ist bei der Milbenallergie der
+entscheidende Unterschied zum nackten Schaumkeil.
+https://www.procave.de/shop/bett-matratzen-zubehoer/matratzen-ritzenfueller/
+
+PROCAVE liefert nach Österreich für 9,95 € Versand. Alternativen:
+sleepling 17,99 €, MSS Kaltschaum 22,99 €, Blumtal 29,99 €.
+
+---
+
+## Geprüft und ausgeschieden
+
+| Anbieter | Befund |
+|---|---|
+| massivmoebel24.de | 200 × 200 nur Balkenbetten, 1.035 – 1.782 €. Rustikale Wildeiche und Balkeneiche – falsche Formensprache für das helle Altbauzimmer, zu teuer. |
+| Voglauer | 1.874,25 € bereits für 180 × 200. Weit über Budget. |
+| LaModula | Eichenbetten 200 × 200 ab 2.149 €. Wiener Schauraum nur zum Ansehen. |
+| Betten Reiter | Matratzen 885 – 2.151 €, 100 × 200 nur als Sondermaß. |
+| Ravensberger | gute Alternative, aber Österreich-Versand nur auf Anfrage. |
+| Anrei | keine belastbaren Preisdaten auffindbar. |
+| massive-naturmoebel.de | HTTP 403, nicht ladbar. |
+| allnatura.at | Kategorieseiten HTTP 404, nicht ladbar. |
+| xxxlutz.at/.de, moebelix.at | Cloudflare, HTTP 403. Nur über Preisvergleich erreichbar. |
+
+---
+
 ## Budget mit der Empfehlung
 
 | Position | Preis |
@@ -301,11 +342,11 @@ Marktplatz und ist kein Herstellerpreis.
 | 2 × Lattenrost K | 159,90 € |
 | 2 × Novel Ortho Star Plus 100 × 200 H3, 26 cm | 738,30 € |
 | 2 × Encasing allsana 100 × 200 × **30** | ~110 € |
-| Liebesbrücke | ~40 € |
-| **Gesamt** | **~1.951 €** |
+| Liebesbrücke PROCAVE | 23,95 € |
+| **Gesamt** | **~1.935 €** |
 
 Variante mit Ravensberger Ravo-Spring (22 cm) und 24-cm-Encasings:
-**rund 1.873 €.**
+**rund 1.857 €.**
 
 Beide unter 2.000 €, die Altbett-Mitnahme (~30–60 €) noch nicht enthalten.
 Bei Engpass an den Lattenrosten sparen, nicht an Matratze oder Encasing.
@@ -326,10 +367,9 @@ Matratze, desto mehr Verlängerung.
 4. Hasena: **Fußhöhe 20 cm** angeben, nicht 25 cm
 5. Kopfteilbreite 186 cm ist konstruktionsbedingt, keine Rückfrage nötig –
    nur wissen, dass der Rahmen beidseitig übersteht
-6. Novel-Matratze: Tonnentaschenfederkern oder normaler Taschenfederkern?
-7. Matratzenhöhe festlegen, **danach** Encasing in passender Höhe
-8. Lattenroste: Österreich-Versand bei matratzen.discount klären
-9. Altmöbelmitnahme bei XXXLutz anfragen; sonst willhaben oder
+6. Matratzenhöhe festlegen, **danach** Encasing in passender Höhe
+7. Lattenroste: Österreich-Versand bei matratzen.discount klären
+8. Altmöbelmitnahme bei XXXLutz anfragen; sonst willhaben oder
    MA-48-Mistplatz
 
 ## Einkaufsweg
