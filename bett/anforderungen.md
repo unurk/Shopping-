@@ -62,17 +62,111 @@ Die Liebesbrücke statt Topper ist bewusst gegen den Standardrat gewählt.
 Rahmen war 1.000 – 2.000 €. Bei Engpass am Gestell sparen, nicht an
 Matratze und Encasings.
 
-## Offene Entscheidungen
+## Getroffene Entscheidungen
 
-1. **Länge 200 oder 210 cm?** Faustregel bei 1,88 m wäre 208 cm. Das jetzige
-   Bett ist aber auch 200 lang. Wenn am Fußende nicht angestoßen wird: 200.
-   210 ist ein Sonderformat mit kleiner Matratzenauswahl und ca. 200–350 €
-   Aufpreis, der von der Matratzenqualität abgeht.
-2. **Stauraum unter dem Bett aufgeben?** Empfehlung ja (Allergie +
-   Saugroboter). Bei 25 m² ist Platz für eine Kommode. Das ist eine
-   Gewohnheitsentscheidung, keine reine Produktfrage.
-3. **Holzton:** Eiche natur (nimmt das Fischgrätparkett auf, bringt Wärme ins
-   sehr weiße Zimmer) oder weiter Weiß (zurückhaltender).
+1. **Länge: 200 cm.** Es wird am Fußende nicht angestoßen, also kein Grund
+   für das teure Sonderformat 210.
+2. **Stauraum unter dem Bett wird aufgegeben.** Gestell auf Beinen,
+   Saugroboter fährt durch. Ersatzstauraum muss ins Zimmer (siehe unten).
+3. **Eiche natur**, nicht Weiß.
+
+## Gestaltung: Warum Eiche natur
+
+Der Raum: weiße Wände, weißes Bett, weiße Papierleuchte, hellgraue Vorhänge
+und Teppich – alles im obersten Helligkeitsdrittel. Einziger Mittelton ist
+das Fischgrätparkett.
+
+- Fischgrätparkett ist das architektonisch wertvollste Element im Raum.
+  Weiße Möbel stehen dagegen, Holzmöbel sprechen damit.
+- Ein 200-cm-Bett ist das größte Objekt im Raum. In Weiß verschwimmt es mit
+  der Wand und verliert seine Form; in Eiche wird es zum Anker.
+- Altbau mit hoher Decke braucht visuelles Gewicht unten im Raum.
+- Ein leinenbezogenes Polsterbett wäre die naheliegende Designer-Wahl,
+  scheidet aber wegen der Milbenallergie aus.
+
+### Holzton-Spezifikation (der kritische Teil)
+
+Holz auf Holz geht schief, wenn es *fast* gleich ist. Deutlich anders wirkt
+als Absicht, fast gleich als Fehlkauf.
+
+- **Ruhige Maserung**, keine Wildeiche. Das Fischgrätmuster ist optisch schon
+  aktiv; starke Zeichnung und Äste konkurrieren damit.
+- **Warmer Unterton, eine Nuance heller als das Parkett** (natur geölt).
+- **Kein gekalktes oder grau gebeiztes "Eiche hell"** – kühl, beißt sich mit
+  dem warmen Boden.
+- **Nicht dunkel gebeizt** – Erdgeschoss, kein Licht wegnehmen.
+- **Form:** schlicht, niedrig, sichtbare Beine. Kopfteil-Oberkante ca.
+  100–110 cm ab Boden (das flache MALM-Kopfteil wirkt an einer
+  Altbauwand verloren; höher ist außerdem bequemer zum Anlehnen).
+
+### Folgeanschaffungen
+
+1. **Teppich raus.** Bei 200 cm Bettbreite kippt die Proportion des jetzigen
+   kleinen Teppichs ohnehin. Teppich im Schlafzimmer ist zudem nach der
+   Matratze der zweitgrößte Milbenherd. Falls zu kalt: zwei schmale, bei
+   60 °C waschbare Läufer an den Bettseiten.
+2. **Langes niedriges Sideboard in derselben Eiche** – ersetzt den
+   aufgegebenen Unterbettstauraum und bringt die fehlende Masse im Mittelton.
+3. **Zwei Nachtkästchen in derselben Eiche** – ohne sie wirkt ein 200er Bett
+   hingestellt, und Ablage fehlt jetzt sowieso.
+
+## Einkaufsspezifikation
+
+### Gestell
+
+| Kriterium | Wert |
+|---|---|
+| Liegefläche | 200 × 200 cm, Innenmaß 200–202 cm |
+| Material | massive Eiche, geölt – nicht furniert, keine "Eiche-Nachbildung" |
+| Maserung | Bezeichnung "Eiche", nicht "Wildeiche"/"Asteiche"/"Balkeneiche" |
+| Bodenfreiheit | ≥ 15 cm unter dem Rahmen (Saugroboter) |
+| Kopfteil | Holz, Oberkante ca. 100–110 cm ab Boden |
+| Mittelholm | zwingend, mit Mittelfuß |
+| Lieferung | zerlegt |
+
+**Häufigster Fehler: fehlender Mittelholm.** Zwei Lattenroste à 100 cm
+brauchen in der Mitte eine Auflage – bei 174 kg Paargewicht kein Detail.
+Ausdrücklich nachfragen, wenn es nicht in den Produktdaten steht.
+Bodenfreiheit wird ebenfalls fast nie angegeben – nachfragen.
+
+**Höhenrechnung:** Matratzenoberkante 50–55 cm ist der bequeme Bereich.
+Bei 23 cm Matratze und ~7 cm Lattenrost liegt die Auflagefläche im Rahmen
+bei 20–25 cm, darunter bleiben die 15 cm für den Roboter.
+
+### Matratzen (2 ×, je 100 × 200)
+
+- Tonnentaschenfederkern, 7 Zonen – nicht Bonell, nicht Kaltschaum
+- Höhe 22–24 cm, Härtegrad H3 für beide
+- Bezug mit 4-Seiten-Reißverschluss, abnehmbar, 60 °C waschbar
+- OEKO-TEX Standard 100
+- keine Visco- oder Gelauflage (Wärmestau)
+
+Verifizierte Kandidaten: **Badenia Irisette Büsum / Fehmarn / Lotus**,
+500er Tonnentaschenfederkern, 7 Zonen, in 100 × 200 / H3 erhältlich
+(u. a. moebel24.at). Lotus und Fehmarn mit Stiftung Warentest "Gut (2,5)"
+– der Fehmarn-Test stammt allerdings aus 2017.
+Weitere gut bewertete Marken: Malie, f.a.n. Frankenstolz, Röwa.
+Oberklasse-Referenz zum Vergleichen: selecta TF5, 22 cm, ab 569 €/Stück.
+
+### Lattenroste (2 ×, je 100 × 200)
+
+starr, ≥ 28 Leisten, Mittelzonenverstärkung mit Härtegradschiebern,
+Schichtholzrahmen.
+
+### Encasings (2 ×)
+
+milbendicht, umlaufender Reißverschluss, 60 °C waschbar.
+**Encasing-Höhe muss zur Matratzenhöhe passen** – bei 23 cm Matratze kein
+Bezug für 20 cm. Wird häufig übersehen.
+
+### Liebesbrücke
+
+200 cm, Schaumkeil mit Spanngurt.
+
+### Kaufreihenfolge
+
+Erst Matratzen (bestimmen Encasing-Größe und Gesamthöhe), dann Encasings,
+Gestellhöhe passend zur Matratzenhöhe wählen.
 
 ## Bezugsquellen Wien / Österreich
 
@@ -108,6 +202,10 @@ Matratze und Encasings.
 
 ## Nächster Schritt
 
-Offene Entscheidungen 1–3 klären, danach konkrete Produktauswahl
-(Gestellmodell, Lattenrost, zwei Matratzen, Encasings, Liebesbrücke) mit
-Direktlinks und Endpreis.
+1. Probeliegen bei Betten Reiter, Mariahilfer Straße 120 – zu zweit,
+   mindestens 15 Minuten pro Matratze, nicht mehr als zwei Modelle pro Termin.
+2. Holzton bei LaModula Wien in echt anschauen (nicht dort kaufen).
+3. Gestell online bestellen, Mittelholm und Bodenfreiheit vorher bestätigen
+   lassen.
+4. Encasings passend zur gekauften Matratzenhöhe nachbestellen.
+5. Danach: Sideboard und zwei Nachtkästchen in derselben Eiche.
