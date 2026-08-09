@@ -6,6 +6,65 @@ Alle Angaben in den Tabellen wurden auf der jeweiligen Produktseite selbst
 gelesen, nicht aus Suchergebnissen übernommen. Was dort nicht stand, ist
 ausdrücklich als **offen** markiert.
 
+## DIE BESTE KOMBINATION
+
+| # | Position | Spezifikation | Preis |
+|---|---|---|---|
+| 1 | Bettgestell | Hasena Trento "Ancona", 200 × 200, Ausführung **Eiche** (nicht bianco), **Fußhöhe 20 cm** | 785,15 € |
+| 2 | Head-Plus | Kopfteilverlängerung **+13 cm** | 38,40 € |
+| 3 | Mitteltraverse | Hasena "Midtraver" | 79,20 € |
+| 4 | Matratzen | 2 × Novel Ortho Star Plus T, 100 × 200, **H3**, 26 cm, Tonnentaschenfederkern, 1000 Federn | 738,30 € |
+| 5 | Lattenroste | 2 × Lattenrost K, Birke Schichtholz, starr | 159,90 € |
+| 6 | Encasings | 2 × allsana 100 × 200 × **30**, Hohenstein, 95 °C | ~110 € |
+| 7 | Liebesbrücke | PROCAVE Doppelbettbrücke, Frottee-Bezug abnehmbar | 23,95 € |
+| | | **Gesamt** | **1.934,90 €** |
+
+### Begründung der Einzelentscheidungen
+
+- **Eiche statt Eiche bianco:** warme, ruhige Maserung zum Fischgrätparkett.
+- **20 cm Füße statt 25 cm:** Roboter braucht 10–12 cm; 25 cmträfen die
+  Einstiegshöhe auf 61 cm.
+- **Head-Plus +13 statt +9:** ergibt 31 cm Kopfteil über der Matratze statt
+  27 cm. Ohne Adapter wären es 18 cm.
+- **Novel statt Ravensberger:** doppelte Federdichte (1000 statt 500 pro m²),
+  26 statt 22 cm, Herstellerangabe H3 = 70–100 kg deckt beide Personen ab,
+  und bei XXXLutz Wien zum Probeliegen in derselben Lieferung.
+- **Encasing 30 cm statt 24 cm:** für 26-cm-Matratzen gibt es keine
+  26-cm-Bezüge, die nächste Größe ist 30.
+- **Starre Lattenroste:** Federkern braucht keine Verstellung.
+
+### Resultierender Höhenaufbau
+
+| Ebene | Höhe |
+|---|---|
+| Bodenfreiheit für den Saugroboter | 20 cm |
+| Rahmenoberkante | 36 cm |
+| Matratzenoberkante = Einstiegshöhe | ≈ 56 cm |
+| Kopfteil-Oberkante | 87 cm |
+| **Kopfteil über der Matratze** | **31 cm** |
+
+### Einkaufsweg
+
+1. **Ein Termin bei XXXLutz Wien:** Bett (Eiche, Fußhöhe 20 cm), beide
+   Matratzen probeliegen, Lattenroste, Lieferung und Altbett-Mitnahme in
+   einem Auftrag. Nach Mitteltraverse und Head-Plus fragen – Hasena-Teile,
+   sollten bestellbar sein.
+2. **Online nachbestellen**, was XXXLutz nicht führt: Head-Plus und
+   Mitteltraverse bei iodormo.shop, Encasings von allsana, Liebesbrücke
+   bei PROCAVE.
+3. **Falls XXXLutz "Eiche" nicht führt:** modular bei iodormo – Rahmen
+   Trento 16, Füße Nelo 20 cm, Kopfteil Pella in Eiche, Mitteltraverse,
+   Head-Plus.
+
+### Vorher wissen
+
+- Kopfteil **186 cm breit bei 208 cm Bettaußenmaß** – der Rahmen steht
+  beidseitig über. Konstruktionsbedingt, kein Mangel.
+- Mit Altbett-Mitnahme (30–60 €) rund 1.995 €. Verkauf des MALM auf
+  willhaben bringt deutlich darunter.
+
+---
+
 ## Marktbefund
 
 Ruhige Eiche (nicht Wildeiche) **mit** Holzkopfteil in 200 × 200 unter
