@@ -61,16 +61,59 @@ warme Eichengrund bleibt, nur die Pore ist weiß pigmentiert) und im sehr
 weißen Zimmer durchaus vertretbar – aber in echt ansehen. "Eiche" ist der
 sichere Treffer.
 
-Einschränkungen:
+#### Kopfteil: gelöst über den Head-Plus-Adapter
 
-- Kopfteil endet bei 74 cm Gesamthöhe, also nur ~28 cm über der Matratze.
-  Niedriger als empfohlen. Hasena bietet Kopfteilkissen gegen Aufpreis –
-  bei der Milbenallergie aber ein Staubfänger. Dieses Problem haben alle
-  Kandidaten dieser Preisklasse, auch das Wadon.
-- iodormo nennt "Kopfteilbreite 186 cm" – für ein 200er Bett unplausibel,
-  vermutlich ein Datenfehler oder der Wert der 180er-Variante. Vor der
-  Bestellung klären.
-- Beckhuis: versandkostenfrei nur in Deutschland.
+Das Kopfteil "Pella" ist **38 cm hoch, montiert am Bettrahmen** – zusammen
+mit der Rahmenoberkante bei 36 cm ergibt das die 74 cm Gesamthöhe. Über
+einer 26-cm-Matratze (Oberkante 56 cm) bleiben nur **18 cm** zum Anlehnen.
+
+**Hasena löst das selbst:** Der Verlängerungsadapter **"Head-Plus"** hebt
+das Kopfteil um **9 oder 13 cm** an und ist ausdrücklich für hohe Matratzen
+gedacht. Kompatibel mit Pella (nicht mit Balco, Cemoa, Cena, Ceneri, Dolce,
+Dorma, Inca, Lucca, Opera). Montage über zusätzliche Adapterplatten, ohne
+neue Bohrungen.
+
+- Preis: **38,40 €** (statt 48,00 €), iodormo.shop
+- https://iodormo.shop/zubehoer/741-hasena-head-plus-verlaengerung-fuer-hasena-kopfteile.html
+
+Mit +13 cm: Gesamthöhe 87 cm, **31 cm über der Matratze** – mehr als die
+27 cm beim Wadon. Damit ist der einzige echte Nachteil des Hasena behoben,
+und zwar für 38,40 €.
+
+#### Korrektur zur Kopfteilbreite
+
+Die "186 cm" sind **kein Datenfehler**. Das Kopfteil Pella wird bei
+Bettbreite 180 und 200 cm in einer **Universalbreite von 186 cm**
+ausgeliefert – so ist es konstruiert. Bei 208 cm Außenmaß steht der Rahmen
+also beidseitig etwas über. Das ist eine Gestaltungsentscheidung von Hasena,
+kein Mangel, aber man sollte es vorher wissen.
+
+Kopfteil Pella einzeln: **101,17 €** (statt 151,00 €), erhältlich in
+Kernbuche, **Eiche**, Wildeiche, Nussbaum und MDF weiß.
+https://iodormo.shop/hasena-konfigurator/2976-hasena-trento-kopfteil-pella.html
+
+#### Modularer Aufbau als Alternative
+
+"Ancona" ist nur eine fertige Kombination: Rahmen Trento 16 + Füße Nelo
+(20 cm) + Kopfteil Pella. Über den Konfigurator lässt sich das einzeln
+zusammenstellen – nützlich, wenn XXXLutz die Ausführung Eiche nicht führt.
+
+| Komponente | Preis (ab) |
+|---|---|
+| Bettrahmen Trento 16 | 239,19 € |
+| Füße Nelo (20 cm) | 117,92 € |
+| Füße Tunca | 81,74 € |
+| Kopfteil Pella | 101,17 € |
+| Mitteltraverse (ab 160 cm Breite empfohlen) | 79,20 € |
+| Head-Plus Verlängerung | 38,40 € |
+
+https://iodormo.shop/21-hasena-konfigurator
+
+Achtung: Das sind "ab"-Preise; der Rahmen in 200 × 200 kostet mehr.
+
+#### Weitere Einschränkung
+
+Beckhuis: versandkostenfrei nur in Deutschland.
 
 ### 1. Wadon mit Holzkopfteil – 849,99 €
 
@@ -176,36 +219,117 @@ https://www.moebel24.at/moebel/matratzen-lattenroste/matratzen/federkernmatratze
 
 ---
 
+## Lattenroste
+
+Geprüft auf matratzen.discount (Seite geladen), alle 100 × 200,
+kostenloser Versand, sofort lieferbar:
+
+| Produkt | Bauart | Preis |
+|---|---|---|
+| **Lattenrost K** | Birke Schichtholz, starr | **79,95 €** |
+| Supportho | Birke Schichtholz, Kopfteil verstellbar | 99,95 € |
+| CloudComfort | Birke Schichtholz, klappbar | 109,95 € |
+| Rollrost R22 | Kiefer, Rollrost | 39,95 € |
+
+https://matratzen.discount/lattenroste/100x200
+
+Empfehlung: **2 × Lattenrost K = 159,90 €.** Schichtholz statt Kiefer,
+starr statt verstellbar – bei Federkernmatratzen bringt eine Verstellung
+nichts. Österreich-Versand ist auf der Seite nicht ausgewiesen, vor der
+Bestellung klären. allnatura.at führt ebenfalls Lattenroste 100 × 200,
+die Kategorieseite war jedoch nicht erreichbar (404).
+
+---
+
+## Encasings – der Punkt, an dem die Matratzenhöhe entscheidet
+
+**Befund: Die meisten Encasings enden bei 20–25 cm Matratzenhöhe.** Für
+eine 26-cm-Matratze braucht es die Extra-hoch-Variante. Marktübersicht der
+Höhen in 100 × 200: 15, 16, 20, 24, 25 und 30 cm – **26 cm gibt es nicht**,
+man muss auf 30 cm gehen.
+
+| Produkt | Höhe | Wäsche | Zertifikat |
+|---|---|---|---|
+| **allsana 100 × 200 × 30** | 30 cm | 95 °C, trocknergeeignet | Hohenstein |
+| allsana 100 × 200 × 24 | 24 cm | 95 °C | Hohenstein |
+| Third of Life LISA | 25 cm | 95 °C | milbendicht |
+| Welldora Premium | 20 cm | 95 °C | zertifiziert |
+
+Preisniveau allsana: 39,99 € (90 × 200 × 16) bis 53,99 € (120 × 200 × 20);
+für 100 × 200 × 30 rund 55 €. Encasings müssen nur 2–3 × pro Jahr
+gewaschen werden.
+
+Alternative Bezugsquelle: PROCAVE (Evolon®, kochfest bis 95 °C), liefert
+nach Österreich für 9,95 € Versand – führt in 100 × 200 aber derzeit nur
+Spannbettlaken (ab 41,95 €) und einen 4-cm-Topperbezug (51,95 €), keine
+hohe Matratzenvariante. https://www.procave.at/shop/encasing/_100x200/
+
+---
+
+## Matratzen-Alternative: Ravensberger Ravo-Spring
+
+Geprüft auf ravensberger-matratzen.de (Seite geladen):
+
+| Merkmal | Wert |
+|---|---|
+| Höhe | ca. 22 cm |
+| Federkern | ca. 500 Federn pro 2 m², 7 Zonen, zonendifferenzierte Federstärken |
+| Bezug | abnehmbar, 4-seitiger Reißverschluss, 60 °C Schonwaschgang |
+| Garantie | 10 Jahre |
+| Preis | ab 299,00 € (kleinere Größen; 100 × 200 H3 über die Größenauswahl) |
+| Versand | versandkostenfrei nur deutsches Festland, AT auf Anfrage |
+
+https://www.ravensberger-matratzen.de/federkernmatratze-ravo-spring/federkernmatratze-ravo-spring
+
+**Warum das interessant ist:** Mit 22 cm liegt sie mitten im Bereich, für
+den es Encasings im Überfluss gibt (20–25 cm). Die 26-cm-Novel zwingt zur
+30-cm-Sondergröße. Beide Wege funktionieren – die 22-cm-Variante macht das
+Zubehör einfacher, die 26-cm-Variante ist bei 94 kg großzügiger dimensioniert.
+
+Der bei Stylight genannte Preis von 599 € gilt für 120 × 200 auf einem
+Marktplatz und ist kein Herstellerpreis.
+
+---
+
 ## Budget mit der Empfehlung
 
 | Position | Preis |
 |---|---|
-| Hasena Trento Ancona 200 × 200, XXXLutz, inkl. Versand | 785,15 € |
+| Hasena Trento Ancona 200 × 200 Eiche, XXXLutz, inkl. Versand | 785,15 € |
+| Head-Plus Verlängerung +13 cm | 38,40 € |
 | Mitteltraverse Midtraver | 79,20 € |
-| 2 × Novel Ortho Star Plus 100 × 200 H3 | 738,30 € |
-| 2 × Lattenrost 100 × 200 | ~200 € |
-| 2 × Encasing **für 26 cm Matratzenhöhe** | ~100 € |
+| 2 × Lattenrost K | 159,90 € |
+| 2 × Novel Ortho Star Plus 100 × 200 H3, 26 cm | 738,30 € |
+| 2 × Encasing allsana 100 × 200 × **30** | ~110 € |
 | Liebesbrücke | ~40 € |
-| **Gesamt** | **~1.943 €** |
+| **Gesamt** | **~1.951 €** |
 
-Knapp unter 2.000 €, aber die Altbett-Mitnahme (~30–60 €) ist noch nicht
-enthalten. Bei Engpass an den Lattenrosten sparen, nicht an der Matratze.
+Variante mit Ravensberger Ravo-Spring (22 cm) und 24-cm-Encasings:
+**rund 1.873 €.**
 
-**Encasings für 26 cm Matratzenhöhe bestellen**, nicht die üblichen
-20-cm-Bezüge.
+Beide unter 2.000 €, die Altbett-Mitnahme (~30–60 €) noch nicht enthalten.
+Bei Engpass an den Lattenrosten sparen, nicht an Matratze oder Encasing.
+
+**Reihenfolge beim Kauf:** erst Matratze festlegen, dann Encasing in der
+passenden Höhe, dann Head-Plus mit 9 oder 13 cm wählen – je höher die
+Matratze, desto mehr Verlängerung.
 
 ---
 
 ## Vor dem Kauf zu klären
 
 1. Hasena: Ausführung **"Eiche"** (nicht bianco) in 200 × 200 verfügbar?
+   Kopfteil Pella gibt es in Eiche – beim Komplettbett prüfen.
 2. Hasena: **Mitteltraverse Midtraver mitbestellen** – nicht im Lieferumfang
-3. Hasena: **Fußhöhe 20 cm** angeben, nicht 25 cm
-4. Hasena: Kopfteilbreite für die 200er Variante bestätigen lassen
-   (iodormo nennt widersprüchliche 186 cm)
-5. Novel-Matratze: Tonnentaschenfederkern oder normaler Taschenfederkern?
-6. Matratzenhöhe bestätigen (ca. 26 cm), **danach** passende Encasings
-7. Altmöbelmitnahme bei XXXLutz anfragen; sonst willhaben oder
+3. Hasena: **Head-Plus Verlängerung mitbestellen**, 9 oder 13 cm je nach
+   Matratzenhöhe
+4. Hasena: **Fußhöhe 20 cm** angeben, nicht 25 cm
+5. Kopfteilbreite 186 cm ist konstruktionsbedingt, keine Rückfrage nötig –
+   nur wissen, dass der Rahmen beidseitig übersteht
+6. Novel-Matratze: Tonnentaschenfederkern oder normaler Taschenfederkern?
+7. Matratzenhöhe festlegen, **danach** Encasing in passender Höhe
+8. Lattenroste: Österreich-Versand bei matratzen.discount klären
+9. Altmöbelmitnahme bei XXXLutz anfragen; sonst willhaben oder
    MA-48-Mistplatz
 
 ## Einkaufsweg
