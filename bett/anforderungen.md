@@ -1,76 +1,113 @@
-# Bett für zwei Personen – Anforderungen
+# Bett für zwei Personen – Anforderungen und Empfehlung
 
 Stand: 2026-08-09
+Standort: Wien 1140, Erdgeschoss, Altbau, Schlafzimmer ca. 25 m²
 
 ## Ausgangslage
 
-- Aktuelles Bett: IKEA, 160 × 200 cm – zu schmal für zwei Personen
+- Aktuelles Bett: IKEA MALM Hochbett mit Schubladen, weiß, 160 × 200 cm
+- Probleme: zu schmal für zwei Personen, Matratze alt und durchgelegen
 - Gesucht: **200 cm Liegebreite**
-- Hinweis: IKEA-Sortiment endet in Europa üblicherweise bei 180 × 200 cm.
-  Mit 200 cm Breite fallen Gestell, Lattenrost und Bettwäsche neu an.
+- Hinweis: IKEA endet in Europa üblicherweise bei 180 × 200 cm. Mit 200 cm
+  Breite fallen Gestell, Lattenrost und Bettwäsche neu an.
+- Zimmer: reichlich Platz links, rechts und am Fußende – Breite ist kein Problem
+- Bettwäsche und Decken werden nicht benötigt
 
-## Bereits entschieden
+## Personendaten
 
-| Punkt | Entscheidung |
+| | Person 1 | Person 2 |
+|---|---|---|
+| Körpergröße | 1,88 m | 1,73 m |
+| Gewicht | ca. 94 kg | ca. 80 kg |
+| Härtegrad | **H3** | **H3** (liegt an der H2/H3-Grenze, H2 wäre zu weich) |
+| Besonderheit | Hausstaubmilbenallergie | wird nachts oft heiß |
+
+Keine Rücken-, Nacken- oder Schulterbeschwerden bei beiden.
+
+## Die zwei tragenden Erkenntnisse
+
+1. **Beide brauchen H3.** Person 2 liegt mit 80 kg exakt an der Grenze; H2
+   würde nach wenigen Jahren wieder durchliegen – genau das aktuelle Problem.
+2. **Ein Matratzentyp löst Wärme und Allergie gleichzeitig:
+   Tonnentaschenfederkern.** Luftdurchlässig, staut keine Wärme, bleibt
+   trocken – und Milben brauchen Feuchtigkeit. Kaltschaum, Visco und Gel
+   scheiden für dieses Paar aus.
+
+## Empfehlung
+
+| Position | Empfehlung | Begründung |
+|---|---|---|
+| Maße | 200 × 200 cm | siehe offene Entscheidung "Länge" |
+| Matratzen | 2 × Tonnentaschenfederkern 100 × 200, H3, 22–24 cm, Bezug abnehmbar und 60 °C waschbar | kühl, trocken, milbenfeindlich, tragfähig bei 94 kg |
+| Encasings | 2 × milbendichter Vollbezug | wirksamste Einzelmaßnahme bei der Allergie |
+| Gestell | Massivholz Eiche, auf Beinen, min. 15 cm Bodenfreiheit | Saugroboter fährt komplett durch |
+| Stauraum | aufgeben | geschlossener Sockel = Staubnest, für den Roboter unerreichbar |
+| Kopfteil | Holz behalten, nicht polstern | gepolsterte Kopfteile sind Staubfänger direkt am Kopf |
+| Lattenrost | 2 × starr, stabil, Mittelzonenverstärkung | Federkern braucht keinen verstellbaren Rost; Geld gehört in die Matratze |
+| Mittelritze | Liebesbrücke, **kein Topper** | ein Topper isoliert zusätzlich und verschärft das Wärmeproblem |
+
+Die Liebesbrücke statt Topper ist bewusst gegen den Standardrat gewählt.
+
+## Budget
+
+| Position | Preis |
 |---|---|
-| Bauart | Bettgestell + Lattenrost (kein Boxspring, kein Polsterbett mit Bettkasten) |
-| Budget gesamt | 1.000 – 2.000 € (Gestell + Matratzen + Lattenrost) |
-| Matratzen-Aufteilung | **offen** – Tendenz 2 × 100 × 200 cm |
-| Schlaftyp beider Personen | **offen** |
+| Massivholzbett Eiche 200 × 200 auf Beinen | 620 – 850 € |
+| 2 × Lattenrost 100 × 200 | 160 – 260 € |
+| 2 × Tonnentaschenfederkern H3 | 560 – 800 € |
+| 2 × Encasing milbendicht | 70 – 120 € |
+| Liebesbrücke | 30 – 50 € |
+| **Gesamt** | **1.440 – 2.080 €** |
 
-### Zur Matratzen-Aufteilung
+Rahmen war 1.000 – 2.000 €. Bei Engpass am Gestell sparen, nicht an
+Matratze und Encasings.
 
-Empfehlung bei diesem Budget und dieser Bauart: **2 × 100 × 200 cm**.
+## Offene Entscheidungen
 
-- Pro: eigener Härtegrad je Person, keine Bewegungsübertragung, einzeln
-  wendbar und einzeln ersetzbar
-- Contra: Mittelritze – lösbar durch durchgehenden Topper 200 × 200 cm
-- Alternative 1 × 200 × 200 cm: keine Ritze, aber ~50 kg (kaum wendbar),
-  Härtegrad-Kompromiss für beide, teurerer Versand
+1. **Länge 200 oder 210 cm?** Faustregel bei 1,88 m wäre 208 cm. Das jetzige
+   Bett ist aber auch 200 lang. Wenn am Fußende nicht angestoßen wird: 200.
+   210 ist ein Sonderformat mit kleiner Matratzenauswahl und ca. 200–350 €
+   Aufpreis, der von der Matratzenqualität abgeht.
+2. **Stauraum unter dem Bett aufgeben?** Empfehlung ja (Allergie +
+   Saugroboter). Bei 25 m² ist Platz für eine Kommode. Das ist eine
+   Gewohnheitsentscheidung, keine reine Produktfrage.
+3. **Holzton:** Eiche natur (nimmt das Fischgrätparkett auf, bringt Wärme ins
+   sehr weiße Zimmer) oder weiter Weiß (zurückhaltender).
 
-Endgültige Festlegung erst nach Klärung von Größe/Gewicht/Schlafposition.
+## Bezugsquellen Wien / Österreich
 
-## Offene Fragen
+- **Probeliegen:** Betten Reiter, mehrere Wiener Filialen (Mariahilfer
+  Straße 120, Viktor-Adler-Platz, Am Spitz, Stadlau) mit Schlafstudio.
+  Laut Branchenverzeichnis auch ein Standort in 1140 Penzing – vorher
+  anrufen, steht nicht auf der offiziellen Filialliste.
+- **LaModula**, Schauraum in Wien: schöne Massivholzbetten, aber Gestelle ab
+  ca. 1.170 € bis 2.900 €. Zum Anschauen gut, fürs Budget zu teuer.
+- **Online nach Österreich:** wohnen-shop.at (über 340 Gestelle 200 × 200,
+  ca. 389 – 3.759 €; z. B. Eiche "Jenny" ab 849 €, "Odrato" ab 619 €),
+  allnatura.at, betten.at.
+- **Matratzenmarken** mit guten Testergebnissen: Badenia Irisette, Malie,
+  f.a.n. Frankenstolz, Röwa.
+- Beim Onlinekauf auf 100-Nächte-Rückgaberecht achten, sonst probeliegen.
 
-### A. Raum & Maße
+## Altbett entsorgen
 
-1. Schlafzimmergröße (L × B); verbleibende Bewegungsfläche links, rechts,
-   Fußende. Faustregel: ≥ 70 cm an einer Längsseite, 50 cm Minimum.
-2. Körpergröße beider Personen → ab ca. 1,85 m Bettlänge 210 oder 220 cm
-   statt 200 cm.
-3. Türbreiten, Treppenhaus, Aufzug – Anlieferung möglich?
-4. Wunsch-Einstiegshöhe (Oberkante Matratze): ~45 cm niedrig, 50–60 cm bequem.
+- Bevorzugt: MALM auf willhaben verkaufen – weiße MALM-Betten gehen in Wien
+  gut weg, kein Transportaufwand.
+- Alternative: Abgabe am MA-48-Mistplatz, für Wiener Haushalte kostenlos
+  (Lichtbildausweis, Selbstanlieferung im Privat-Pkw, bis 2 m³ pro Jahr).
+- Erdgeschoss ohne Treppe macht Anlieferung und Abtransport unkompliziert.
 
-### B. Schlaftyp (bestimmt Härtegrad und Aufteilung)
+## Anmerkungen zum Raum
 
-5. Körpergröße und Gewicht je Person → H2 / H3 / H4.
-6. Schlafposition je Person: Seite / Rücken / Bauch / Wechsler.
-7. Starkes Schwitzen oder Frieren? (Kaltschaum wärmer, Federkern kühler.)
-8. Allergien (Hausstaubmilbe)? → Bezüge bei 60 °C waschbar.
-9. Rücken-, Nacken-, Schulterschmerzen beim Aufwachen?
-10. Was stört an der jetzigen IKEA-Matratze außer der Breite? Alter der
-    Matratze? (Wichtigste Einzelinfo.)
-
-### C. Ausstattung
-
-11. Stauraum unter dem Bett: Bettkasten / Platz für Rollboxen / ganz frei?
-12. Kopfteil zum Anlehnen: gepolstert / Holz / keins?
-13. Lattenrost: starr / manuell verstellbar / motorisch (kostet viel vom
-    Matratzenbudget).
-14. Material und Farbe – Abstimmung auf vorhandene Möbel?
-15. Knarrt das jetzige Bett? Falls ja: Massivholz mit verschraubten
-    Verbindungen statt Metallrahmen.
-
-### D. Kauf & Logistik
-
-16. Probeliegen im Möbelhaus oder online mit 100-Nächte-Rückgaberecht?
-17. Region / Land (vermutlich Österreich) – bestimmt die Händlerauswahl.
-18. Lieferung bis ins Schlafzimmer inkl. Aufbau? Altbett-Entsorgung?
-19. Zeitrahmen – Massivholz und Boxspring oft 4–12 Wochen Lieferzeit.
-20. Bettwäsche/Decken: eine 200 × 220 Decke oder zwei 135 × 200?
-    Zusätzlich ca. 100–250 € einplanen.
+- **Teppich unter dem Bett** ist bei Hausstaubmilbenallergie nach der
+  Matratze der zweitgrößte Milbenherd. Auf dem Parkett wäre ein
+  Schlafzimmer ohne Teppich die konsequentere Lösung.
+- **Steckdose und Pendelleuchte:** Bei 160 → 200 cm verschiebt sich das Bett
+  um 40 cm. Nachmessen, wo die Leuchte dann hängt und ob die Steckdose
+  links erreichbar bleibt.
 
 ## Nächster Schritt
 
-Antworten zu A–D ergänzen, danach konkrete Produktvorschläge
-(Gestell, Lattenrost, Matratzen, Topper) inklusive Preisen erstellen.
+Offene Entscheidungen 1–3 klären, danach konkrete Produktauswahl
+(Gestellmodell, Lattenrost, zwei Matratzen, Encasings, Liebesbrücke) mit
+Direktlinks und Endpreis.
