@@ -50,6 +50,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* TikTok-Textboxen */
 .ov{position:absolute;z-index:2;left:max(16px,env(safe-area-inset-left,0px));right:76px;top:30%;display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none;text-align:center}
 .ov.low{top:auto;bottom:38%}
+.ov.top{top:calc(env(safe-area-inset-top,0px) + 92px)}
 .ov{transition:opacity .2s}
 .ov span{font-weight:700;font-size:clamp(19px,5.4vw,26px);line-height:1.25;padding:3px 10px;border-radius:7px;background:var(--fg);color:#000;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .ov.plain span{background:none;color:var(--fg);text-shadow:0 0 3px #000,0 0 3px #000,0 1px 4px rgba(0,0,0,.8)}
@@ -194,7 +195,7 @@ a.gift{text-decoration:none;top:66%}
 <script>
 const M = x => ({type:"image", src:`media/${x}.jpg`});
 const POSTS = [
-  {media:[M("hero")], ov:{lines:["es ist ihr geburtstag"], cls:"big"},
+  {media:[M("hero")], ov:{lines:["es ist ihr geburtstag"], cls:"big top"},
    desc:"heute nur ein account auf deiner fyp.", tags:"#fyp", likes:1511, saves:211, shares:15, when:"15.11.",
    comments:[["🫶","unur","erster","jetzt"]]},
   {media:[{type:"video",src:"media/jahr2.mp4",poster:"media/jahr2.jpg"}],
@@ -207,21 +208,18 @@ const POSTS = [
    desc:"nur noch ein video.", tags:"#meeverynightat9pm", likes:2100, saves:140, shares:21, when:"15.11.",
    comments:[["🫶","unur","gilt auch für mich","jetzt"]]},
   {bg:"t1", dim:1, media:[M("bg_10j")], ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
-   desc:"ich weiß, welchen krimi du schauen willst, bevor du's weißt.", tags:"#tellmewithouttellingme", likes:3653, saves:300, shares:10, when:"15.11.",
-   comments:[["🫶","unur","funktioniert leider nur bei krimis","jetzt"]]},
-  {bg:"t2", dim:1, media:[M("bg_krimi")], ov:{lines:["pov: du liest mankell","nur am strand"], cls:""},
+   desc:"du schaust aus dem fenster, ich mach ein selfie. seit über 10 jahren.", tags:"#tellmewithouttellingme", likes:3653, saves:300, shares:10, when:"15.11.",
+   comments:[["🫶","unur","du hast nicht mal hergeschaut","jetzt"]]},
+  {bg:"t2", dim:1, media:[M("bg_strand")], ov:{lines:["pov: du liest mankell","nur am strand"], cls:""},
    gift:{label:"Geschenk 1 freischalten", title:"die popcornmaschine", note:"für wallander-abende auf dem sofa"},
    desc:"der nächste strand ist weit weg. also: sofa.", tags:"#wallander #booktok", likes:847, saves:66, shares:3, when:"15.11.",
    comments:[["🫶","unur","ich mach das popcorn","jetzt"]]},
-  {bg:"t3", dim:1, media:[M("bg_algo")], ov:{lines:["der algorithmus sagt, du magst:","gunmetal ✔︎","silbergrau ✔︎","handgemacht ✔︎"], cls:"plain big"},
+  {bg:"t3", media:[M("fit2")], ov:{lines:["der algorithmus sagt, du magst:","gunmetal ✔︎","silbergrau ✔︎","handgemacht ✔︎"], cls:"low"},
    desc:"stimmt.", tags:"#gunmetal #handmade", likes:2311, saves:190, shares:7, when:"15.11.",
    comments:[["🫶","unur","der algorithmus bin ich","jetzt"]]},
-  {bg:"t4", dim:1, media:[M("bg_ton")], ov:{lines:["weißt du noch?","der töpferkurs"], cls:""},
-   desc:"nächstes level ↓", tags:"#töpferkurs", likes:1204, saves:44, shares:2, when:"15.11.",
-   comments:[["🫶","unur","ton → silber. logisch.","jetzt"]]},
-  {bg:"t5", dim:1, media:[M("bg_silber")], ov:{lines:["wachs schnitzen.","in silber gießen.","dein eigener ring."], cls:"dark big"},
+  {bg:"t5", dim:1, media:[M("bg_silber")], ov:{lines:["schmuck im museum.","deiner kommt bald."], cls:"dark"},
    gift:{label:"Geschenk 2 freischalten", title:"dein wax2silver-kurs", note:"aus wachs wird 925er silber"},
-   desc:"selbst gemacht. diesmal aus silber.", tags:"#wax2silver #schmuck", likes:5925, saves:925, shares:25, when:"15.11.",
+   desc:"wachs schnitzen, in silber gießen. diesmal machst du ihn selbst.", tags:"#wax2silver #schmuck", likes:5925, saves:925, shares:25, when:"15.11.",
    comments:[["🫶","unur","foto davon bitte","jetzt"]]},
   {bg:"t6", dim:1, media:[M("bg_diy")], ov:{lines:["wenn deine garne endlich","ein zuhause haben"], cls:""},
    gift:{label:"Geschenk 3 freischalten", title:"dein diy-turm", note:"selbst bauen, selbst befüllen"},
@@ -236,23 +234,23 @@ const POSTS = [
 ];// Musik: Kevin MacLeod (incompetech.com), lizenziert unter CC BY 4.0
 const KM=' – Kevin MacLeod (incompetech.com) · CC BY 4.0';
 const SONGS=[["Hyperfun"],["Carefree",1],["Bossa Antigua",1],["Wallpaper"],["Easy Lemon"],["Sneaky Snitch"],
-  ["Monkeys Spinning Monkeys"],["Easy Lemon"],["Hyperfun"],["Life of Riley"],["Wallpaper",1],["Carefree"]];
+  ["Monkeys Spinning Monkeys"],["Hyperfun"],["Life of Riley"],["Wallpaper",1],["Carefree"]];
 POSTS.forEach((p,i)=>{const [t,inVid]=SONGS[i];p.song=t+KM;if(!inVid)p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;});
 // Zusätzliche Beiträge, jeweils nach einem bestehenden eingefügt
 const orig=POSTS.slice();
 const K=(pre,n)=>Array.from({length:n},(_,i)=>M(`${pre}${i+1}`));
 const song=(p,t)=>{p.song=t+KM;p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;return p;};
 const after=(i,...ps)=>POSTS.splice(POSTS.indexOf(orig[i])+1,0,...ps);
-after(1, song({media:K("fakt",8), ov:{lines:["fakten über marina"], cls:""},
+after(1, song({media:K("fakt",8), ov:{lines:["fakten über marina"], cls:"top"},
   desc:"liste unvollständig.", tags:"#girlfriendfacts", likes:8888, saves:808, shares:8, when:"15.11.",
   comments:[["🫶","unur","fortsetzung folgt","jetzt"]]},"Carefree"));
 after(2, song({media:K("pyr",10), ov:{lines:["ich: soll ich ein foto","vor der pyramide machen?","du: ja, eins."], cls:""},
   desc:"es wurden zehn.", tags:"#pov #mexiko", likes:4410, saves:310, shares:44, when:"10.12.2025",
   comments:[["🫶","unur","ich hab nicht nein gesagt","jetzt"]]},"Fluffing a Duck"));
-after(5, song({media:K("fit",6), ov:{lines:["outfit check:","schwarz.","schwarz.","schwarz."], cls:""},
+after(5, song({media:[M("fit1"),M("fit3"),M("fit4")], ov:{lines:["outfit check:","schwarz.","schwarz.","schwarz."], cls:""},
   desc:"konsequent.", tags:"#outfitcheck #allblack", likes:3010, saves:450, shares:12, when:"15.11.",
   comments:[["🫶","unur","gunmetal zählt als farbe","jetzt"]]},"Hyperfun"));
-after(8, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
+after(7, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
   desc:"weihnachten.", tags:"#weihnachten", likes:2412, saves:120, shares:3, when:"24.12.2025",
   comments:[["🫶","unur","frohe weihnachten. elf monate zu spät","jetzt"]]},"Easy Lemon"),
   song({media:K("us",6), ov:{lines:["wir, in selfies"], cls:"low"},
@@ -265,7 +263,7 @@ after(6, song({bg:"t8", dim:1, media:[M("bg_spiel")], ov:{lines:["neues spiel.",
   link:{href:"https://claude.ai/artifact/EejowV1QmM7d8yRS8mr6Bw", label:"jetzt spielen"},
   desc:"du spielst das eh gern. heute halt meine version.", tags:"#wortspiel #rätsel", likes:777, saves:70, shares:7, when:"15.11.",
   comments:[["🫶","unur","kein tipp von mir. es gibt einen eingebauten","jetzt"]]},"Investigations"));
-after(9, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
+after(8, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
   desc:"märz. spa. bester dresscode.", tags:"#spaday", likes:1803, saves:96, shares:2, when:"28.03.",
   comments:[["🫶","unur","bitte wiederholen","jetzt"]]},"Wallpaper"));
 
