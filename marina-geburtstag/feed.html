@@ -101,6 +101,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .gift{position:absolute;z-index:4;left:50%;top:58%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;white-space:nowrap;
   padding:12px 18px;border-radius:6px;border:0;background:var(--heart);color:var(--fg);font:700 15px var(--tt);cursor:pointer;box-shadow:0 6px 20px rgba(254,44,85,.35)}
 .gift svg{width:18px;height:18px;fill:currentColor}
+a.gift{text-decoration:none;top:66%}
 .unlocked{position:absolute;z-index:4;left:max(16px,env(safe-area-inset-left,0px));right:76px;top:56%;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
 .unlocked span{font-weight:800;font-size:clamp(18px,5vw,24px);padding:3px 10px;border-radius:7px;background:var(--heart);color:var(--fg)}
 .unlocked small{font-size:13px;color:var(--muted);text-shadow:0 1px 2px #000}
@@ -233,9 +234,10 @@ after(8, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
   song({media:K("kreta",3), ov:{lines:["kreta, juni"], cls:""},
   desc:"30 grad. sie in schwarz.", tags:"#kreta", likes:2026, saves:140, shares:6, when:"26.06.",
   comments:[["🫶","unur","ich hab geschwitzt. sie nicht","jetzt"]]},"Bossa Antigua"));
-after(6, song({bg:"t8", game:{title:"finde 7 wörter", seed:1511, words:["mexiko","kreta","silber","popcorn","garn","krimi","sofa"], done:"alle gefunden. respekt."},
-  desc:"waagrecht, senkrecht, diagonal, auch rückwärts. finger drüberziehen.", tags:"#wortsuche #rätsel", likes:777, saves:70, shares:7, when:"15.11.",
-  comments:[["🫶","unur","ich hab 4 gefunden. du bist dran","jetzt"]]},"Investigations"));
+after(6, song({bg:"t8", ov:{lines:["neues spiel.","5 buchstaben.","6 versuche.","7 wörter."], cls:"plain big"},
+  link:{href:"https://claude.ai/artifact/EejowV1QmM7d8yRS8mr6Bw", label:"jetzt spielen"},
+  desc:"du spielst das eh gern. heute halt meine version.", tags:"#wortspiel #rätsel", likes:777, saves:70, shares:7, when:"15.11.",
+  comments:[["🫶","unur","kein tipp von mir. es gibt einen eingebauten","jetzt"]]},"Investigations"));
 after(9, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
   desc:"märz. spa. bester dresscode.", tags:"#spaday", likes:1803, saves:96, shares:2, when:"28.03.",
   comments:[["🫶","unur","bitte wiederholen","jetzt"]]},"Wallpaper"));
@@ -268,6 +270,7 @@ POSTS.forEach((p,i)=>{
   ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div><div class="count">1/${m.length}</div>`:''}
   <button class="mute" aria-label="Ton an">🔇 Ton an</button>${isVid?`<div class="prog" role="slider" tabindex="0" aria-label="Video vorspulen" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><b></b></div><div class="time" hidden></div>`:''}
   ${p.audio?`<audio src="${p.audio}" loop preload="none"></audio>`:''}
+  ${p.link?`<a class="gift" href="${p.link.href}" target="_blank" rel="noopener">▶ ${p.link.label}</a>`:''}
   ${p.gift?`<button class="gift">${IC.gift}${p.gift.label}</button><div class="unlocked" hidden><span>${esc(p.gift.title)}</span><small>${esc(p.gift.note)}</small></div>`:''}
   <div class="rail">
     <div class="av"><div class="pic" role="img" aria-label="unur"></div><button class="plus" aria-label="Folgen">+</button></div>

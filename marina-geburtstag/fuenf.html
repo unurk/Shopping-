@@ -1,0 +1,236 @@
+<title>Fünf für Marina</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: eine Bildschirmhöhe. Kopfzeile, Fortschritt, 6×5-Raster, Hinweiszeile, QWERTZ-Tastatur. Bewusst nur dunkel, Gunmetal-Palette. */
+:root{
+  --bg:#121417; --panel:#1C1F24; --line:#3A3F47; --fg:#F2F3F5; --muted:#9AA0A8;
+  --hit:#2FA88E;   /* richtiger Platz */
+  --near:#C9922E;  /* im Wort, falscher Platz */
+  --miss:#2A2E34;  /* nicht im Wort */
+  --key:#4A5059;
+  --font:"TikTok Sans","Helvetica Neue",Arial,system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.app{height:100%;display:grid;grid-template-rows:auto auto 1fr auto auto;gap:8px;max-width:500px;margin:0 auto;
+  padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px));padding-block:8px 10px;box-sizing:border-box}
+header{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:8px}
+header h1{margin:0;text-align:center;font-size:22px;font-weight:800;letter-spacing:.02em}
+header h1 small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.icon{all:unset;cursor:pointer;width:40px;height:40px;display:grid;place-items:center;border-radius:10px;color:var(--fg);font-size:20px;font-weight:700}
+.icon:focus-visible,.k:focus-visible,.btn:focus-visible{outline:2px solid var(--hit);outline-offset:2px}
+.progress{display:flex;justify-content:center;gap:6px}
+.progress i{width:26px;height:6px;border-radius:3px;background:var(--line)}
+.progress i.done{background:var(--hit)}
+.progress i.lost{background:var(--near)}
+.progress i.now{background:var(--fg)}
+.boardwrap{display:grid;place-items:center;min-height:0}
+.board{display:grid;grid-template-rows:repeat(6,1fr);gap:6px;height:min(100%,420px);aspect-ratio:5/6;max-width:100%}
+.row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.row.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.cell{display:grid;place-items:center;border:2px solid var(--line);border-radius:8px;font-weight:800;font-size:clamp(22px,6.5vw,32px);text-transform:uppercase;background:var(--bg)}
+.cell.filled{border-color:#6B727C;animation:pop .1s}
+@keyframes pop{50%{transform:scale(1.08)}}
+.cell.hit,.cell.near,.cell.miss{border-color:transparent;color:#fff}
+.cell.hit{background:var(--hit)} .cell.near{background:var(--near)} .cell.miss{background:var(--miss)}
+.cell.flip{animation:flip .45s ease both}
+@keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+.cell.win{animation:jump .5s ease both}
+@keyframes jump{40%{transform:translateY(-14px)}80%{transform:translateY(2px)}}
+.msg{min-height:42px;display:grid;place-items:center;text-align:center}
+.msg span{display:inline-block;padding:9px 14px;border-radius:8px;background:var(--fg);color:#111;font-weight:700;font-size:15px}
+.msg .hint{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--muted)}
+.kb{display:grid;gap:7px}
+.kr{display:flex;gap:5px;justify-content:center}
+.k{all:unset;cursor:pointer;flex:1;max-width:44px;height:54px;border-radius:7px;background:var(--key);display:grid;place-items:center;font-weight:700;font-size:17px;text-transform:uppercase;touch-action:manipulation}
+.k.wide{max-width:66px;flex:1.5;font-size:13px}
+.k:active{filter:brightness(1.25)}
+.k.hit{background:var(--hit)} .k.near{background:var(--near)} .k.miss{background:var(--miss);color:#6F7680}
+/* Ergebnis-Karte */
+.sheet{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:rgba(0,0,0,.6);padding:20px}
+.card{width:min(100%,380px);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 20px;display:grid;gap:12px;text-align:center}
+.card .word{display:flex;gap:6px;justify-content:center}
+.card .word b{width:42px;height:42px;display:grid;place-items:center;border-radius:7px;background:var(--hit);font-size:22px}
+.card.lost .word b{background:var(--near)}
+.card h2{margin:0;font-size:20px;font-weight:800}
+.card p{margin:0;color:var(--muted);font-size:15px;line-height:1.4}
+.card .tries{font-size:13px;color:var(--muted)}
+.btn{all:unset;cursor:pointer;justify-self:center;padding:12px 22px;border-radius:999px;background:var(--fg);color:#111;font-weight:800;font-size:15px}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:600}
+.howto{text-align:left;display:grid;gap:10px;font-size:14px;color:var(--muted);line-height:1.4}
+.ex{display:flex;gap:4px}
+.ex b{width:30px;height:30px;display:grid;place-items:center;border-radius:5px;border:2px solid var(--line);color:var(--fg);font-size:15px}
+.ex b.hit{background:var(--hit);border-color:var(--hit)} .ex b.near{background:var(--near);border-color:var(--near)} .ex b.miss{background:var(--miss);border-color:var(--miss)}
+canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.cell.flip,.cell.win,.row.shake,.cell.filled{animation:none}}
+@media (max-height:640px){.k{height:46px}.board{height:min(100%,330px)}}
+</style>
+
+<div class="app">
+  <header>
+    <button class="icon" id="helpBtn" aria-label="Spielregeln">?</button>
+    <h1>Fünf<small>für marina</small></h1>
+    <button class="icon" id="resetBtn" aria-label="Von vorne">↺</button>
+  </header>
+  <div class="progress" id="progress" aria-label="Fortschritt"></div>
+  <div class="boardwrap"><div class="board" id="board"></div></div>
+  <div class="msg" id="msg"></div>
+  <div class="kb" id="kb"></div>
+</div>
+<div class="sheet" id="sheet" hidden><div class="card" id="card"></div></div>
+
+<script>
+// Lösungswörter mit Tipp (nach 3 Fehlversuchen) und Text nach dem Lösen
+const LEVELS = [
+  {w:"KRIMI", tip:"liest du nur am strand.", win:"geschenk 1 hat was damit zu tun. und mit popcorn."},
+  {w:"WACHS", tip:"daraus wird bald silber.", win:"geschenk 2: du schnitzt, es wird silber."},
+  {w:"NADEL", tip:"servietten. faden. du.", win:"geschenk 3 ist für alles, was dazugehört."},
+  {w:"KRETA", tip:"juni. 30 grad.", win:"30 grad. du in schwarz."},
+  {w:"DECKE", tip:"21 uhr. sofa.", win:"decke: immer."},
+  {w:"HUNDE", tip:"> menschen.", win:"hunde > menschen. bestätigt."},
+  {w:"SNACK", tip:"chips sind ein accessoire.", win:"letztes wort. jetzt: geschenke auspacken."}
+];
+const ROWS = 6, COLS = 5;
+const KEYS = ["QWERTZUIOP", "ASDFGHJKL", "↵YXCVBNM⌫"];
+const $ = id => document.getElementById(id);
+let state = load() || {level:0, results:[], guesses:[]};
+let cur = "", busy = false;
+
+function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina")); } catch(e){ return null; } }
+function save(){ try { localStorage.setItem("fuenf-marina", JSON.stringify(state)); } catch(e){} }
+
+// Bewertung wie üblich: erst exakte Treffer, dann restliche Buchstaben nach Häufigkeit
+function score(guess, sol){
+  const res = Array(COLS).fill("miss"), left = {};
+  for(let i=0;i<COLS;i++){ if(guess[i]===sol[i]) res[i]="hit"; else left[sol[i]]=(left[sol[i]]||0)+1; }
+  for(let i=0;i<COLS;i++){ if(res[i]!=="hit" && left[guess[i]]){ res[i]="near"; left[guess[i]]--; } }
+  return res;
+}
+
+function build(){
+  const b = $("board"); b.innerHTML = "";
+  for(let r=0;r<ROWS;r++){ const row=document.createElement("div"); row.className="row";
+    for(let c=0;c<COLS;c++){ const d=document.createElement("div"); d.className="cell"; row.appendChild(d); } b.appendChild(row); }
+  const kb = $("kb"); kb.innerHTML = "";
+  KEYS.forEach(line=>{ const r=document.createElement("div"); r.className="kr";
+    [...line].forEach(ch=>{ const k=document.createElement("button"); k.className="k"+(ch==="↵"||ch==="⌫"?" wide":"");
+      k.textContent = ch==="↵" ? "OK" : ch; k.dataset.k = ch; k.setAttribute("aria-label", ch==="↵"?"Prüfen":ch==="⌫"?"Löschen":ch);
+      k.addEventListener("click", ()=>press(ch)); r.appendChild(k); }); kb.appendChild(r); });
+  renderProgress(); restore();
+}
+function renderProgress(){
+  $("progress").innerHTML = LEVELS.map((_,i)=>{ const r=state.results[i]; return `<i class="${r==="win"?"done":r==="lost"?"lost":i===state.level?"now":""}"></i>`; }).join("");
+}
+function restore(){
+  const lv = LEVELS[state.level]; if(!lv){ finale(); return; }
+  state.guesses.forEach((g,r)=>paintRow(r,g,score(g,lv.w),false));
+  updateKeys(); hintArea();
+}
+function rowEl(r){ return $("board").children[r]; }
+function paintTyping(){
+  const r = state.guesses.length; if(r>=ROWS) return; const cells = rowEl(r).children;
+  for(let c=0;c<COLS;c++){ cells[c].textContent = cur[c]||""; cells[c].classList.toggle("filled", !!cur[c]); }
+}
+function paintRow(r, g, res, animate){
+  const cells = rowEl(r).children;
+  [...cells].forEach((cell,i)=>{ cell.textContent = g[i];
+    const apply=()=>{ cell.classList.remove("filled"); cell.classList.add(res[i]); };
+    if(animate){ setTimeout(()=>{ cell.classList.add("flip"); setTimeout(apply,220); }, i*230); } else apply(); });
+}
+function updateKeys(){
+  const lv = LEVELS[state.level]; if(!lv) return; const best = {};
+  const rank = {miss:0, near:1, hit:2};
+  state.guesses.forEach(g=>score(g,lv.w).forEach((s,i)=>{ if(!(g[i] in best) || rank[s]>rank[best[g[i]]]) best[g[i]]=s; }));
+  document.querySelectorAll(".k").forEach(k=>{ k.classList.remove("hit","near","miss"); const s=best[k.dataset.k]; if(s) k.classList.add(s); });
+}
+function say(t, ms=1600){ const m=$("msg"); m.innerHTML = `<span>${t}</span>`; clearTimeout(say.t); say.t=setTimeout(hintArea, ms); }
+function hintArea(){
+  const lv = LEVELS[state.level], m = $("msg"); if(!lv){ m.innerHTML=""; return; }
+  if(state.guesses.length>=3){ m.innerHTML = `<button class="hint" id="hintBtn">tipp?</button>`;
+    $("hintBtn").addEventListener("click", ()=>{ m.innerHTML = `<span>${lv.tip}</span>`; }); }
+  else m.innerHTML = `<span style="background:none;color:var(--muted);font-weight:600">wort ${state.level+1} von ${LEVELS.length}</span>`;
+}
+
+function press(ch){
+  if(busy || !LEVELS[state.level] || !$("sheet").hidden) return;
+  if(ch==="⌫"){ cur = cur.slice(0,-1); paintTyping(); return; }
+  if(ch==="↵"){ submit(); return; }
+  if(/^[A-Z]$/.test(ch) && cur.length<COLS){ cur += ch; paintTyping(); }
+}
+function submit(){
+  const r = state.guesses.length, lv = LEVELS[state.level];
+  if(cur.length<COLS){ const row=rowEl(r); row.classList.remove("shake"); void row.offsetWidth; row.classList.add("shake"); say("zu kurz."); return; }
+  busy = true; const g = cur; cur = ""; state.guesses.push(g); save();
+  const res = score(g, lv.w); paintRow(r, g, res, true);
+  setTimeout(()=>{ updateKeys(); busy=false;
+    if(g===lv.w){ [...rowEl(r).children].forEach((c,i)=>setTimeout(()=>c.classList.add("win"), i*90)); setTimeout(()=>done("win"), 900); }
+    else if(state.guesses.length>=ROWS){ setTimeout(()=>done("lost"), 400); }
+    else hintArea();
+  }, COLS*230+250);
+}
+const PRAISE = ["genial.", "stark.", "sauber.", "gut.", "knapp.", "puh."];
+function done(result){
+  const lv = LEVELS[state.level], n = state.guesses.length;
+  state.results[state.level] = result; save(); renderProgress();
+  const last = state.level === LEVELS.length-1;
+  $("card").className = "card" + (result==="lost" ? " lost" : "");
+  $("card").innerHTML = `<div class="word">${[...lv.w].map(c=>`<b>${c}</b>`).join("")}</div>
+    <h2>${result==="win" ? PRAISE[n-1] : "knapp daneben."}</h2>
+    <p>${lv.win}</p>
+    <div class="tries">${result==="win" ? `${n} von 6 versuchen` : "zählt trotzdem."}</div>
+    <button class="btn" id="nextBtn">${last ? "fertig" : "nächstes wort"}</button>`;
+  $("sheet").hidden = false; if(result==="win") confetti();
+  $("nextBtn").addEventListener("click", ()=>{ $("sheet").hidden = true; state.level++; state.guesses = []; save(); build(); });
+}
+function finale(){
+  const wins = state.results.filter(r=>r==="win").length;
+  $("card").className = "card";
+  $("card").innerHTML = `<h2>${wins} von ${LEVELS.length}.</h2>
+    <p>${wins===LEVELS.length ? "alle. respekt." : "reicht völlig."}<br>alles gute, marina.</p>
+    <div class="word">${["H","A","N","D","Y"].map(c=>`<b>${c}</b>`).join("")}</div>
+    <p>weg damit. geschenke.</p>
+    <button class="btn ghost" id="againBtn">nochmal spielen</button>`;
+  $("sheet").hidden = false; $("msg").innerHTML = ""; if(wins) confetti();
+  $("againBtn").addEventListener("click", reset);
+}
+function reset(){ state = {level:0, results:[], guesses:[]}; cur=""; save(); $("sheet").hidden = true; build(); }
+function help(){
+  $("card").className = "card";
+  $("card").innerHTML = `<h2>so geht's</h2>
+    <div class="howto">
+      <div>errate das wort mit 5 buchstaben. du hast 6 versuche. ${LEVELS.length} wörter, alle haben was mit dir zu tun.</div>
+      <div class="ex"><b class="hit">K</b><b>R</b><b>E</b><b>T</b><b>A</b></div><div>grün: richtiger buchstabe, richtiger platz.</div>
+      <div class="ex"><b>S</b><b class="near">N</b><b>A</b><b>C</b><b>K</b></div><div>gelb: kommt vor, aber woanders.</div>
+      <div class="ex"><b>H</b><b>U</b><b class="miss">N</b><b>D</b><b>E</b></div><div>grau: kommt nicht vor.</div>
+      <div>nach 3 versuchen gibt's einen tipp.</div>
+    </div>
+    <button class="btn" id="okBtn">los</button>`;
+  $("sheet").hidden = false; $("okBtn").addEventListener("click", ()=>{ $("sheet").hidden = true; });
+}
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c=document.createElement("canvas"); c.className="conf"; c.width=innerWidth; c.height=innerHeight; document.body.appendChild(c);
+  const g=c.getContext("2d"), cols=["#2FA88E","#C9922E","#F2F3F5","#9AA0A8","#FE2C55"];
+  const ps=Array.from({length:110},()=>({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*12-4,c:cols[Math.random()*5|0],s:Math.random()*7+4,a:Math.random()*6}));
+  let f=0;(function t(){g.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;g.fillStyle=p.c;g.save();g.translate(p.x,p.y);g.rotate(p.a);g.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);g.restore();});
+    if(++f<110)requestAnimationFrame(t);else c.remove();})();
+}
+document.addEventListener("keydown", e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  if(e.key==="Enter"){ if(!$("sheet").hidden){ const b=$("card").querySelector(".btn"); b&&b.click(); } else press("↵"); e.preventDefault(); }
+  else if(e.key==="Backspace") press("⌫");
+  else if(/^[a-zA-Z]$/.test(e.key)) press(e.key.toUpperCase());
+});
+$("helpBtn").addEventListener("click", help);
+$("resetBtn").addEventListener("click", ()=>{
+  $("card").className="card"; $("card").innerHTML=`<h2>von vorne?</h2><p>der fortschritt wird gelöscht.</p><button class="btn" id="yesBtn">ja, neu starten</button><button class="btn ghost" id="noBtn">abbrechen</button>`;
+  $("sheet").hidden=false; $("yesBtn").addEventListener("click", reset); $("noBtn").addEventListener("click", ()=>{$("sheet").hidden=true;});
+});
+build();
+if(!state.guesses.length && !state.results.length) help();
+</script>
