@@ -15,3 +15,12 @@ Summe 321,99 € regulär (mit Express 336,94 €).
 
 ## Laden München
 Breuninger, Sendlinger Straße 3, 80331 München, Mo–Sa 10–20 Uhr, Tel. 089 2444220 (https://www.breuninger.com/de/muenchen/). Lagerstand im Haus ⚠️.
+
+## v3 (Wunsch: MediaMarkt)
+- BEURER Venen Trainer FM 150 (643.25), 109,99 € (UVP 182,99 €), MediaMarkt AT, laut Seite „Online only“.
+  https://www.mediamarkt.at/de/product/_beurer-venen-trainer-fm-150-643-25-1523520.html
+  Lieferung 13.11. an eine AT-Adresse; „Sofort-Lieferung in unter 90 Minuten optional“ (Wien, heute ⚠️ im Checkout prüfen).
+  Zwei Beinmanschetten mit Luftpolstern (Unterschenkel/Füße), Intensität stufenlos. Medizinprodukt-Status FM 150 ⚠️.
+  Gebrauchsanweisung: max. 30 min am Stück; bei Grunderkrankungen vorher Arzt fragen. ⚕️ Abklärung fehlt.
+- Verworfen: REBOOTS Go Lite 537,92 € (über Budget, Marketplace, frühestens 18.11.), RENPHO Aeria Thermal 159,99 € (Marketplace, Wärme, keine Druckangaben), FM 150 Pro DE 202,69 € (Marketplace, 13.–17.11.).
+- Kombi-Option: FM 150 + Decke ESKIMO Biella + Karte = ca. 390 €.
