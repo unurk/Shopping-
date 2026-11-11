@@ -74,11 +74,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .rail .saved svg{fill:var(--save)}
 .rail button:active svg{transform:scale(.85)}
 .av{position:relative;width:48px;height:48px;margin-bottom:10px}
-.av .pic{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--fg);background:url("media/m50.jpg") center 30%/cover,#555}
+.av .pic{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--fg);background:url("media/avatar.jpg") center/cover,#555}
 .av .plus{all:unset;position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--heart);display:grid;place-items:center;font-weight:800;font-size:15px;line-height:1;cursor:pointer}
 .av .plus.done{background:var(--fg);color:var(--heart)}
 .disc{width:44px;height:44px;border-radius:50%;margin-top:6px;background:radial-gradient(circle,#222 30%,#111 31%,#2b2b2b 60%,#111 100%);display:grid;place-items:center;animation:spin 5s linear infinite}
-.disc i{width:22px;height:22px;border-radius:50%;background:url("media/m75.jpg") center/cover,#555}
+.disc i{width:22px;height:22px;border-radius:50%;background:url("media/disc.jpg") center/cover,#555}
 @keyframes spin{to{transform:rotate(360deg)}}
 .burst{position:absolute;z-index:5;pointer-events:none;width:96px;height:96px;fill:var(--heart);transform:translate(-50%,-50%) scale(0);animation:pop .8s ease-out forwards}
 @keyframes pop{25%{transform:translate(-50%,-50%) scale(1.15) rotate(var(--r,-12deg));opacity:1}100%{transform:translate(-50%,-110%) scale(1.3);opacity:0}}
@@ -153,19 +153,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <script>
 const M = x => ({type:"image", src:`media/${x}.jpg`});
 const POSTS = [
-  {media:[M("m75")], ov:{lines:["es ist ihr geburtstag"], cls:"big"},
+  {media:[M("hero")], ov:{lines:["es ist ihr geburtstag"], cls:"big"},
    desc:"heute nur ein account auf deiner fyp.", tags:"#fyp", likes:1511, saves:211, shares:15, when:"15.11.",
    comments:[["🫶","unur","erster","jetzt"]]},
-  {media:[{type:"video",src:"media/jahr.mp4",poster:"media/jahr.jpg"}],
+  {media:[{type:"video",src:"media/jahr2.mp4",poster:"media/jahr2.jpg"}],
    desc:"nov → nov.", tags:"#recap", likes:3650, saves:365, shares:12, when:"15.11.",
-   comments:[["🫶","unur","das mit der pyramide erklär ich gleich","jetzt"]]},
-  {media:["m01","m02","m06","m13","m33","m36","m28","m45","m50","m58","m63","m65","m75"].map(M), ov:{lines:["photo dump"], cls:"low"},
-   desc:"keine erklärung.", tags:"#photodump", likes:1313, saves:88, shares:4, when:"15.11.",
-   comments:[["🫶","unur","bild 5.","jetzt"]]},
+   comments:[["🫶","unur","der rest kommt beim wischen","jetzt"]]},
   {media:[{type:"video",src:"media/mexiko.mp4",poster:"media/mexiko.jpg"}],
    desc:"dezember.", tags:"#mexiko", likes:2512, saves:120, shares:9, when:"12.12.2025",
    comments:[["🫶","unur","ich war der kameramann. wie immer","jetzt"]]},
-  {media:[M("m69"),M("m45")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
+  {media:[M("night1"),M("night2")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
    desc:"nur noch ein video.", tags:"#meeverynightat9pm", likes:2100, saves:140, shares:21, when:"15.11.",
    comments:[["🫶","unur","gilt auch für mich","jetzt"]]},
   {bg:"t1", ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
@@ -197,7 +194,7 @@ const POSTS = [
    comments:[["🫶","unur","dreh dich um","jetzt"]]}
 ];// Musik: Kevin MacLeod (incompetech.com), lizenziert unter CC BY 4.0
 const KM=' – Kevin MacLeod (incompetech.com) · CC BY 4.0';
-const SONGS=[["Hyperfun"],["Carefree",1],["Life of Riley"],["Bossa Antigua",1],["Wallpaper"],["Easy Lemon"],["Sneaky Snitch"],
+const SONGS=[["Hyperfun"],["Carefree",1],["Bossa Antigua",1],["Wallpaper"],["Easy Lemon"],["Sneaky Snitch"],
   ["Monkeys Spinning Monkeys"],["Easy Lemon"],["Hyperfun"],["Life of Riley"],["Wallpaper",1],["Carefree"]];
 POSTS.forEach((p,i)=>{const [t,inVid]=SONGS[i];p.song=t+KM;if(!inVid)p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;});
 // Zusätzliche Beiträge, jeweils nach einem bestehenden eingefügt
@@ -205,25 +202,25 @@ const orig=POSTS.slice();
 const K=(pre,n)=>Array.from({length:n},(_,i)=>M(`${pre}${i+1}`));
 const song=(p,t)=>{p.song=t+KM;p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;return p;};
 const after=(i,...ps)=>POSTS.splice(POSTS.indexOf(orig[i])+1,0,...ps);
-after(1, song({media:K("love",8), ov:{lines:["fakten über marina"], cls:""},
+after(1, song({media:K("fakt",8), ov:{lines:["fakten über marina"], cls:""},
   desc:"liste unvollständig.", tags:"#girlfriendfacts", likes:8888, saves:808, shares:8, when:"15.11.",
   comments:[["🫶","unur","fortsetzung folgt","jetzt"]]},"Carefree"));
-after(3, song({media:K("pyr",10), ov:{lines:["ich: soll ich ein foto","vor der pyramide machen?","du: ja, eins."], cls:""},
+after(2, song({media:K("pyr",10), ov:{lines:["ich: soll ich ein foto","vor der pyramide machen?","du: ja, eins."], cls:""},
   desc:"es wurden zehn.", tags:"#pov #mexiko", likes:4410, saves:310, shares:44, when:"10.12.2025",
   comments:[["🫶","unur","ich hab nicht nein gesagt","jetzt"]]},"Fluffing a Duck"));
-after(6, song({media:K("fit",6), ov:{lines:["outfit check:","schwarz.","schwarz.","schwarz."], cls:""},
+after(5, song({media:K("fit",6), ov:{lines:["outfit check:","schwarz.","schwarz.","schwarz."], cls:""},
   desc:"konsequent.", tags:"#outfitcheck #allblack", likes:3010, saves:450, shares:12, when:"15.11.",
   comments:[["🫶","unur","gunmetal zählt als farbe","jetzt"]]},"Hyperfun"));
-after(9, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
+after(8, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
   desc:"weihnachten.", tags:"#weihnachten", likes:2412, saves:120, shares:3, when:"24.12.2025",
   comments:[["🫶","unur","frohe weihnachten. elf monate zu spät","jetzt"]]},"Easy Lemon"),
-  song({media:K("us",8), ov:{lines:["wir, in selfies"], cls:"low"},
+  song({media:K("us",6), ov:{lines:["wir, in selfies"], cls:"low"},
   desc:"mein arm war immer dabei.", tags:"#selfies", likes:5205, saves:300, shares:10, when:"15.11.",
-  comments:[["🫶","unur","die besten 8","jetzt"]]},"Life of Riley"),
+  comments:[["🫶","unur","die besten 6","jetzt"]]},"Life of Riley"),
   song({media:K("kreta",3), ov:{lines:["kreta, juni"], cls:""},
   desc:"30 grad. sie in schwarz.", tags:"#kreta", likes:2026, saves:140, shares:6, when:"26.06.",
   comments:[["🫶","unur","ich hab geschwitzt. sie nicht","jetzt"]]},"Bossa Antigua"));
-after(10, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
+after(9, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
   desc:"märz. spa. bester dresscode.", tags:"#spaday", likes:1803, saves:96, shares:2, when:"28.03.",
   comments:[["🫶","unur","bitte wiederholen","jetzt"]]},"Wallpaper"));
 
