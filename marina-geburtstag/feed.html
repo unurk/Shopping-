@@ -24,7 +24,18 @@ body{background:var(--ink);color:var(--fg);font-family:var(--body);overflow:hidd
   padding-bottom:calc(env(safe-area-inset-bottom,0px) + 28px);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .bg{position:absolute;inset:0;z-index:0}
-.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.55))}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.55));pointer-events:none}
+.bg video,.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slides{position:absolute;inset:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.slides::-webkit-scrollbar{display:none}
+.slides > *{position:relative;flex:0 0 100%;height:100%;scroll-snap-align:start}
+.dots{position:absolute;z-index:3;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 52px);display:flex;gap:6px}
+.dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4)}
+.dots i.on{background:var(--fg)}
+.sound{position:absolute;z-index:3;left:max(16px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 52px);
+  all:unset;cursor:pointer;padding:8px 12px;border-radius:999px;background:rgba(14,15,18,.55);font:600 13px var(--body);color:var(--fg)}
+.has-media .stage{place-items:start;padding-top:96px}
+.has-media .big{font-size:clamp(26px,7vw,44px);text-shadow:0 2px 12px rgba(0,0,0,.6)}
 .stage{position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:90px 84px 190px 28px;text-align:left}
 .big{font-family:var(--display);font-weight:800;font-size:clamp(34px,9vw,64px);line-height:1.02;text-wrap:balance;letter-spacing:-.01em;max-width:14ch}
 .big small{display:block;font-family:var(--body);font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--silver);margin-bottom:14px}
@@ -92,6 +103,9 @@ const POSTS = [
   {bg:"g2", kicker:"Throwback", big:"Über 10 Jahre. Ein Feed.",
    cap:"Du schaust jeden Tag hunderte Videos. Das hier ist das einzige, das nur für dich gemacht ist.", tags:"#throwback #wir", likes:"3.650",
    comments:[["U","unur","Ungefähr 3.650 Tage mit dir. Ich hab nachgerechnet."]]},
+  {bg:"g8", kicker:"Ich jeden Abend um 21 Uhr", big:"Beine hoch. Decke drüber. Noch ein Video.",
+   cap:"Trend: „Me every night at 9 PM“. Heute läuft um 21 Uhr nur dein Feed.", tags:"#meeverynightat9pm #couchmode", likes:"2.100",
+   comments:[["U","unur","Ich bring die Snacks. Siehe nächstes Video."]]},
   {bg:"g3", kicker:"POV", big:"Du liest Mankell nur am Strand.",
    cap:"Bis zum nächsten Strand ist es noch lang. Also holen wir Wallander aufs Sofa.", tags:"#wallander #krimiabend", likes:"847",
    gift:{label:"Geschenk 1 freischalten", reveal:"Die Popcornmaschine. Heute Abend: Krimi, Decke, Beine hoch."},
@@ -122,8 +136,15 @@ const gem='<svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9l4-6zm1.2 2L4.
 const feed=document.getElementById('feed');
 POSTS.forEach((p,i)=>{
   const s=document.createElement('section');
-  s.className='post';s.setAttribute('aria-label',`Post ${i+1} von ${POSTS.length}`);
-  s.innerHTML=`<div class="bg ${p.bg}"></div>
+  s.className='post'+(p.media?' has-media':'');s.setAttribute('aria-label',`Post ${i+1} von ${POSTS.length}`);
+  const m=p.media||[];
+  const one=x=>x.type==='video'
+    ?`<video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
+    :`<img src="${x.src}" alt="${x.alt||''}">`;
+  const mediaHtml=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
+  s.innerHTML=`<div class="bg ${p.bg}">${mediaHtml}</div>
+  ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div>`:''}
+  ${m.some(x=>x.type==='video')?`<button class="sound" aria-label="Ton an">Ton an</button>`:''}
   <div class="stage"><div><div class="big"><small>${p.kicker}</small>${p.big}</div>
   ${p.gift?`<button class="gift" id="gift${i}">${gem.replace('<svg','<svg width="18" height="18" fill="currentColor"')} ${p.gift.label}</button><div class="reveal" id="rev${i}" hidden>${p.gift.reveal}</div>`:''}</div></div>
   <div class="rail">
@@ -150,6 +171,23 @@ POSTS.forEach((p,i)=>{
   s.querySelector('.com').addEventListener('click',()=>openSheet(p));
   if(p.gift){const g=s.querySelector('.gift'),r=s.querySelector('.reveal');
     g.addEventListener('click',()=>{g.hidden=true;r.hidden=false;like.classList.add('liked');});}
+});
+
+// Medien: Videos spielen nur im sichtbaren Post, Karussell-Punkte folgen dem Wischen
+let soundOn=false;
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  e.target.querySelectorAll('video').forEach(v=>{
+    if(e.isIntersecting){v.muted=!soundOn;v.play().catch(()=>{});}else v.pause();
+  });
+}),{threshold:.6});
+document.querySelectorAll('.post').forEach(post=>{
+  io.observe(post);
+  const sl=post.querySelector('.slides'),dots=post.querySelectorAll('.dots i');
+  if(sl)sl.addEventListener('scroll',()=>{const k=Math.round(sl.scrollLeft/sl.clientWidth);dots.forEach((d,j)=>d.classList.toggle('on',j===k));},{passive:true});
+  const sb=post.querySelector('.sound');
+  if(sb)sb.addEventListener('click',()=>{soundOn=!soundOn;
+    document.querySelectorAll('.sound').forEach(b=>{b.textContent=soundOn?'Ton aus':'Ton an';b.setAttribute('aria-label',b.textContent);});
+    post.querySelectorAll('video').forEach(v=>{v.muted=!soundOn;v.play().catch(()=>{});});});
 });
 
 const sheet=document.getElementById('sheet');
