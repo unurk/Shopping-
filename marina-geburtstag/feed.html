@@ -26,6 +26,8 @@ body{background:var(--ink);color:var(--fg);font-family:var(--body);overflow:hidd
 .bg{position:absolute;inset:0;z-index:0}
 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.55));pointer-events:none}
 .bg video,.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bg img.blur{filter:blur(22px) brightness(.65);transform:scale(1.15)}
+.bg img.wide{object-fit:contain}
 .slides{position:absolute;inset:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .slides::-webkit-scrollbar{display:none}
 .slides > *{position:relative;flex:0 0 100%;height:100%;scroll-snap-align:start}
@@ -97,13 +99,23 @@ body{background:var(--ink);color:var(--fg);font-family:var(--body);overflow:hidd
 
 <script>
 const POSTS = [
-  {bg:"g1", kicker:"15. November 2026", big:"Happy Birthday, Marina.",
+  {bg:"g1", media:[{type:"image",src:"media/p045.jpg",alt:"Marina und Unur am Strand"}], kicker:"15. November 2026", big:"Happy Birthday, Marina.",
    cap:"Heute gibt es nur einen Account in deinem Feed. Wisch nach oben.", tags:"#fürdich #geburtstagskind", likes:"10,1 Tsd.",
    comments:[["U","unur","Erster!"],["U","unur","Und für immer dein Lieblingsfollower."]]},
   {bg:"g2", kicker:"Throwback", big:"Über 10 Jahre. Ein Feed.",
    cap:"Du schaust jeden Tag hunderte Videos. Das hier ist das einzige, das nur für dich gemacht ist.", tags:"#throwback #wir", likes:"3.650",
    comments:[["U","unur","Ungefähr 3.650 Tage mit dir. Ich hab nachgerechnet."]]},
-  {bg:"g8", kicker:"Ich jeden Abend um 21 Uhr", big:"Beine hoch. Decke drüber. Noch ein Video.",
+  {bg:"g2", media:[{type:"video",src:"media/jahr.mp4",poster:"media/jahr.jpg"}], kicker:"Ein Jahr in 30 Sekunden", big:"",
+   cap:"November 2025 bis November 2026. Mexiko, Kreta, unser Sofa und alles dazwischen.", tags:"#einjahr #recap #marinasjahr", likes:"365",
+   comments:[["U","unur","Jede Sekunde davon würde ich nochmal machen."]]},
+  {bg:"g1", media:["p002","p006","p010","p015","p016","p022","p025","p027","p031","p034","p038","p042","p045"].map(x=>({type:"image",src:`media/${x}.jpg`})),
+   kicker:"Photo dump", big:"",
+   cap:"Unser Jahr in 13 Bildern. Wisch zur Seite.", tags:"#photodump #mexiko #kreta #wir", likes:"1.313",
+   comments:[["U","unur","Bild 5: Snack-Model des Jahres."],["U","unur","Das letzte ist mein Lieblingsbild."]]},
+  {bg:"g3", media:[{type:"video",src:"media/v018.mp4",poster:"media/v018.jpg"}], kicker:"POV: Dezember in Mexiko", big:"",
+   cap:"Du im türkisen Wasser. Ich am Rand mit der Kamera, wie immer.", tags:"#mexiko #dezember #urlaub", likes:"2.512",
+   comments:[["U","unur","Nächstes Mal spring ich mit rein."]]},
+  {bg:"g8", media:[{type:"image",src:"media/p040.jpg"},{type:"image",src:"media/p022.jpg"}], kicker:"Ich jeden Abend um 21 Uhr", big:"Beine hoch. Decke drüber. Noch ein Video.",
    cap:"Trend: „Me every night at 9 PM“. Heute läuft um 21 Uhr nur dein Feed.", tags:"#meeverynightat9pm #couchmode", likes:"2.100",
    comments:[["U","unur","Ich bring die Snacks. Siehe nächstes Video."]]},
   {bg:"g3", kicker:"POV", big:"Du liest Mankell nur am Strand.",
@@ -124,6 +136,9 @@ const POSTS = [
    cap:"Die Garne aus der Barnabitengasse liegen überall. Ab heute nicht mehr.", tags:"#sticken #yukimade #ordnung", likes:"968",
    gift:{label:"Geschenk 3 freischalten", reveal:"Dein DIY-Turm. Selbst gebaut, selbst befüllt."},
    comments:[["U","unur","Ich halte beim Zusammenbauen die Schrauben. Versprochen."]]},
+  {bg:"g2", media:[{type:"video",src:"media/v048.mp4",poster:"media/v048.jpg"}], kicker:"Wir zwei, unterwegs", big:"",
+   cap:"7. November 2026. Schiebedach auf, du schaust raus, ich schau zu dir.", tags:"#roadtrip #wir", likes:"711",
+   comments:[["U","unur","Beifahrerin des Jahres."]]},
   {bg:"g8", kicker:"Ende des Feeds", big:"Du bist durch. Ich bin noch da.",
    cap:"Kein Algorithmus findet dich so gut wie ich. Alles Liebe zum Geburtstag. Unur", tags:"#fürimmer", likes:"∞",
    comments:[["U","unur","Wisch nicht weiter. Dreh dich um."]]}
@@ -140,7 +155,7 @@ POSTS.forEach((p,i)=>{
   const m=p.media||[];
   const one=x=>x.type==='video'
     ?`<video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
-    :`<img src="${x.src}" alt="${x.alt||''}">`;
+    :`<img class="blur" src="${x.src}" alt=""><img class="photo" src="${x.src}" alt="${x.alt||''}">`;
   const mediaHtml=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
   s.innerHTML=`<div class="bg ${p.bg}">${mediaHtml}</div>
   ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div>`:''}
@@ -173,6 +188,11 @@ POSTS.forEach((p,i)=>{
     g.addEventListener('click',()=>{g.hidden=true;r.hidden=false;like.classList.add('liked');});}
 });
 
+// Querformat-Fotos ganz zeigen (auf unscharfem Hintergrund), Hochformat füllt den Bildschirm
+document.querySelectorAll('img.photo').forEach(im=>{
+  const fit=()=>{if(im.naturalWidth>im.naturalHeight*1.05)im.classList.add('wide');};
+  im.complete?fit():im.addEventListener('load',fit);
+});
 // Medien: Videos spielen nur im sichtbaren Post, Karussell-Punkte folgen dem Wischen
 let soundOn=false;
 const io=new IntersectionObserver(es=>es.forEach(e=>{
