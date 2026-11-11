@@ -130,6 +130,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   font-weight:700;font-size:14px;text-shadow:0 1px 3px #000;pointer-events:none;animation:bob 1.4s ease-in-out infinite}
 .hint svg{width:34px;height:34px;fill:var(--fg)}
 @keyframes bob{50%{transform:translate(-50%,-10px)}}
+
+/* Wortgitter */
+.t8{background:linear-gradient(170deg,#2B3036,#0F1114)}
+.game{position:absolute;z-index:4;left:max(14px,env(safe-area-inset-left,0px));right:76px;top:calc(env(safe-area-inset-top,0px) + 84px);display:grid;gap:8px;justify-items:center}
+.game h4{margin:0;font-size:18px;font-weight:800;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;width:min(100%,290px,38vh);aspect-ratio:1;padding:6px;border-radius:12px;background:var(--fg);touch-action:none;user-select:none;-webkit-user-select:none}
+.grid i{display:grid;place-items:center;font-style:normal;font-weight:700;font-size:clamp(14px,4.4vw,19px);color:#111;border-radius:6px;transition:background .1s}
+.grid i.sel{background:var(--cyan)}
+.grid i.found{background:#FFE3EA;color:var(--heart)}
+.words{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;max-width:300px}
+.words span{font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.14)}
+.words span.done{background:var(--heart);text-decoration:line-through}
+.game .score{font-size:13px;color:var(--muted);font-weight:600}
 @media (prefers-reduced-motion:reduce){.burst,.hint,.disc,.music .track{animation:none}.sheet{transition:none}}
 </style>
 
@@ -220,6 +233,9 @@ after(8, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
   song({media:K("kreta",3), ov:{lines:["kreta, juni"], cls:""},
   desc:"30 grad. sie in schwarz.", tags:"#kreta", likes:2026, saves:140, shares:6, when:"26.06.",
   comments:[["🫶","unur","ich hab geschwitzt. sie nicht","jetzt"]]},"Bossa Antigua"));
+after(6, song({bg:"t8", game:{title:"finde 7 wörter", seed:1511, words:["mexiko","kreta","silber","popcorn","garn","krimi","sofa"], done:"alle gefunden. respekt."},
+  desc:"waagrecht, senkrecht, diagonal, auch rückwärts. finger drüberziehen.", tags:"#wortsuche #rätsel", likes:777, saves:70, shares:7, when:"15.11.",
+  comments:[["🫶","unur","ich hab 4 gefunden. du bist dran","jetzt"]]},"Investigations"));
 after(9, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
   desc:"märz. spa. bester dresscode.", tags:"#spaday", likes:1803, saves:96, shares:2, when:"28.03.",
   comments:[["🫶","unur","bitte wiederholen","jetzt"]]},"Wallpaper"));
@@ -268,6 +284,7 @@ POSTS.forEach((p,i)=>{
     <span class="music">${IC.note}<span style="overflow:hidden"><span class="track">${esc(p.song)} &nbsp;&nbsp;&nbsp; ${esc(p.song)} &nbsp;&nbsp;&nbsp;</span></span></span>
   </div>`;
   feed.appendChild(s);
+  if(p.game)buildGame(s,p.game);
 
   const like=s.querySelector('.like'),ln=like.querySelector('.n');
   const setLike=on=>{like.classList.toggle('liked',on);ln.textContent=fmt(p.likes+(on?1:0));};
@@ -284,7 +301,7 @@ POSTS.forEach((p,i)=>{
   let last=0,timer=null,dx=0,dy=0;
   s.addEventListener('pointerdown',e=>{dx=e.clientX;dy=e.clientY;},{passive:true});
   s.addEventListener('pointerup',e=>{
-    if(e.target.closest('button,.rail,.cap,.sheet,.prog'))return;
+    if(e.target.closest('button,.rail,.cap,.sheet,.prog,.game'))return;
     if(Math.abs(e.clientX-dx)>10||Math.abs(e.clientY-dy)>10)return; // war ein Wischen, kein Tippen
     const now=Date.now();
     if(now-last<300){clearTimeout(timer);setLike(true);
@@ -348,6 +365,41 @@ document.querySelectorAll('img.photo').forEach(im=>{
   const fit=()=>{if(im.naturalWidth>im.naturalHeight*1.05)im.classList.add('wide');};
   im.complete?fit():im.addEventListener('load',fit);
 });
+
+
+// Wortgitter: Wörter durch Wischen über die Buchstaben finden (waagrecht, senkrecht, diagonal, auch rückwärts)
+function buildGame(s,cfg){
+  const N=8, words=cfg.words.map(w=>w.toUpperCase());
+  let seed=cfg.seed||7; const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  const g=Array.from({length:N},()=>Array(N).fill(''));
+  const dirs=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[1,-1]];
+  for(const w of [...words].sort((a,b)=>b.length-a.length)){
+    for(let t=0;t<500;t++){const [dr,dc]=dirs[Math.floor(rnd()*dirs.length)],r=Math.floor(rnd()*N),c=Math.floor(rnd()*N);
+      const er=r+dr*(w.length-1),ec=c+dc*(w.length-1); if(er<0||er>=N||ec<0||ec>=N)continue;
+      let ok=true;for(let k=0;k<w.length;k++){const x=g[r+dr*k][c+dc*k];if(x&&x!==w[k]){ok=false;break;}}
+      if(!ok)continue;for(let k=0;k<w.length;k++)g[r+dr*k][c+dc*k]=w[k];break;}
+  }
+  const AB='ABCDEFGHIKLMNOPRSTUW';
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!g[r][c])g[r][c]=AB[Math.floor(rnd()*AB.length)];
+  const box=document.createElement('div');box.className='game';
+  box.innerHTML=`<h4>${esc(cfg.title)}</h4><div class="grid" role="grid" aria-label="Buchstabengitter">${g.flat().map((ch,i)=>`<i data-i="${i}">${ch}</i>`).join('')}</div>
+    <div class="words">${words.map(w=>`<span data-w="${w}">${w.toLowerCase()}</span>`).join('')}</div><div class="score">0/${words.length} gefunden</div>`;
+  s.appendChild(box);
+  const grid=box.querySelector('.grid'),cells=[...grid.children],found=new Set();let start=null,path=[];
+  const at=e=>{const el=document.elementFromPoint(e.clientX,e.clientY);return el&&el.parentNode===grid?+el.dataset.i:null;};
+  const line=(a,b)=>{const r0=a/N|0,c0=a%N,r1=b/N|0,c1=b%N,dr=Math.sign(r1-r0),dc=Math.sign(c1-c0),n=Math.max(Math.abs(r1-r0),Math.abs(c1-c0));
+    if(!(r0===r1||c0===c1||Math.abs(r1-r0)===Math.abs(c1-c0)))return null;return Array.from({length:n+1},(_,k)=>(r0+dr*k)*N+c0+dc*k);};
+  const paint=()=>cells.forEach((c,i)=>c.classList.toggle('sel',path.includes(i)));
+  grid.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();const i=at(e);if(i==null)return;start=i;path=[i];grid.setPointerCapture(e.pointerId);paint();});
+  grid.addEventListener('pointermove',e=>{if(start==null)return;const i=at(e);if(i==null)return;const l=line(start,i);if(l){path=l;paint();}});
+  const end=e=>{if(start==null)return;e.stopPropagation();const w=path.map(i=>g.flat()[i]).join(''),rw=[...w].reverse().join('');
+    const hit=words.find(x=>!found.has(x)&&(x===w||x===rw));
+    if(hit){found.add(hit);path.forEach(i=>cells[i].classList.add('found'));box.querySelector(`[data-w="${hit}"]`).classList.add('done');
+      box.querySelector('.score').textContent=`${found.size}/${words.length} gefunden`;
+      if(found.size===words.length){confetti(s);toast(cfg.done);}}
+    start=null;path=[];paint();};
+  grid.addEventListener('pointerup',end);grid.addEventListener('pointercancel',end);
+}
 
 // Kommentare
 const sheet=document.getElementById('sheet');
