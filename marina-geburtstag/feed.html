@@ -74,11 +74,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .rail .saved svg{fill:var(--save)}
 .rail button:active svg{transform:scale(.85)}
 .av{position:relative;width:48px;height:48px;margin-bottom:10px}
-.av .pic{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--fg);background:url("media/p025.jpg") center 20%/cover,#555}
+.av .pic{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--fg);background:url("media/m50.jpg") center 30%/cover,#555}
 .av .plus{all:unset;position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--heart);display:grid;place-items:center;font-weight:800;font-size:15px;line-height:1;cursor:pointer}
 .av .plus.done{background:var(--fg);color:var(--heart)}
 .disc{width:44px;height:44px;border-radius:50%;margin-top:6px;background:radial-gradient(circle,#222 30%,#111 31%,#2b2b2b 60%,#111 100%);display:grid;place-items:center;animation:spin 5s linear infinite}
-.disc i{width:22px;height:22px;border-radius:50%;background:url("media/p045.jpg") center/cover,#555}
+.disc i{width:22px;height:22px;border-radius:50%;background:url("media/m75.jpg") center/cover,#555}
 @keyframes spin{to{transform:rotate(360deg)}}
 .burst{position:absolute;z-index:5;pointer-events:none;width:96px;height:96px;fill:var(--heart);transform:translate(-50%,-50%) scale(0);animation:pop .8s ease-out forwards}
 @keyframes pop{25%{transform:translate(-50%,-50%) scale(1.15) rotate(var(--r,-12deg));opacity:1}100%{transform:translate(-50%,-110%) scale(1.3);opacity:0}}
@@ -153,19 +153,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <script>
 const M = x => ({type:"image", src:`media/${x}.jpg`});
 const POSTS = [
-  {media:[M("p045")], ov:{lines:["es ist ihr geburtstag 🎂"], cls:"big"},
+  {media:[M("m75")], ov:{lines:["es ist ihr geburtstag 🎂"], cls:"big"},
    desc:"heute gibt's nur einen account auf deiner fyp. wisch hoch ⬆️", tags:"#fyp #geburtstagskind #15november", likes:1511, saves:211, shares:15, when:"15.11.",
    comments:[["🫶","unur","erster!! und für immer dein lieblingsfollower","jetzt"],["🍿","die_popcornmaschine","bin schon aufgeregt","2 Min."]]},
   {media:[{type:"video",src:"media/jahr.mp4",poster:"media/jahr.jpg"}],
    desc:"nov 2025 → nov 2026. mexiko, kreta, unser sofa und alles dazwischen 🫶", tags:"#recap #marinasjahr #einjahr", likes:3650, saves:365, shares:12, when:"15.11.",
    comments:[["🫶","unur","jede sekunde davon würd ich nochmal machen","jetzt"],["🛋️","das_sofa","ich war auch dabei","5 Min."]]},
-  {media:["p002","p006","p010","p015","p016","p022","p025","p027","p031","p034","p038","p042","p045"].map(M), ov:{lines:["photo dump: unser jahr 📸"], cls:"low"},
+  {media:["m01","m02","m06","m13","m33","m36","m28","m45","m50","m58","m63","m65","m75"].map(M), ov:{lines:["photo dump: unser jahr 📸"], cls:"low"},
    desc:"13 bilder, 0 schlechte. wisch zur seite ➡️", tags:"#photodump #mexiko #kreta #wir", likes:1313, saves:88, shares:4, when:"15.11.",
    comments:[["🫶","unur","bild 5: snack-model des jahres","jetzt"],["🫶","unur","das letzte ist mein lieblingsbild","jetzt"]]},
-  {media:[{type:"video",src:"media/v018.mp4",poster:"media/v018.jpg"}],
-   desc:"du im türkisen wasser, ich am rand mit der kamera. wie immer 🙃", tags:"#mexiko #pov #dezember", likes:2512, saves:120, shares:9, when:"12.12.2025",
+  {media:[{type:"video",src:"media/mexiko.mp4",poster:"media/mexiko.jpg"}],
+   desc:"pyramide, türkises wasser und du mittendrin. ich am rand mit der kamera, wie immer 🙃🇲🇽", tags:"#mexiko #pov #dezember #chichenitza", likes:2512, saves:120, shares:9, when:"12.12.2025",
    comments:[["🫶","unur","nächstes mal spring ich mit rein","jetzt"]]},
-  {media:[M("p040"),M("p022")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
+  {media:[M("m69"),M("m45")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
    desc:"beine hoch, decke drüber, noch ein video. heute läuft um 21 uhr nur dein feed 🛋️", tags:"#meeverynightat9pm #couchmode", likes:2100, saves:140, shares:21, when:"15.11.",
    comments:[["🫶","unur","ich bring die snacks. siehe nächstes video","jetzt"],["🛋️","das_sofa","21 uhr. ich wart auf dich","1 Std."]]},
   {bg:"t1", ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
@@ -189,8 +189,8 @@ const POSTS = [
    gift:{label:"Geschenk 3 freischalten", title:"dein diy-turm 🧵", note:"selbst gebaut, selbst befüllt"},
    desc:"die garne aus der barnabitengasse liegen überall. ab heute nicht mehr.", tags:"#sticken #yukimade #organization #diy", likes:968, saves:120, shares:5, when:"15.11.",
    comments:[["🫶","unur","ich halt beim zusammenbauen die schrauben. versprochen","jetzt"],["🗼","dein_diy_turm","ich brauch nur noch garn","8 Min."]]},
-  {media:[{type:"video",src:"media/v048.mp4",poster:"media/v048.jpg"}],
-   desc:"schiebedach auf, du schaust raus, ich schau zu dir.", tags:"#roadtrip #wir #beifahrerin", likes:711, saves:30, shares:1, when:"07.11.",
+  {media:[{type:"video",src:"media/auto.mp4",poster:"media/auto.jpg"}],
+   desc:"smoothie-pause irgendwo zwischen a und b. mit dir ist jede fahrt ein roadtrip 🥤", tags:"#roadtrip #wir #smoothie", likes:711, saves:30, shares:1, when:"02.07.",
    comments:[["🫶","unur","beifahrerin des jahres","jetzt"]]},
   {bg:"t7", ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["nein, hast du nicht.","ich bin noch da ❤️"], cls:"low"},
    desc:"kein algorithmus kennt dich so gut wie ich. alles liebe zum geburtstag, marina.", tags:"#fürimmer #fyp", likes:999999, saves:1, shares:0, when:"15.11.",
