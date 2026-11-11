@@ -201,16 +201,16 @@ const POSTS = [
   {media:[{type:"video",src:"media/jahr2.mp4",poster:"media/jahr2.jpg"}],
    desc:"nov → nov.", tags:"#recap", likes:3650, saves:365, shares:12, when:"15.11.",
    comments:[["🫶","unur","der rest kommt beim wischen","jetzt"]]},
-  {media:[{type:"video",src:"media/mexiko.mp4",poster:"media/mexiko.jpg"}],
+  {media:[{type:"video",src:"media/v_mexiko.mp4",poster:"media/v_mexiko.jpg"}],
    desc:"dezember.", tags:"#mexiko", likes:2512, saves:120, shares:9, when:"12.12.2025",
    comments:[["🫶","unur","ich war der kameramann. wie immer","jetzt"]]},
-  {media:[M("night1"),M("night2")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
+  {media:[{type:"video",src:"media/v_nacht.mp4",poster:"media/v_nacht.jpg"},M("night1"),M("night2")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
    desc:"nur noch ein video.", tags:"#meeverynightat9pm", likes:2100, saves:140, shares:21, when:"15.11.",
    comments:[["🫶","unur","gilt auch für mich","jetzt"]]},
   {bg:"t1", dim:1, media:[M("bg_10j")], ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
    desc:"du schaust aus dem fenster, ich mach ein selfie. seit über 10 jahren.", tags:"#tellmewithouttellingme", likes:3653, saves:300, shares:10, when:"15.11.",
    comments:[["🫶","unur","du hast nicht mal hergeschaut","jetzt"]]},
-  {bg:"t2", dim:1, media:[M("bg_strand")], ov:{lines:["pov: du liest mankell","nur am strand"], cls:""},
+  {bg:"t2", dim:1, media:[{type:"video",src:"media/v_strand.mp4",poster:"media/v_strand.jpg"}], ov:{lines:["pov: du liest mankell","nur am strand"], cls:""},
    gift:{label:"Geschenk 1 freischalten", title:"die popcornmaschine", note:"für wallander-abende auf dem sofa"},
    desc:"der nächste strand ist weit weg. also: sofa.", tags:"#wallander #booktok", likes:847, saves:66, shares:3, when:"15.11.",
    comments:[["🫶","unur","ich mach das popcorn","jetzt"]]},
@@ -225,22 +225,24 @@ const POSTS = [
    gift:{label:"Geschenk 3 freischalten", title:"dein diy-turm", note:"selbst bauen, selbst befüllen"},
    desc:"die garne aus der barnabitengasse liegen überall. ab heute nicht mehr.", tags:"#sticken #diy", likes:968, saves:120, shares:5, when:"15.11.",
    comments:[["🫶","unur","übung hab ich ja. siehe foto","jetzt"]]},
-  {media:[{type:"video",src:"media/auto.mp4",poster:"media/auto.jpg"}],
+  {media:[{type:"video",src:"media/v_auto.mp4",poster:"media/v_auto.jpg"}],
    desc:"smoothie-pause.", tags:"#roadtrip", likes:711, saves:30, shares:1, when:"02.07.",
    comments:[["🫶","unur","dj-wünsche bitte schriftlich","jetzt"]]},
-  {bg:"t7", dim:1, media:[M("bg_ende")], ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["handy weg.","geschenke."], cls:"low"},
+  {bg:"t7", dim:1, media:[{type:"video",src:"media/v_ende.mp4",poster:"media/v_ende.jpg"}], ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["handy weg.","geschenke."], cls:"low"},
    desc:"alles gute, marina.", tags:"#fyp", likes:1000000, saves:1, shares:0, when:"15.11.",
    comments:[["🫶","unur","dreh dich um","jetzt"]]}
 ];// Musik: Kevin MacLeod (incompetech.com), lizenziert unter CC BY 4.0
 const KM=' – Kevin MacLeod (incompetech.com) · CC BY 4.0';
-const SONGS=[["Hyperfun"],["Carefree",1],["Bossa Antigua",1],["Wallpaper"],["Easy Lemon"],["Sneaky Snitch"],
-  ["Monkeys Spinning Monkeys"],["Hyperfun"],["Life of Riley"],["Wallpaper",1],["Carefree"]];
+const SONGS=[["Hyperfun"],["Carefree",1],["Bossa Antigua",1],["Wallpaper"],["Easy Lemon"],["Sneaky Snitch",1],
+  ["Monkeys Spinning Monkeys"],["Hyperfun"],["Life of Riley"],["Wallpaper",1],["Carefree",1]];
 POSTS.forEach((p,i)=>{const [t,inVid]=SONGS[i];p.song=t+KM;if(!inVid)p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;});
 // Zusätzliche Beiträge, jeweils nach einem bestehenden eingefügt
 const orig=POSTS.slice();
 const K=(pre,n)=>Array.from({length:n},(_,i)=>M(`${pre}${i+1}`));
 const song=(p,t)=>{p.song=t+KM;p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;return p;};
 const after=(i,...ps)=>POSTS.splice(POSTS.indexOf(orig[i])+1,0,...ps);
+const vsong=(p,t)=>{p.song=t+KM;return p;}; // Musik steckt schon im Video
+const VID=n=>({type:"video",src:`media/${n}.mp4`,poster:`media/${n}.jpg`});
 after(1, song({media:K("fakt",8), ov:{lines:["fakten über marina"], cls:"top"},
   desc:"liste unvollständig.", tags:"#girlfriendfacts", likes:8888, saves:808, shares:8, when:"15.11.",
   comments:[["🫶","unur","fortsetzung folgt","jetzt"]]},"Carefree"));
@@ -256,13 +258,25 @@ after(7, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
   song({media:K("us",6), ov:{lines:["wir, in selfies"], cls:"low"},
   desc:"mein arm war immer dabei.", tags:"#selfies", likes:5205, saves:300, shares:10, when:"15.11.",
   comments:[["🫶","unur","die besten 6","jetzt"]]},"Life of Riley"),
-  song({media:K("kreta",3), ov:{lines:["kreta, juni"], cls:""},
+  song({media:[{type:"video",src:"media/v_pool.mp4",poster:"media/v_pool.jpg"},...K("kreta",3)], ov:{lines:["kreta, juni"], cls:""},
   desc:"30 grad. sie in schwarz.", tags:"#kreta", likes:2026, saves:140, shares:6, when:"26.06.",
-  comments:[["🫶","unur","ich hab geschwitzt. sie nicht","jetzt"]]},"Bossa Antigua"));
+  comments:[["🫶","unur","ich hab geschwitzt. sie nicht","jetzt"]]},"Bossa Antigua"),
+  song({media:[VID("v_hund"),M("cat1"),M("cat2"),M("cat3")], ov:{lines:["kreta.","die eigentlichen stars:"], cls:""},
+  desc:"ein hund, mehrere katzen. du hast jeden begrüßt.", tags:"#kreta #hunde #katzen", likes:3120, saves:260, shares:11, when:"28.06.",
+  comments:[["🫶","unur","ich wurde von keinem begrüßt","jetzt"]]},"Fluffing a Duck"));
 after(6, song({bg:"t8", dim:1, media:[M("bg_spiel")], ov:{lines:["neues spiel.","6 wörter.","3 geschenke."], cls:"plain big"},
   link:{href:"https://claude.ai/artifact/EejowV1QmM7d8yRS8mr6Bw", label:"jetzt spielen"},
   desc:"du spielst das eh gern. heute halt meine version.", tags:"#wortspiel #rätsel", likes:777, saves:70, shares:7, when:"15.11.",
   comments:[["🫶","unur","kein tipp von mir. es gibt einen eingebauten","jetzt"]]},"Investigations"));
+after(4, vsong({media:[VID("v_vorne")], ov:{lines:["jeder urlaub:","du vorne.","ich hinten mit der kamera."], cls:""},
+  desc:"kreta, abends.", tags:"#kreta #pov", likes:1620, saves:90, shares:4, when:"02.07.",
+  comments:[["🫶","unur","ich komm ja schon","jetzt"]]},"Life of Riley"));
+after(9, vsong({media:[VID("v_atlantik")], ov:{lines:["portugal, november."], cls:"top"},
+  desc:"du am atlantik. ich hab gefilmt, statt reinzugehen.", tags:"#portugal #atlantik", likes:2205, saves:150, shares:6, when:"05.11.",
+  comments:[["🫶","unur","mir war's zu kalt","jetzt"]]},"Bossa Antigua"),
+  vsong({media:[VID("v_buch")], ov:{lines:["buchhandlung in lissabon."], cls:"top"},
+  desc:"krimis gibt's auch auf portugiesisch.", tags:"#lissabon #booktok", likes:1306, saves:210, shares:9, when:"06.11.",
+  comments:[["🫶","unur","das fahrrad an der decke war das highlight","jetzt"]]},"Easy Lemon"));
 after(8, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
   desc:"märz. spa. bester dresscode.", tags:"#spaday", likes:1803, saves:96, shares:2, when:"28.03.",
   comments:[["🫶","unur","bitte wiederholen","jetzt"]]},"Wallpaper"));
