@@ -29,6 +29,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bg video,.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .bg img.blur{transform:scale(1.1)}
 .bg img.wide{object-fit:contain}
+.bg.dim::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5);pointer-events:none}
 .shade{position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.6));pointer-events:none}
 .slides{position:absolute;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
 .slides::-webkit-scrollbar{display:none}
@@ -205,31 +206,31 @@ const POSTS = [
   {media:[M("night1"),M("night2")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
    desc:"nur noch ein video.", tags:"#meeverynightat9pm", likes:2100, saves:140, shares:21, when:"15.11.",
    comments:[["🫶","unur","gilt auch für mich","jetzt"]]},
-  {bg:"t1", ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
+  {bg:"t1", dim:1, media:[M("bg_10j")], ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
    desc:"ich weiß, welchen krimi du schauen willst, bevor du's weißt.", tags:"#tellmewithouttellingme", likes:3653, saves:300, shares:10, when:"15.11.",
    comments:[["🫶","unur","funktioniert leider nur bei krimis","jetzt"]]},
-  {bg:"t2", ov:{lines:["pov: du liest mankell","nur am strand"], cls:""},
+  {bg:"t2", dim:1, media:[M("bg_krimi")], ov:{lines:["pov: du liest mankell","nur am strand"], cls:""},
    gift:{label:"Geschenk 1 freischalten", title:"die popcornmaschine", note:"für wallander-abende auf dem sofa"},
    desc:"der nächste strand ist weit weg. also: sofa.", tags:"#wallander #booktok", likes:847, saves:66, shares:3, when:"15.11.",
    comments:[["🫶","unur","ich mach das popcorn","jetzt"]]},
-  {bg:"t3", ov:{lines:["der algorithmus sagt, du magst:","gunmetal ✔︎","silbergrau ✔︎","handgemacht ✔︎"], cls:"plain big"},
+  {bg:"t3", dim:1, media:[M("bg_algo")], ov:{lines:["der algorithmus sagt, du magst:","gunmetal ✔︎","silbergrau ✔︎","handgemacht ✔︎"], cls:"plain big"},
    desc:"stimmt.", tags:"#gunmetal #handmade", likes:2311, saves:190, shares:7, when:"15.11.",
    comments:[["🫶","unur","der algorithmus bin ich","jetzt"]]},
-  {bg:"t4", ov:{lines:["weißt du noch?","der töpferkurs"], cls:""},
+  {bg:"t4", dim:1, media:[M("bg_ton")], ov:{lines:["weißt du noch?","der töpferkurs"], cls:""},
    desc:"nächstes level ↓", tags:"#töpferkurs", likes:1204, saves:44, shares:2, when:"15.11.",
    comments:[["🫶","unur","ton → silber. logisch.","jetzt"]]},
-  {bg:"t5", ov:{lines:["wachs schnitzen.","in silber gießen.","dein eigener ring."], cls:"dark big"},
+  {bg:"t5", dim:1, media:[M("bg_silber")], ov:{lines:["wachs schnitzen.","in silber gießen.","dein eigener ring."], cls:"dark big"},
    gift:{label:"Geschenk 2 freischalten", title:"dein wax2silver-kurs", note:"aus wachs wird 925er silber"},
    desc:"selbst gemacht. diesmal aus silber.", tags:"#wax2silver #schmuck", likes:5925, saves:925, shares:25, when:"15.11.",
    comments:[["🫶","unur","foto davon bitte","jetzt"]]},
-  {bg:"t6", ov:{lines:["wenn deine garne endlich","ein zuhause haben"], cls:""},
+  {bg:"t6", dim:1, media:[M("bg_diy")], ov:{lines:["wenn deine garne endlich","ein zuhause haben"], cls:""},
    gift:{label:"Geschenk 3 freischalten", title:"dein diy-turm", note:"selbst bauen, selbst befüllen"},
    desc:"die garne aus der barnabitengasse liegen überall. ab heute nicht mehr.", tags:"#sticken #diy", likes:968, saves:120, shares:5, when:"15.11.",
-   comments:[["🫶","unur","ich bau ihn auf. irgendwann","jetzt"]]},
+   comments:[["🫶","unur","übung hab ich ja. siehe foto","jetzt"]]},
   {media:[{type:"video",src:"media/auto.mp4",poster:"media/auto.jpg"}],
    desc:"smoothie-pause.", tags:"#roadtrip", likes:711, saves:30, shares:1, when:"02.07.",
    comments:[["🫶","unur","dj-wünsche bitte schriftlich","jetzt"]]},
-  {bg:"t7", ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["handy weg.","geschenke."], cls:"low"},
+  {bg:"t7", dim:1, media:[M("bg_ende")], ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["handy weg.","geschenke."], cls:"low"},
    desc:"alles gute, marina.", tags:"#fyp", likes:1000000, saves:1, shares:0, when:"15.11.",
    comments:[["🫶","unur","dreh dich um","jetzt"]]}
 ];// Musik: Kevin MacLeod (incompetech.com), lizenziert unter CC BY 4.0
@@ -260,7 +261,7 @@ after(8, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
   song({media:K("kreta",3), ov:{lines:["kreta, juni"], cls:""},
   desc:"30 grad. sie in schwarz.", tags:"#kreta", likes:2026, saves:140, shares:6, when:"26.06.",
   comments:[["🫶","unur","ich hab geschwitzt. sie nicht","jetzt"]]},"Bossa Antigua"));
-after(6, song({bg:"t8", ov:{lines:["neues spiel.","6 wörter.","3 geschenke."], cls:"plain big"},
+after(6, song({bg:"t8", dim:1, media:[M("bg_spiel")], ov:{lines:["neues spiel.","6 wörter.","3 geschenke."], cls:"plain big"},
   link:{href:"https://claude.ai/artifact/EejowV1QmM7d8yRS8mr6Bw", label:"jetzt spielen"},
   desc:"du spielst das eh gern. heute halt meine version.", tags:"#wortspiel #rätsel", likes:777, saves:70, shares:7, when:"15.11.",
   comments:[["🫶","unur","kein tipp von mir. es gibt einen eingebauten","jetzt"]]},"Investigations"));
@@ -288,10 +289,10 @@ POSTS.forEach((p,i)=>{
   const m=p.media||[];
   const one=x=>x.type==='video'
     ?`<video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
-    :`<img class="blur" src="${x.src.replace('.jpg','_b.jpg')}" alt="" decoding="async"${i>1?' loading="lazy"':''}><img class="photo" src="${x.src}" alt="" decoding="async"${i>1?' loading="lazy"':''}>`;
+    :`<img class="blur" src="${x.src.replace('.jpg','_b.jpg')}" alt="" decoding="async"><img class="photo" src="${x.src}" alt="" decoding="async"${i>1?' loading="lazy"':''}>`;
   const media=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
   const isVid=m.some(x=>x.type==='video');
-  s.innerHTML=`<div class="bg ${p.bg||''}">${media}</div><div class="shade"></div>
+  s.innerHTML=`<div class="bg ${p.bg||''}${p.dim?' dim':''}">${media}</div><div class="shade"></div>
   ${ov(p.ov)}${ov(p.ov2)}
   ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div><div class="count">1/${m.length}</div>`:''}
   <button class="mute" aria-label="Ton an">🔇 Ton an</button>${isVid?`<div class="prog" role="slider" tabindex="0" aria-label="Video vorspulen" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><b></b></div><div class="time" hidden></div>`:''}
