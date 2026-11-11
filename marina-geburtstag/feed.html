@@ -1,0 +1,163 @@
+<title>Marinas Feed</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Inter:wght@400;600&display=swap">
+<style>
+/* Layout: ein vertikaler Feed im Kurzvideo-Stil, jede Karte bildschirmhoch, Snap-Scrolling, Aktionsspalte rechts. Bewusst nur dunkel. */
+:root{
+  --ink:#0E0F12; --fg:#F2F3F5; --muted:#A9AEB6; --silver:#C9CDD3; --gun:#4E535A; --heart:#FF4D6D;
+  --display:"Syne", "Avenir Next", "Segoe UI", sans-serif;
+  --body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--ink);color:var(--fg);font-family:var(--body);overflow:hidden}
+.top{position:fixed;inset:0 0 auto;z-index:5;display:flex;justify-content:center;gap:20px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 12px);padding-bottom:12px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  font-weight:600;font-size:15px;color:var(--muted);pointer-events:none;
+  background:linear-gradient(var(--ink),transparent)}
+.top b{color:var(--fg);border-bottom:2px solid var(--fg);padding-bottom:4px}
+.feed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain}
+.post{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 28px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bg{position:absolute;inset:0;z-index:0}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.55))}
+.stage{position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:90px 84px 190px 28px;text-align:left}
+.big{font-family:var(--display);font-weight:800;font-size:clamp(34px,9vw,64px);line-height:1.02;text-wrap:balance;letter-spacing:-.01em;max-width:14ch}
+.big small{display:block;font-family:var(--body);font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--silver);margin-bottom:14px}
+.cap{position:relative;z-index:2;max-width:calc(100% - 72px);display:grid;gap:6px}
+.user{font-weight:600}
+.cap p{margin:0;line-height:1.45;font-size:15px}
+.tags{color:var(--silver);font-size:14px}
+.music{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.music span{display:inline-block;white-space:nowrap;overflow:hidden;max-width:220px}
+.rail{position:absolute;z-index:3;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 110px);
+  display:grid;gap:18px;justify-items:center}
+.rail button{all:unset;cursor:pointer;display:grid;justify-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--fg)}
+.rail button:focus-visible{outline:2px solid var(--silver);outline-offset:4px;border-radius:8px}
+.ico{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.12);backdrop-filter:blur(6px)}
+.ico svg{width:26px;height:26px;fill:var(--fg)}
+.liked .ico svg{fill:var(--heart)}
+.avatar{width:48px;height:48px;border-radius:50%;border:2px solid var(--fg);display:grid;place-items:center;
+  font-family:var(--display);font-weight:800;background:var(--gun)}
+.burst{position:absolute;z-index:4;pointer-events:none;width:110px;height:110px;fill:var(--heart);transform:translate(-50%,-50%) scale(0);animation:pop .8s ease-out forwards}
+@keyframes pop{30%{transform:translate(-50%,-50%) scale(1.1) rotate(-8deg);opacity:1}100%{transform:translate(-50%,-90%) scale(.9);opacity:0}}
+.gift{margin-top:18px;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;border:1px solid var(--silver);
+  background:rgba(14,15,18,.55);color:var(--fg);font:600 15px var(--body);cursor:pointer}
+.gift:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.reveal{margin-top:16px;font-family:var(--display);font-size:clamp(22px,6vw,34px);font-weight:800;line-height:1.1}
+.sheet{position:fixed;z-index:9;inset:auto 0 0;max-height:60%;background:#17181C;border-radius:16px 16px 0 0;
+  padding-block:18px calc(env(safe-area-inset-bottom,0px) + 18px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  overflow-y:auto;transform:translateY(100%);transition:transform .25s ease}
+.sheet.open{transform:none}
+.sheet h3{margin:0 0 12px;text-align:center;font-size:14px;color:var(--muted)}
+.c{display:grid;grid-template-columns:36px 1fr;gap:10px;padding:10px 0;font-size:14px;line-height:1.4}
+.c .a{width:36px;height:36px;border-radius:50%;background:var(--gun);display:grid;place-items:center;font-weight:700;font-size:13px}
+.c b{display:block;color:var(--muted);font-size:12px;font-weight:600}
+.close{all:unset;cursor:pointer;display:block;margin:10px auto 0;padding:10px 18px;border-radius:999px;background:var(--gun);font-weight:600}
+.hint{position:fixed;z-index:4;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);transform:translateX(-50%);font-size:12px;color:var(--muted);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,-6px)}}
+@media (prefers-reduced-motion:reduce){.burst,.hint{animation:none}.sheet{transition:none}}
+/* Hintergründe je Post */
+.g1{background:radial-gradient(120% 80% at 70% 20%,#5B616A,#1A1C20 70%)}
+.g2{background:radial-gradient(120% 90% at 20% 10%,#3C4A5A,#0E1116 75%)}
+.g3{background:radial-gradient(110% 80% at 80% 30%,#C8923E,#3A2412 70%)}
+.g4{background:linear-gradient(160deg,#7A8592,#2A3038 55%,#15181C)}
+.g5{background:radial-gradient(120% 80% at 30% 20%,#8E5B4A,#26150F 72%)}
+.g6{background:conic-gradient(from 200deg at 60% 40%,#E6E8EB,#7C828A,#2B2E33,#A9AEB6,#E6E8EB)}
+.g7{background:radial-gradient(120% 90% at 70% 15%,#7A4E62,#1E1218 72%)}
+.g8{background:linear-gradient(180deg,#2A2D33,#0E0F12)}
+.g6 + .stage .big{color:#0E0F12;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.g6 + .stage .big small{color:#2B2E33}
+</style>
+
+<div class="top"><span>Folge ich</span><b>Für dich</b></div>
+<main class="feed" id="feed"></main>
+<div class="hint" id="hint">nach oben wischen</div>
+<section class="sheet" id="sheet" aria-hidden="true">
+  <h3 id="sheetTitle">Kommentare</h3>
+  <div id="sheetBody"></div>
+  <button class="close" id="closeSheet">Schließen</button>
+</section>
+
+<script>
+const POSTS = [
+  {bg:"g1", kicker:"15. November 2026", big:"Happy Birthday, Marina.",
+   cap:"Heute gibt es nur einen Account in deinem Feed. Wisch nach oben.", tags:"#fürdich #geburtstagskind", likes:"10,1 Tsd.",
+   comments:[["U","unur","Erster!"],["U","unur","Und für immer dein Lieblingsfollower."]]},
+  {bg:"g2", kicker:"Throwback", big:"Über 10 Jahre. Ein Feed.",
+   cap:"Du schaust jeden Tag hunderte Videos. Das hier ist das einzige, das nur für dich gemacht ist.", tags:"#throwback #wir", likes:"3.650",
+   comments:[["U","unur","Ungefähr 3.650 Tage mit dir. Ich hab nachgerechnet."]]},
+  {bg:"g3", kicker:"POV", big:"Du liest Mankell nur am Strand.",
+   cap:"Bis zum nächsten Strand ist es noch lang. Also holen wir Wallander aufs Sofa.", tags:"#wallander #krimiabend", likes:"847",
+   gift:{label:"Geschenk 1 freischalten", reveal:"Die Popcornmaschine. Heute Abend: Krimi, Decke, Beine hoch."},
+   comments:[["U","unur","Ich mach das Popcorn. Du suchst die Folge aus."]]},
+  {bg:"g4", kicker:"Der Algorithmus kennt dich", big:"Gunmetal. Silbergrau. Handgemacht.",
+   cap:"Du magst Dinge, die glänzen und die jemand mit den Händen gemacht hat. Am liebsten du selbst.", tags:"#silber #diy #handmade", likes:"2.311",
+   comments:[["U","unur","Deine Servietten sind schöner als alles im Laden."]]},
+  {bg:"g5", kicker:"Weißt du noch", big:"Erst Ton.",
+   cap:"Der Töpferkurs war ein Volltreffer. Ton war der Anfang. Jetzt kommt was, das bleibt.", tags:"#töpferkurs #levelup", likes:"1.204",
+   comments:[["U","unur","Nächster Halt: Metall."]]},
+  {bg:"g6", kicker:"Dann Silber", big:"Wachs schnitzen. In Silber gießen.",
+   cap:"Du schnitzt dein Schmuckstück aus Wachs, und daraus wird echtes Silber. Dein eigener Ring, von dir gemacht.", tags:"#wax2silver #925", likes:"5.925",
+   gift:{label:"Geschenk 2 freischalten", reveal:"Dein Wax-to-Silver-Kurs. Gunmetal-Herz, Silberring."},
+   comments:[["U","unur","Ich will das erste Foto davon sehen. Und dann deinen Post."]]},
+  {bg:"g7", kicker:"Für deine Fäden", big:"Jedes Garn hat einen Platz verdient.",
+   cap:"Die Garne aus der Barnabitengasse liegen überall. Ab heute nicht mehr.", tags:"#sticken #yukimade #ordnung", likes:"968",
+   gift:{label:"Geschenk 3 freischalten", reveal:"Dein DIY-Turm. Selbst gebaut, selbst befüllt."},
+   comments:[["U","unur","Ich halte beim Zusammenbauen die Schrauben. Versprochen."]]},
+  {bg:"g8", kicker:"Ende des Feeds", big:"Du bist durch. Ich bin noch da.",
+   cap:"Kein Algorithmus findet dich so gut wie ich. Alles Liebe zum Geburtstag. Unur", tags:"#fürimmer", likes:"∞",
+   comments:[["U","unur","Wisch nicht weiter. Dreh dich um."]]}
+];
+
+const heart='<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.3 2.4.8-1.3 2.3-2.4 4.4-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>';
+const bubble='<svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.6 1.4 4.9 3.6 6.5L5 21.5l4.1-2.1c.9.2 1.9.3 2.9.3 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg>';
+const gem='<svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9l4-6zm1.2 2L4.8 8.6h4.4L10.5 5H7.2zm6.3 0 1.3 3.6h4.4L16.8 5h-3.3zM9.6 8.6h4.8L12 5.3 9.6 8.6zM5.3 10.4 11 17.3l-2.4-6.9H5.3zm5.2 0L12 15l1.5-4.6h-3zm4.9 0-2.4 6.9 5.7-6.9h-3.3z"/></svg>';
+
+const feed=document.getElementById('feed');
+POSTS.forEach((p,i)=>{
+  const s=document.createElement('section');
+  s.className='post';s.setAttribute('aria-label',`Post ${i+1} von ${POSTS.length}`);
+  s.innerHTML=`<div class="bg ${p.bg}"></div>
+  <div class="stage"><div><div class="big"><small>${p.kicker}</small>${p.big}</div>
+  ${p.gift?`<button class="gift" id="gift${i}">${gem.replace('<svg','<svg width="18" height="18" fill="currentColor"')} ${p.gift.label}</button><div class="reveal" id="rev${i}" hidden>${p.gift.reveal}</div>`:''}</div></div>
+  <div class="rail">
+    <div class="avatar" aria-hidden="true">U</div>
+    <button class="like" id="like${i}" aria-label="Gefällt mir"><span class="ico">${heart}</span><span class="n">${p.likes}</span></button>
+    <button class="com" id="com${i}" aria-label="Kommentare"><span class="ico">${bubble}</span><span>${p.comments.length}</span></button>
+  </div>
+  <div class="cap"><span class="user">@unur</span><p>${p.cap}</p><span class="tags">${p.tags}</span>
+  <span class="music">♪ <span>Originalton · nur für Marina</span></span></div>`;
+  feed.appendChild(s);
+  const like=s.querySelector('.like');
+  like.addEventListener('click',()=>like.classList.toggle('liked'));
+  let last=0;
+  s.querySelector('.stage').addEventListener('pointerup',e=>{
+    if(e.target.closest('.gift'))return;
+    const now=Date.now();
+    if(now-last<320){like.classList.add('liked');
+      const b=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      b.setAttribute('viewBox','0 0 24 24');b.classList.add('burst');b.innerHTML=heart.replace(/<\/?svg[^>]*>/g,'');
+      const r=s.getBoundingClientRect();b.style.left=(e.clientX-r.left)+'px';b.style.top=(e.clientY-r.top)+'px';
+      s.appendChild(b);setTimeout(()=>b.remove(),900);}
+    last=now;
+  });
+  s.querySelector('.com').addEventListener('click',()=>openSheet(p));
+  if(p.gift){const g=s.querySelector('.gift'),r=s.querySelector('.reveal');
+    g.addEventListener('click',()=>{g.hidden=true;r.hidden=false;like.classList.add('liked');});}
+});
+
+const sheet=document.getElementById('sheet');
+function openSheet(p){
+  document.getElementById('sheetTitle').textContent=`${p.comments.length} Kommentar${p.comments.length>1?'e':''}`;
+  document.getElementById('sheetBody').innerHTML=p.comments.map(c=>`<div class="c"><span class="a">${c[0]}</span><div><b>@${c[1]}</b>${c[2]}</div></div>`).join('');
+  sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');
+}
+document.getElementById('closeSheet').addEventListener('click',()=>{sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');});
+feed.addEventListener('scroll',()=>{document.getElementById('hint').hidden=feed.scrollTop>40;},{passive:true});
+</script>
