@@ -1,221 +1,315 @@
 <title>Marinas Feed</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Inter:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;600;700;800&display=swap">
 <style>
-/* Layout: ein vertikaler Feed im Kurzvideo-Stil, jede Karte bildschirmhoch, Snap-Scrolling, Aktionsspalte rechts. Bewusst nur dunkel. */
+/* Layout: Kurzvideo-App. Bildschirmhohe Posts mit Snap, Aktionsspalte rechts, Caption unten links, Navigationsleiste unten. Bewusst nur dunkel. */
 :root{
-  --ink:#0E0F12; --fg:#F2F3F5; --muted:#A9AEB6; --silver:#C9CDD3; --gun:#4E535A; --heart:#FF4D6D;
-  --display:"Syne", "Avenir Next", "Segoe UI", sans-serif;
-  --body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ink:#000; --fg:#fff; --muted:rgba(255,255,255,.75); --dim:rgba(255,255,255,.55);
+  --heart:#FE2C55; --save:#FACE15; --cyan:#25F4EE; --sheet:#fff; --sheet-fg:#161823; --sheet-muted:#8A8B91;
+  --tt:"TikTok Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --nav:52px;
   color-scheme:dark;
 }
 html,body{height:100%}
-body{background:var(--ink);color:var(--fg);font-family:var(--body);overflow:hidden}
-.top{position:fixed;inset:0 0 auto;z-index:5;display:flex;justify-content:center;gap:20px;
-  padding-top:calc(env(safe-area-inset-top,0px) + 12px);padding-bottom:12px;
+[hidden]{display:none!important}
+body{background:var(--ink);color:var(--fg);font-family:var(--tt);overflow:hidden;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+.top{position:fixed;inset:0 0 auto;z-index:6;display:flex;justify-content:center;align-items:center;gap:18px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 10px);padding-bottom:10px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  font-weight:600;font-size:15px;color:var(--muted);pointer-events:none;
-  background:linear-gradient(var(--ink),transparent)}
-.top b{color:var(--fg);border-bottom:2px solid var(--fg);padding-bottom:4px}
-.feed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain}
-.post{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 28px);
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.bg{position:absolute;inset:0;z-index:0}
-.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.55));pointer-events:none}
+  font-weight:600;font-size:16px;color:var(--dim);pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.top b{color:var(--fg);position:relative;font-weight:700}
+.top b::after{content:"";position:absolute;left:50%;bottom:-7px;width:28px;height:3px;border-radius:2px;background:var(--fg);transform:translateX(-50%)}
+.top .live{position:absolute;left:max(16px,env(safe-area-inset-left,0px));font-size:12px;font-weight:700;color:var(--fg)}
+.feed{position:fixed;inset:0 0 calc(var(--nav) + env(safe-area-inset-bottom,0px));overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
+.feed::-webkit-scrollbar{display:none}
+.post{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:#111}
+.bg{position:absolute;inset:0}
 .bg video,.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.bg img.blur{filter:blur(22px) brightness(.65);transform:scale(1.15)}
+.bg img.blur{filter:blur(22px) brightness(.6);transform:scale(1.15)}
 .bg img.wide{object-fit:contain}
+.shade{position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.6));pointer-events:none}
 .slides{position:absolute;inset:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .slides::-webkit-scrollbar{display:none}
 .slides > *{position:relative;flex:0 0 100%;height:100%;scroll-snap-align:start}
-.dots{position:absolute;z-index:3;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 52px);display:flex;gap:6px}
-.dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4)}
+.dots{position:absolute;z-index:3;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:4px}
+.dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4)}
 .dots i.on{background:var(--fg)}
-.sound{position:absolute;z-index:3;left:max(16px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 52px);
-  all:unset;cursor:pointer;padding:8px 12px;border-radius:999px;background:rgba(14,15,18,.55);font:600 13px var(--body);color:var(--fg)}
-.has-media .stage{place-items:start;padding-top:96px}
-.has-media .big{font-size:clamp(26px,7vw,44px);text-shadow:0 2px 12px rgba(0,0,0,.6)}
-.stage{position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:90px 84px 190px 28px;text-align:left}
-.big{font-family:var(--display);font-weight:800;font-size:clamp(34px,9vw,64px);line-height:1.02;text-wrap:balance;letter-spacing:-.01em;max-width:14ch}
-.big small{display:block;font-family:var(--body);font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--silver);margin-bottom:14px}
-.cap{position:relative;z-index:2;max-width:calc(100% - 72px);display:grid;gap:6px}
-.user{font-weight:600}
-.cap p{margin:0;line-height:1.45;font-size:15px}
-.tags{color:var(--silver);font-size:14px}
-.music{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
-.music span{display:inline-block;white-space:nowrap;overflow:hidden;max-width:220px}
-.rail{position:absolute;z-index:3;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 110px);
-  display:grid;gap:18px;justify-items:center}
-.rail button{all:unset;cursor:pointer;display:grid;justify-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--fg)}
-.rail button:focus-visible{outline:2px solid var(--silver);outline-offset:4px;border-radius:8px}
-.ico{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.12);backdrop-filter:blur(6px)}
-.ico svg{width:26px;height:26px;fill:var(--fg)}
-.liked .ico svg{fill:var(--heart)}
-.avatar{width:48px;height:48px;border-radius:50%;border:2px solid var(--fg);display:grid;place-items:center;
-  font-family:var(--display);font-weight:800;background:var(--gun)}
-.burst{position:absolute;z-index:4;pointer-events:none;width:110px;height:110px;fill:var(--heart);transform:translate(-50%,-50%) scale(0);animation:pop .8s ease-out forwards}
-@keyframes pop{30%{transform:translate(-50%,-50%) scale(1.1) rotate(-8deg);opacity:1}100%{transform:translate(-50%,-90%) scale(.9);opacity:0}}
-.gift{margin-top:18px;display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:999px;border:1px solid var(--silver);
-  background:rgba(14,15,18,.55);color:var(--fg);font:600 15px var(--body);cursor:pointer}
-.gift:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
-.reveal{margin-top:16px;font-family:var(--display);font-size:clamp(22px,6vw,34px);font-weight:800;line-height:1.1}
-.sheet{position:fixed;z-index:9;inset:auto 0 0;max-height:60%;background:#17181C;border-radius:16px 16px 0 0;
-  padding-block:18px calc(env(safe-area-inset-bottom,0px) + 18px);
+.count{position:absolute;z-index:3;right:max(14px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 52px);
+  padding:3px 9px;border-radius:999px;background:rgba(0,0,0,.45);font-size:12px;font-weight:600}
+/* Textpost-Hintergruende wie im Foto-Modus */
+.t1{background:linear-gradient(160deg,#3A3F47,#121316)}
+.t2{background:linear-gradient(200deg,#C7924A,#3B2511)}
+.t3{background:linear-gradient(160deg,#9AA3AE,#3A4049 60%,#17191D)}
+.t4{background:linear-gradient(170deg,#9B6A55,#2B1810)}
+.t5{background:linear-gradient(180deg,#E9EBEE,#8D939B)}
+.t6{background:linear-gradient(170deg,#7D4E67,#1F121A)}
+.t7{background:#111}
+/* TikTok-Textboxen */
+.ov{position:absolute;z-index:2;left:max(16px,env(safe-area-inset-left,0px));right:76px;top:30%;display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none;text-align:center}
+.ov.low{top:auto;bottom:38%}
+.ov span{font-weight:700;font-size:clamp(19px,5.4vw,26px);line-height:1.25;padding:3px 10px;border-radius:7px;background:var(--fg);color:#000;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ov.plain span{background:none;color:var(--fg);text-shadow:0 0 3px #000,0 0 3px #000,0 1px 4px rgba(0,0,0,.8)}
+.ov.big span{font-size:clamp(26px,8vw,40px);font-weight:800}
+.ov.dark span{background:#000;color:var(--fg)}
+/* Caption */
+.cap{position:absolute;z-index:3;left:max(12px,env(safe-area-inset-left,0px));right:84px;bottom:22px;display:grid;gap:5px;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.user{font-weight:700;font-size:16px;display:flex;align-items:center;gap:6px}
+.user em{font-style:normal;font-weight:400;font-size:13px;color:var(--muted)}
+.desc{font-size:15px;line-height:1.35;margin:0}
+.desc.clip{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.desc b{font-weight:700}
+.more{all:unset;cursor:pointer;font-weight:700;font-size:14px;color:var(--fg)}
+.music{display:flex;align-items:center;gap:6px;font-size:14px;overflow:hidden;max-width:230px}
+.music .track{white-space:nowrap;animation:marq 9s linear infinite}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* Aktionsspalte */
+.rail{position:absolute;z-index:4;right:max(8px,env(safe-area-inset-right,0px));bottom:16px;display:grid;gap:14px;justify-items:center;width:56px}
+.rail button{all:unset;cursor:pointer;display:grid;justify-items:center;gap:2px;font-size:12px;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.rail button:focus-visible,.gift:focus-visible,.more:focus-visible,.navb:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+.rail svg{width:36px;height:36px;fill:var(--fg);filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));transition:transform .15s}
+.rail .liked svg{fill:var(--heart)}
+.rail .saved svg{fill:var(--save)}
+.rail button:active svg{transform:scale(.85)}
+.av{position:relative;width:48px;height:48px;margin-bottom:10px}
+.av .pic{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--fg);background:url("media/p025.jpg") center 20%/cover,#555}
+.av .plus{all:unset;position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--heart);display:grid;place-items:center;font-weight:800;font-size:15px;line-height:1;cursor:pointer}
+.av .plus.done{background:var(--fg);color:var(--heart)}
+.disc{width:44px;height:44px;border-radius:50%;margin-top:6px;background:radial-gradient(circle,#222 30%,#111 31%,#2b2b2b 60%,#111 100%);display:grid;place-items:center;animation:spin 5s linear infinite}
+.disc i{width:22px;height:22px;border-radius:50%;background:url("media/p045.jpg") center/cover,#555}
+@keyframes spin{to{transform:rotate(360deg)}}
+.burst{position:absolute;z-index:5;pointer-events:none;width:96px;height:96px;fill:var(--heart);transform:translate(-50%,-50%) scale(0);animation:pop .8s ease-out forwards}
+@keyframes pop{25%{transform:translate(-50%,-50%) scale(1.15) rotate(var(--r,-12deg));opacity:1}100%{transform:translate(-50%,-110%) scale(1.3);opacity:0}}
+/* Video */
+.prog{position:absolute;z-index:4;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.2)}
+.prog i{display:block;height:100%;width:0;background:var(--fg)}
+.paused{position:absolute;z-index:3;left:50%;top:50%;width:64px;height:64px;transform:translate(-50%,-50%);fill:rgba(255,255,255,.8);pointer-events:none}
+.mute{all:unset;cursor:pointer;position:absolute;z-index:4;left:max(12px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 52px);
+  display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(0,0,0,.45);font-size:13px;font-weight:600}
+/* Geschenk */
+.gift{position:absolute;z-index:4;left:50%;top:58%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;white-space:nowrap;
+  padding:12px 18px;border-radius:6px;border:0;background:var(--heart);color:var(--fg);font:700 15px var(--tt);cursor:pointer;box-shadow:0 6px 20px rgba(254,44,85,.35)}
+.gift svg{width:18px;height:18px;fill:currentColor}
+.unlocked{position:absolute;z-index:4;left:max(16px,env(safe-area-inset-left,0px));right:76px;top:56%;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.unlocked span{font-weight:800;font-size:clamp(18px,5vw,24px);padding:3px 10px;border-radius:7px;background:var(--heart);color:var(--fg)}
+.unlocked small{font-size:13px;color:var(--muted);text-shadow:0 1px 2px #000}
+/* Navigationsleiste */
+.nav{position:fixed;z-index:6;inset:auto 0 0;height:var(--nav);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:content-box;background:#000;border-top:1px solid #1f1f1f;
+  display:grid;grid-template-columns:repeat(5,1fr);align-items:center;
+  padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.navb{all:unset;cursor:pointer;display:grid;justify-items:center;gap:2px;font-size:10px;color:var(--dim)}
+.navb.on{color:var(--fg)}
+.navb svg{width:24px;height:24px;fill:currentColor}
+.add{width:44px;height:28px;border-radius:8px;background:var(--fg);position:relative;justify-self:center;box-shadow:-3px 0 0 var(--cyan),3px 0 0 var(--heart);display:grid;place-items:center;color:#000;font-weight:800;font-size:20px;line-height:1}
+/* Kommentare */
+.sheet{position:fixed;z-index:9;inset:auto 0 0;max-height:62%;background:var(--sheet);color:var(--sheet-fg);border-radius:12px 12px 0 0;
+  padding-block:14px calc(env(safe-area-inset-bottom,0px) + 14px);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  overflow-y:auto;transform:translateY(100%);transition:transform .25s ease}
+  overflow-y:auto;transform:translateY(105%);transition:transform .25s ease}
 .sheet.open{transform:none}
-.sheet h3{margin:0 0 12px;text-align:center;font-size:14px;color:var(--muted)}
-.c{display:grid;grid-template-columns:36px 1fr;gap:10px;padding:10px 0;font-size:14px;line-height:1.4}
-.c .a{width:36px;height:36px;border-radius:50%;background:var(--gun);display:grid;place-items:center;font-weight:700;font-size:13px}
-.c b{display:block;color:var(--muted);font-size:12px;font-weight:600}
-.close{all:unset;cursor:pointer;display:block;margin:10px auto 0;padding:10px 18px;border-radius:999px;background:var(--gun);font-weight:600}
-.hint{position:fixed;z-index:4;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);transform:translateX(-50%);font-size:12px;color:var(--muted);animation:bob 1.6s ease-in-out infinite}
-@keyframes bob{50%{transform:translate(-50%,-6px)}}
-@media (prefers-reduced-motion:reduce){.burst,.hint{animation:none}.sheet{transition:none}}
-/* Hintergründe je Post */
-.g1{background:radial-gradient(120% 80% at 70% 20%,#5B616A,#1A1C20 70%)}
-.g2{background:radial-gradient(120% 90% at 20% 10%,#3C4A5A,#0E1116 75%)}
-.g3{background:radial-gradient(110% 80% at 80% 30%,#C8923E,#3A2412 70%)}
-.g4{background:linear-gradient(160deg,#7A8592,#2A3038 55%,#15181C)}
-.g5{background:radial-gradient(120% 80% at 30% 20%,#8E5B4A,#26150F 72%)}
-.g6{background:conic-gradient(from 200deg at 60% 40%,#E6E8EB,#7C828A,#2B2E33,#A9AEB6,#E6E8EB)}
-.g7{background:radial-gradient(120% 90% at 70% 15%,#7A4E62,#1E1218 72%)}
-.g8{background:linear-gradient(180deg,#2A2D33,#0E0F12)}
-.g6 + .stage .big{color:#0E0F12;text-shadow:0 1px 0 rgba(255,255,255,.4)}
-.g6 + .stage .big small{color:#2B2E33}
+.sheet h3{margin:0 0 10px;text-align:center;font-size:13px;font-weight:600}
+.c{display:grid;grid-template-columns:34px 1fr auto;gap:10px;padding:8px 0;font-size:14px;line-height:1.35}
+.c .a{width:34px;height:34px;border-radius:50%;background:#E3E3E6;display:grid;place-items:center;font-size:16px}
+.c b{display:block;color:var(--sheet-muted);font-size:13px;font-weight:600}
+.c small{display:block;color:var(--sheet-muted);font-size:12px;margin-top:3px}
+.c .h{color:var(--sheet-muted);font-size:12px;text-align:center}
+.close{all:unset;cursor:pointer;display:block;margin:8px auto 0;padding:9px 18px;border-radius:4px;background:#F1F1F2;font-weight:600;font-size:14px}
+.toast{position:fixed;z-index:11;left:50%;top:45%;transform:translate(-50%,-50%);padding:12px 16px;border-radius:8px;background:rgba(0,0,0,.8);font-size:14px;font-weight:600;text-align:center;max-width:80%}
+.hint{position:fixed;z-index:5;left:50%;bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px) + 150px);transform:translateX(-50%);display:grid;justify-items:center;gap:6px;
+  font-weight:700;font-size:14px;text-shadow:0 1px 3px #000;pointer-events:none;animation:bob 1.4s ease-in-out infinite}
+.hint svg{width:34px;height:34px;fill:var(--fg)}
+@keyframes bob{50%{transform:translate(-50%,-10px)}}
+@media (prefers-reduced-motion:reduce){.burst,.hint,.disc,.music .track{animation:none}.sheet{transition:none}}
 </style>
 
-<div class="top"><span>Folge ich</span><b>Für dich</b></div>
+<div class="top"><span class="live">LIVE</span><span>Folge ich</span><b>Für dich</b></div>
 <main class="feed" id="feed"></main>
-<div class="hint" id="hint">nach oben wischen</div>
+<div class="hint" id="hint"><svg viewBox="0 0 24 24"><path d="M12 4l-7 7h4v9h6v-9h4z"/></svg>nach oben wischen</div>
+<nav class="nav" aria-label="Navigation">
+  <button class="navb on" id="nav-home"><svg viewBox="0 0 24 24"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>Startseite</button>
+  <button class="navb" id="nav-friends"><svg viewBox="0 0 24 24"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm7 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM1 20c0-3.3 3.6-6 8-6s8 2.7 8 6zm16.5 0c0-2-1-3.8-2.7-5 3.8-.4 7.2 1.8 7.2 5z"/></svg>Freunde</button>
+  <button class="navb" id="nav-add" aria-label="Erstellen"><span class="add">+</span></button>
+  <button class="navb" id="nav-inbox"><svg viewBox="0 0 24 24"><path d="M3 5h18v11h-6l-3 3-3-3H3z"/></svg>Postfach</button>
+  <button class="navb" id="nav-me"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5 0-9 2.5-9 6v1h18v-1c0-3.5-4-6-9-6z"/></svg>Profil</button>
+</nav>
 <section class="sheet" id="sheet" aria-hidden="true">
   <h3 id="sheetTitle">Kommentare</h3>
   <div id="sheetBody"></div>
   <button class="close" id="closeSheet">Schließen</button>
 </section>
+<div class="toast" id="toast" hidden></div>
 
 <script>
+const M = x => ({type:"image", src:`media/${x}.jpg`});
 const POSTS = [
-  {bg:"g1", media:[{type:"image",src:"media/p045.jpg",alt:"Marina und Unur am Strand"}], kicker:"15. November 2026", big:"Happy Birthday, Marina.",
-   cap:"Heute gibt es nur einen Account in deinem Feed. Wisch nach oben.", tags:"#fürdich #geburtstagskind", likes:"10,1 Tsd.",
-   comments:[["U","unur","Erster!"],["U","unur","Und für immer dein Lieblingsfollower."]]},
-  {bg:"g2", kicker:"Throwback", big:"Über 10 Jahre. Ein Feed.",
-   cap:"Du schaust jeden Tag hunderte Videos. Das hier ist das einzige, das nur für dich gemacht ist.", tags:"#throwback #wir", likes:"3.650",
-   comments:[["U","unur","Ungefähr 3.650 Tage mit dir. Ich hab nachgerechnet."]]},
-  {bg:"g2", media:[{type:"video",src:"media/jahr.mp4",poster:"media/jahr.jpg"}], kicker:"Ein Jahr in 30 Sekunden", big:"",
-   cap:"November 2025 bis November 2026. Mexiko, Kreta, unser Sofa und alles dazwischen.", tags:"#einjahr #recap #marinasjahr", likes:"365",
-   comments:[["U","unur","Jede Sekunde davon würde ich nochmal machen."]]},
-  {bg:"g1", media:["p002","p006","p010","p015","p016","p022","p025","p027","p031","p034","p038","p042","p045"].map(x=>({type:"image",src:`media/${x}.jpg`})),
-   kicker:"Photo dump", big:"",
-   cap:"Unser Jahr in 13 Bildern. Wisch zur Seite.", tags:"#photodump #mexiko #kreta #wir", likes:"1.313",
-   comments:[["U","unur","Bild 5: Snack-Model des Jahres."],["U","unur","Das letzte ist mein Lieblingsbild."]]},
-  {bg:"g3", media:[{type:"video",src:"media/v018.mp4",poster:"media/v018.jpg"}], kicker:"POV: Dezember in Mexiko", big:"",
-   cap:"Du im türkisen Wasser. Ich am Rand mit der Kamera, wie immer.", tags:"#mexiko #dezember #urlaub", likes:"2.512",
-   comments:[["U","unur","Nächstes Mal spring ich mit rein."]]},
-  {bg:"g8", media:[{type:"image",src:"media/p040.jpg"},{type:"image",src:"media/p022.jpg"}], kicker:"Ich jeden Abend um 21 Uhr", big:"Beine hoch. Decke drüber. Noch ein Video.",
-   cap:"Trend: „Me every night at 9 PM“. Heute läuft um 21 Uhr nur dein Feed.", tags:"#meeverynightat9pm #couchmode", likes:"2.100",
-   comments:[["U","unur","Ich bring die Snacks. Siehe nächstes Video."]]},
-  {bg:"g3", kicker:"POV", big:"Du liest Mankell nur am Strand.",
-   cap:"Bis zum nächsten Strand ist es noch lang. Also holen wir Wallander aufs Sofa.", tags:"#wallander #krimiabend", likes:"847",
-   gift:{label:"Geschenk 1 freischalten", reveal:"Die Popcornmaschine. Heute Abend: Krimi, Decke, Beine hoch."},
-   comments:[["U","unur","Ich mach das Popcorn. Du suchst die Folge aus."]]},
-  {bg:"g4", kicker:"Der Algorithmus kennt dich", big:"Gunmetal. Silbergrau. Handgemacht.",
-   cap:"Du magst Dinge, die glänzen und die jemand mit den Händen gemacht hat. Am liebsten du selbst.", tags:"#silber #diy #handmade", likes:"2.311",
-   comments:[["U","unur","Deine Servietten sind schöner als alles im Laden."]]},
-  {bg:"g5", kicker:"Weißt du noch", big:"Erst Ton.",
-   cap:"Der Töpferkurs war ein Volltreffer. Ton war der Anfang. Jetzt kommt was, das bleibt.", tags:"#töpferkurs #levelup", likes:"1.204",
-   comments:[["U","unur","Nächster Halt: Metall."]]},
-  {bg:"g6", kicker:"Dann Silber", big:"Wachs schnitzen. In Silber gießen.",
-   cap:"Du schnitzt dein Schmuckstück aus Wachs, und daraus wird echtes Silber. Dein eigener Ring, von dir gemacht.", tags:"#wax2silver #925", likes:"5.925",
-   gift:{label:"Geschenk 2 freischalten", reveal:"Dein Wax-to-Silver-Kurs. Gunmetal-Herz, Silberring."},
-   comments:[["U","unur","Ich will das erste Foto davon sehen. Und dann deinen Post."]]},
-  {bg:"g7", kicker:"Für deine Fäden", big:"Jedes Garn hat einen Platz verdient.",
-   cap:"Die Garne aus der Barnabitengasse liegen überall. Ab heute nicht mehr.", tags:"#sticken #yukimade #ordnung", likes:"968",
-   gift:{label:"Geschenk 3 freischalten", reveal:"Dein DIY-Turm. Selbst gebaut, selbst befüllt."},
-   comments:[["U","unur","Ich halte beim Zusammenbauen die Schrauben. Versprochen."]]},
-  {bg:"g2", media:[{type:"video",src:"media/v048.mp4",poster:"media/v048.jpg"}], kicker:"Wir zwei, unterwegs", big:"",
-   cap:"7. November 2026. Schiebedach auf, du schaust raus, ich schau zu dir.", tags:"#roadtrip #wir", likes:"711",
-   comments:[["U","unur","Beifahrerin des Jahres."]]},
-  {bg:"g8", kicker:"Ende des Feeds", big:"Du bist durch. Ich bin noch da.",
-   cap:"Kein Algorithmus findet dich so gut wie ich. Alles Liebe zum Geburtstag. Unur", tags:"#fürimmer", likes:"∞",
-   comments:[["U","unur","Wisch nicht weiter. Dreh dich um."]]}
+  {media:[M("p045")], ov:{lines:["es ist ihr geburtstag 🎂"], cls:"big"},
+   desc:"heute gibt's nur einen account auf deiner fyp. wisch hoch ⬆️", tags:"#fyp #geburtstagskind #15november", likes:1511, saves:211, shares:15, when:"15.11.",
+   comments:[["🫶","unur","erster!! und für immer dein lieblingsfollower","jetzt"],["🍿","die_popcornmaschine","bin schon aufgeregt","2 Min."]]},
+  {media:[{type:"video",src:"media/jahr.mp4",poster:"media/jahr.jpg"}],
+   desc:"nov 2025 → nov 2026. mexiko, kreta, unser sofa und alles dazwischen 🫶", tags:"#recap #marinasjahr #einjahr", likes:3650, saves:365, shares:12, when:"15.11.",
+   comments:[["🫶","unur","jede sekunde davon würd ich nochmal machen","jetzt"],["🛋️","das_sofa","ich war auch dabei","5 Min."]]},
+  {media:["p002","p006","p010","p015","p016","p022","p025","p027","p031","p034","p038","p042","p045"].map(M), ov:{lines:["photo dump: unser jahr 📸"], cls:"low"},
+   desc:"13 bilder, 0 schlechte. wisch zur seite ➡️", tags:"#photodump #mexiko #kreta #wir", likes:1313, saves:88, shares:4, when:"15.11.",
+   comments:[["🫶","unur","bild 5: snack-model des jahres","jetzt"],["🫶","unur","das letzte ist mein lieblingsbild","jetzt"]]},
+  {media:[{type:"video",src:"media/v018.mp4",poster:"media/v018.jpg"}],
+   desc:"du im türkisen wasser, ich am rand mit der kamera. wie immer 🙃", tags:"#mexiko #pov #dezember", likes:2512, saves:120, shares:9, when:"12.12.2025",
+   comments:[["🫶","unur","nächstes mal spring ich mit rein","jetzt"]]},
+  {media:[M("p040"),M("p022")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
+   desc:"beine hoch, decke drüber, noch ein video. heute läuft um 21 uhr nur dein feed 🛋️", tags:"#meeverynightat9pm #couchmode", likes:2100, saves:140, shares:21, when:"15.11.",
+   comments:[["🫶","unur","ich bring die snacks. siehe nächstes video","jetzt"],["🛋️","das_sofa","21 uhr. ich wart auf dich","1 Std."]]},
+  {bg:"t1", ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
+   desc:"ich: weiß genau, welchen krimi du heute schauen willst, bevor du's sagst 🔎", tags:"#tellmewithouttellingme #10jahre", likes:3653, saves:300, shares:10, when:"15.11.",
+   comments:[["🫶","unur","ungefähr 3.650 tage. ich hab nachgerechnet","jetzt"]]},
+  {bg:"t2", ov:{lines:["pov: du liest mankell","nur am strand 🏖️"], cls:""},
+   gift:{label:"Geschenk 1 freischalten", title:"die popcornmaschine 🍿", note:"bis zum nächsten strand holen wir wallander aufs sofa"},
+   desc:"bis zum nächsten strand ist es noch lang. also: krimiabend zuhause 🍿🔎", tags:"#wallander #krimiabend #booktok", likes:847, saves:66, shares:3, when:"15.11.",
+   comments:[["🫶","unur","ich mach das popcorn, du suchst die folge aus","jetzt"],["🍿","die_popcornmaschine","endlich ein job","3 Min."]]},
+  {bg:"t3", ov:{lines:["der algorithmus sagt, du magst:","gunmetal ✔️","silbergrau ✔️","handgemacht ✔️"], cls:"plain big"},
+   desc:"silbergrau-core. du magst dinge, die glänzen und die jemand mit den händen gemacht hat ✨", tags:"#gunmetal #handmade #diy #aesthetic", likes:2311, saves:190, shares:7, when:"15.11.",
+   comments:[["🫶","unur","deine servietten sind schöner als alles im laden","jetzt"]]},
+  {bg:"t4", ov:{lines:["weißt du noch? 🏺","der töpferkurs"], cls:""},
+   desc:"ton war der anfang. jetzt kommt was, das bleibt.", tags:"#töpferkurs #levelup #throwback", likes:1204, saves:44, shares:2, when:"15.11.",
+   comments:[["🫶","unur","nächster halt: metall","jetzt"]]},
+  {bg:"t5", ov:{lines:["wachs schnitzen.","in silber gießen.","dein eigener ring."], cls:"dark big"},
+   gift:{label:"Geschenk 2 freischalten", title:"dein wax2silver-kurs 💍", note:"du schnitzt in wachs, daraus wird echtes 925er silber"},
+   desc:"von dir gemacht, für immer an dir.", tags:"#wax2silver #schmuck #925silber", likes:5925, saves:925, shares:25, when:"15.11.",
+   comments:[["🫶","unur","ich will das erste foto davon sehen. und dann deinen post","jetzt"],["💍","silberring_in_spe","bald 👀","10 Min."]]},
+  {bg:"t6", ov:{lines:["wenn deine garne endlich","ein zuhause haben 🧵"], cls:""},
+   gift:{label:"Geschenk 3 freischalten", title:"dein diy-turm 🧵", note:"selbst gebaut, selbst befüllt"},
+   desc:"die garne aus der barnabitengasse liegen überall. ab heute nicht mehr.", tags:"#sticken #yukimade #organization #diy", likes:968, saves:120, shares:5, when:"15.11.",
+   comments:[["🫶","unur","ich halt beim zusammenbauen die schrauben. versprochen","jetzt"],["🗼","dein_diy_turm","ich brauch nur noch garn","8 Min."]]},
+  {media:[{type:"video",src:"media/v048.mp4",poster:"media/v048.jpg"}],
+   desc:"schiebedach auf, du schaust raus, ich schau zu dir.", tags:"#roadtrip #wir #beifahrerin", likes:711, saves:30, shares:1, when:"07.11.",
+   comments:[["🫶","unur","beifahrerin des jahres","jetzt"]]},
+  {bg:"t7", ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["nein, hast du nicht.","ich bin noch da ❤️"], cls:"low"},
+   desc:"kein algorithmus kennt dich so gut wie ich. alles liebe zum geburtstag, marina.", tags:"#fürimmer #fyp", likes:999999, saves:1, shares:0, when:"15.11.",
+   comments:[["🫶","unur","wisch nicht weiter. dreh dich um 🫶","jetzt"]]}
 ];
 
-const heart='<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.3 2.4.8-1.3 2.3-2.4 4.4-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>';
-const bubble='<svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.6 1.4 4.9 3.6 6.5L5 21.5l4.1-2.1c.9.2 1.9.3 2.9.3 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg>';
-const gem='<svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9l4-6zm1.2 2L4.8 8.6h4.4L10.5 5H7.2zm6.3 0 1.3 3.6h4.4L16.8 5h-3.3zM9.6 8.6h4.8L12 5.3 9.6 8.6zM5.3 10.4 11 17.3l-2.4-6.9H5.3zm5.2 0L12 15l1.5-4.6h-3zm4.9 0-2.4 6.9 5.7-6.9h-3.3z"/></svg>';
+const IC={
+ heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.3 2.4.8-1.3 2.3-2.4 4.4-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>',
+ com:'<svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.6 1.4 4.9 3.6 6.5L5 21.5l4.1-2.1c.9.2 1.9.3 2.9.3 5.5 0 10-3.8 10-8.5S17.5 3 12 3zM7.5 12.8a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6zm4.5 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6zm4.5 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6z"/></svg>',
+ save:'<svg viewBox="0 0 24 24"><path d="M6 2.5h12a1 1 0 0 1 1 1V22l-7-4.5L5 22V3.5a1 1 0 0 1 1-1z"/></svg>',
+ share:'<svg viewBox="0 0 24 24"><path d="M13 4v4.2C6.8 9 3.5 13.4 3 20c2.3-3.4 5.6-5.2 10-5.2V19l8-7.5z"/></svg>',
+ gift:'<svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.4 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h18V8a1 1 0 0 0-1-1zM9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v7a1 1 0 0 0 1 1h6v-8zm9 8h6a1 1 0 0 0 1-1v-7h-7z"/></svg>',
+ play:'<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>',
+ note:'<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M9 3v11.3A3.5 3.5 0 1 0 11 17V7h6V3z"/></svg>'
+};
+const fmt=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' Mio.':n>=1e4?(n/1e3).toFixed(1).replace('.',',')+' Tsd.':n.toLocaleString('de-AT');
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const ov=o=>o?`<div class="ov ${o.cls||''}">${o.lines.map(l=>`<span>${esc(l)}</span>`).join('')}</div>`:'';
 
 const feed=document.getElementById('feed');
 POSTS.forEach((p,i)=>{
   const s=document.createElement('section');
-  s.className='post'+(p.media?' has-media':'');s.setAttribute('aria-label',`Post ${i+1} von ${POSTS.length}`);
+  s.className='post';s.setAttribute('aria-label',`Video ${i+1} von ${POSTS.length}`);
   const m=p.media||[];
   const one=x=>x.type==='video'
     ?`<video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
-    :`<img class="blur" src="${x.src}" alt=""><img class="photo" src="${x.src}" alt="${x.alt||''}">`;
-  const mediaHtml=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
-  s.innerHTML=`<div class="bg ${p.bg}">${mediaHtml}</div>
-  ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div>`:''}
-  ${m.some(x=>x.type==='video')?`<button class="sound" aria-label="Ton an">Ton an</button>`:''}
-  <div class="stage"><div><div class="big"><small>${p.kicker}</small>${p.big}</div>
-  ${p.gift?`<button class="gift" id="gift${i}">${gem.replace('<svg','<svg width="18" height="18" fill="currentColor"')} ${p.gift.label}</button><div class="reveal" id="rev${i}" hidden>${p.gift.reveal}</div>`:''}</div></div>
+    :`<img class="blur" src="${x.src}" alt=""><img class="photo" src="${x.src}" alt="">`;
+  const media=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
+  const isVid=m.some(x=>x.type==='video');
+  s.innerHTML=`<div class="bg ${p.bg||''}">${media}</div><div class="shade"></div>
+  ${ov(p.ov)}${ov(p.ov2)}
+  ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div><div class="count">1/${m.length}</div>`:''}
+  ${isVid?`<button class="mute" aria-label="Ton an">🔇 Ton an</button><div class="prog"><i></i></div>`:''}
+  ${p.gift?`<button class="gift">${IC.gift}${p.gift.label}</button><div class="unlocked" hidden><span>${esc(p.gift.title)}</span><small>${esc(p.gift.note)}</small></div>`:''}
   <div class="rail">
-    <div class="avatar" aria-hidden="true">U</div>
-    <button class="like" id="like${i}" aria-label="Gefällt mir"><span class="ico">${heart}</span><span class="n">${p.likes}</span></button>
-    <button class="com" id="com${i}" aria-label="Kommentare"><span class="ico">${bubble}</span><span>${p.comments.length}</span></button>
+    <div class="av"><div class="pic" role="img" aria-label="unur"></div><button class="plus" aria-label="Folgen">+</button></div>
+    <button class="like" aria-label="Gefällt mir">${IC.heart}<span class="n">${fmt(p.likes)}</span></button>
+    <button class="com" aria-label="Kommentare">${IC.com}<span>${p.comments.length}</span></button>
+    <button class="save" aria-label="Speichern">${IC.save}<span class="n">${fmt(p.saves)}</span></button>
+    <button class="share" aria-label="Teilen">${IC.share}<span>${fmt(p.shares)}</span></button>
+    <div class="disc" aria-hidden="true"><i></i></div>
   </div>
-  <div class="cap"><span class="user">@unur</span><p>${p.cap}</p><span class="tags">${p.tags}</span>
-  <span class="music">♪ <span>Originalton · nur für Marina</span></span></div>`;
+  <div class="cap">
+    <span class="user">unur <em>· ${p.when}</em></span>
+    <p class="desc clip">${esc(p.desc)} <b>${esc(p.tags)}</b></p>
+    <button class="more">mehr</button>
+    <span class="music">${IC.note}<span style="overflow:hidden"><span class="track">Originalton – unur · nur für marina &nbsp;&nbsp;&nbsp; Originalton – unur · nur für marina &nbsp;&nbsp;&nbsp;</span></span></span>
+  </div>`;
   feed.appendChild(s);
-  const like=s.querySelector('.like');
-  like.addEventListener('click',()=>like.classList.toggle('liked'));
-  let last=0;
-  s.querySelector('.stage').addEventListener('pointerup',e=>{
-    if(e.target.closest('.gift'))return;
+
+  const like=s.querySelector('.like'),ln=like.querySelector('.n');
+  const setLike=on=>{like.classList.toggle('liked',on);ln.textContent=fmt(p.likes+(on?1:0));};
+  like.addEventListener('click',()=>setLike(!like.classList.contains('liked')));
+  const save=s.querySelector('.save'),sn=save.querySelector('.n');
+  save.addEventListener('click',()=>{const on=!save.classList.contains('saved');save.classList.toggle('saved',on);sn.textContent=fmt(p.saves+(on?1:0));if(on)toast('in „Favoriten“ gespeichert');});
+  s.querySelector('.share').addEventListener('click',()=>toast('dieser feed ist nur für dich 🔒'));
+  s.querySelector('.com').addEventListener('click',()=>openSheet(p));
+  const plus=s.querySelector('.plus');
+  plus.addEventListener('click',()=>{document.querySelectorAll('.plus').forEach(b=>{b.classList.add('done');b.textContent='✓';});toast('du folgst unur. schon seit über 10 jahren 🫶');});
+  const more=s.querySelector('.more'),desc=s.querySelector('.desc');
+  more.addEventListener('click',()=>{const c=desc.classList.toggle('clip');more.textContent=c?'mehr':'weniger';});
+
+  let last=0,timer=null;
+  s.addEventListener('pointerup',e=>{
+    if(e.target.closest('button,.rail,.cap,.sheet'))return;
     const now=Date.now();
-    if(now-last<320){like.classList.add('liked');
+    if(now-last<300){clearTimeout(timer);setLike(true);
       const b=document.createElementNS('http://www.w3.org/2000/svg','svg');
-      b.setAttribute('viewBox','0 0 24 24');b.classList.add('burst');b.innerHTML=heart.replace(/<\/?svg[^>]*>/g,'');
+      b.setAttribute('viewBox','0 0 24 24');b.classList.add('burst');b.style.setProperty('--r',(Math.random()*30-15)+'deg');
+      b.innerHTML=IC.heart.replace(/<\/?svg[^>]*>/g,'');
       const r=s.getBoundingClientRect();b.style.left=(e.clientX-r.left)+'px';b.style.top=(e.clientY-r.top)+'px';
-      s.appendChild(b);setTimeout(()=>b.remove(),900);}
+      s.appendChild(b);setTimeout(()=>b.remove(),850);
+    }else if(isVid){timer=setTimeout(()=>togglePause(s),300);}
     last=now;
   });
-  s.querySelector('.com').addEventListener('click',()=>openSheet(p));
-  if(p.gift){const g=s.querySelector('.gift'),r=s.querySelector('.reveal');
-    g.addEventListener('click',()=>{g.hidden=true;r.hidden=false;like.classList.add('liked');});}
+  if(p.gift){const g=s.querySelector('.gift'),u=s.querySelector('.unlocked');
+    g.addEventListener('click',()=>{g.hidden=true;u.hidden=false;setLike(true);confetti(s);});}
 });
 
-// Querformat-Fotos ganz zeigen (auf unscharfem Hintergrund), Hochformat füllt den Bildschirm
-document.querySelectorAll('img.photo').forEach(im=>{
-  const fit=()=>{if(im.naturalWidth>im.naturalHeight*1.05)im.classList.add('wide');};
-  im.complete?fit():im.addEventListener('load',fit);
-});
-// Medien: Videos spielen nur im sichtbaren Post, Karussell-Punkte folgen dem Wischen
+// Videos: nur der sichtbare Post spielt; Fortschrittsbalken; Tippen pausiert
 let soundOn=false;
+function togglePause(s){const v=s.querySelector('video');if(!v)return;let pi=s.querySelector('.paused');
+  if(v.paused){v.play().catch(()=>{});pi&&pi.remove();}else{v.pause();if(!pi){s.insertAdjacentHTML('beforeend',IC.play.replace('<svg','<svg class="paused"'));}}}
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   e.target.querySelectorAll('video').forEach(v=>{
-    if(e.isIntersecting){v.muted=!soundOn;v.play().catch(()=>{});}else v.pause();
+    if(e.isIntersecting){v.muted=!soundOn;v.currentTime=0;v.play().catch(()=>{});const pi=e.target.querySelector('.paused');pi&&pi.remove();}else v.pause();
   });
 }),{threshold:.6});
 document.querySelectorAll('.post').forEach(post=>{
   io.observe(post);
-  const sl=post.querySelector('.slides'),dots=post.querySelectorAll('.dots i');
-  if(sl)sl.addEventListener('scroll',()=>{const k=Math.round(sl.scrollLeft/sl.clientWidth);dots.forEach((d,j)=>d.classList.toggle('on',j===k));},{passive:true});
-  const sb=post.querySelector('.sound');
-  if(sb)sb.addEventListener('click',()=>{soundOn=!soundOn;
-    document.querySelectorAll('.sound').forEach(b=>{b.textContent=soundOn?'Ton aus':'Ton an';b.setAttribute('aria-label',b.textContent);});
-    post.querySelectorAll('video').forEach(v=>{v.muted=!soundOn;v.play().catch(()=>{});});});
+  const v=post.querySelector('video'),bar=post.querySelector('.prog i');
+  if(v&&bar)v.addEventListener('timeupdate',()=>{bar.style.width=(v.currentTime/(v.duration||1)*100)+'%';});
+  const sl=post.querySelector('.slides'),dots=post.querySelectorAll('.dots i'),cnt=post.querySelector('.count');
+  if(sl)sl.addEventListener('scroll',()=>{const k=Math.round(sl.scrollLeft/sl.clientWidth);dots.forEach((d,j)=>d.classList.toggle('on',j===k));cnt.textContent=`${k+1}/${dots.length}`;},{passive:true});
+  const mb=post.querySelector('.mute');
+  if(mb)mb.addEventListener('click',()=>{soundOn=!soundOn;
+    document.querySelectorAll('.mute').forEach(b=>{b.textContent=soundOn?'🔊 Ton aus':'🔇 Ton an';b.setAttribute('aria-label',soundOn?'Ton aus':'Ton an');});
+    post.querySelectorAll('video').forEach(x=>{x.muted=!soundOn;x.play().catch(()=>{});});});
+});
+document.querySelectorAll('img.photo').forEach(im=>{
+  const fit=()=>{if(im.naturalWidth>im.naturalHeight*1.05)im.classList.add('wide');};
+  im.complete?fit():im.addEventListener('load',fit);
 });
 
+// Kommentare
 const sheet=document.getElementById('sheet');
 function openSheet(p){
   document.getElementById('sheetTitle').textContent=`${p.comments.length} Kommentar${p.comments.length>1?'e':''}`;
-  document.getElementById('sheetBody').innerHTML=p.comments.map(c=>`<div class="c"><span class="a">${c[0]}</span><div><b>@${c[1]}</b>${c[2]}</div></div>`).join('');
+  document.getElementById('sheetBody').innerHTML=p.comments.map(c=>`<div class="c"><span class="a">${c[0]}</span><div><b>${esc(c[1])}</b>${esc(c[2])}<small>${esc(c[3])} · Antworten</small></div><span class="h">♡</span></div>`).join('');
   sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');
 }
 document.getElementById('closeSheet').addEventListener('click',()=>{sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');});
+
+// Toast, Konfetti, Navigation
+const toastEl=document.getElementById('toast');let tt;
+function toast(t){toastEl.textContent=t;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,1800);}
+function confetti(s){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=document.createElement('canvas');c.style.cssText='position:absolute;inset:0;z-index:5;pointer-events:none';
+  const r=s.getBoundingClientRect();c.width=r.width;c.height=r.height;s.appendChild(c);
+  const g=c.getContext('2d'),cols=['#FE2C55','#25F4EE','#fff','#C9CDD3','#FACE15'];
+  const ps=Array.from({length:90},()=>({x:r.width/2,y:r.height*.58,vx:(Math.random()-.5)*9,vy:-Math.random()*11-3,c:cols[Math.random()*5|0],s:Math.random()*6+3,a:Math.random()*6}));
+  let f=0;(function tick(){g.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;g.fillStyle=p.c;g.save();g.translate(p.x,p.y);g.rotate(p.a);g.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);g.restore();});
+    if(++f<90)requestAnimationFrame(tick);else c.remove();})();
+}
+document.getElementById('nav-home').addEventListener('click',()=>feed.scrollTo({top:0,behavior:'smooth'}));
+document.getElementById('nav-friends').addEventListener('click',()=>toast('1 freund: unur 🫶'));
+document.getElementById('nav-add').addEventListener('click',()=>toast('posten kannst du später. heute wirst du gefeiert 🎂'));
+document.getElementById('nav-inbox').addEventListener('click',()=>toast('1 neue nachricht: alles gute zum geburtstag ❤️'));
+document.getElementById('nav-me').addEventListener('click',()=>toast('@marina · geburtstagskind · 15.11.'));
 feed.addEventListener('scroll',()=>{document.getElementById('hint').hidden=feed.scrollTop>40;},{passive:true});
 </script>
