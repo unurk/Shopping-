@@ -1,22 +1,17 @@
-# Marinas Geburtstag (15.11.2026): Entscheidung
+# Marinas Geburtstag (15.11.2026): Entscheidung v2 „Silberabend“
 
-Stand: Mi 11.11.2026, ersetzt `claude_geschenkideen.md` und die Optionen im Handoff.
-⚠️ = nicht auf der Originalseite geprüft. ⚕️ = ärztliche Abklärung fehlt noch.
+Stand: Mi 11.11.2026. v1 (Venenkissen + Lymphdrainage-Gutschein) verworfen: zu medizinisch, Termine = Pflicht.
+⚠️ = nicht auf der Originalseite geprüft.
 
-## Empfehlung: „Deine Abende. Deine Beine.“
-Venenkissen zum Hochlagern (zum Auspacken) plus ein gedruckter Gutschein für 3× manuelle Lymphdrainage & Bewegung (je 60 min) und 1× Test der maschinellen Lymphdrainage.
-Das baut direkt auf ihrem Abendritual auf: Die Therapeutin zeigt ihr, wie Bürsten und Hochlagern zu Hause mehr bringen, und der Gerätetest klärt für 30 €, ob die 349-€-Pumpe überhaupt Sinn hat.
-Kosten 429,90 €, in Wien muss heute nichts gekauft werden.
+## Paket
+- ESKIMO Plaid BIELLA, grau, 50 % Kaschmir / 50 % Wolle, 130×200 cm, 279,99 € (Aktionsrabatt angezeigt: 223,99 € ⚠️ Bedingungen im Warenkorb prüfen). Laut Seite nur noch 2 Stück.
+  https://www.breuninger.com/de/marken/eskimo/plaid-biella-mit-cashmere-und-merinowolle/1003465142/p/
+  Versand: Standard 3–5 Werktage (zu spät). DHL Express 14,95 €, nächster Werktag bei Bestellung Mo–Do bis 11 Uhr. Click & Collect 0 €, „im Haus reservieren“ möglich.
+- SUSANNE KAUFMANN Arnica Body Oil, 100 ml, 42 € (Aktion angezeigt: 33,60 € ⚠️)
+  https://www.breuninger.com/de/marken/susanne-kaufmann/arnica-body-oil/1001412128/p/
+- Karte „Silberabend“: `karte_marina.pdf` (A5 quer), neu erzeugen mit `python3 karte.py`.
 
-## Bausteine
-- Venenkissen WELL B4, 62×40×25 cm, waschbarer Bezug, 4,6★ (2.171), 54,90 €, Versand durch Amazon
-  https://www.amazon.de/dp/B0B2WWJ3J4
-  Angezeigt am 11.11.: gratis Lieferung Sa 14.11., Express „morgen 12.11.“ (für PLZ 60313; München ⚠️ im Checkout prüfen)
-- 3× Manuelle Lymphdrainage & Bewegung 60 min à 115 € = 345 € bei PHYSELI'S Physiotherapie, Wien
-  https://physeli.at/preise/ · +43 670 4090911 · office@physeli.at · Firmensitz Schnirchgasse 12, 1030 (Praxisstandort ⚠️) · Öffnungszeiten ⚠️
-  Mit ärztlicher Verordnung erstattet die ÖGK laut Seite 60,82 € pro Einheit, ohne Bewilligung (KPE-Tarif nur, wenn die Voraussetzungen erfüllt sind ⚠️)
-- 1× Reboots (maschinelle Lymphdrainage) 40 min, 30 €. Für Physio-Kund:innen laut Seite kostenlos.
-- Alternative Praxis mit ausdrücklichem Lipödem-Bezug: haelsi, Große Neugasse 28/2, 1040, Mo–Fr 8–19, ab 70 €/Sitzung (Dauer ⚠️) https://haelsi.at/leistung/lymphdrainage-wien
+Summe 321,99 € regulär (mit Express 336,94 €).
 
-## Gutschein
-`gutschein_marina.pdf` (A5 quer, ohne Diagnose, ohne Praxisnamen). Neu erzeugen mit `python3 gutschein.py`.
+## Laden München
+Breuninger, Sendlinger Straße 3, 80331 München, Mo–Sa 10–20 Uhr, Tel. 089 2444220 (https://www.breuninger.com/de/muenchen/). Lagerstand im Haus ⚠️.
