@@ -144,11 +144,37 @@ a.gift{text-decoration:none;top:66%}
 .words span{font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.14)}
 .words span.done{background:var(--heart);text-decoration:line-through}
 .game .score{font-size:13px;color:var(--muted);font-weight:600}
+
+/* Start, Laden, 2x, Hinweise */
+.start{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.start .card{width:min(100%,340px);display:grid;gap:14px;justify-items:center;text-align:center}
+.start .notif{width:100%;display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;text-align:left;padding:12px;border-radius:16px;background:rgba(255,255,255,.12)}
+.start .notif i{width:40px;height:40px;border-radius:10px;background:url("media/avatar.jpg") center/cover,#555}
+.start .notif b{display:block;font-size:14px}.start .notif span{font-size:13px;color:var(--muted)}
+.start .go{all:unset;cursor:pointer;width:100%;box-sizing:border-box;text-align:center;padding:15px;border-radius:8px;background:var(--heart);font-weight:800;font-size:16px}
+.start .quiet{all:unset;cursor:pointer;font-size:14px;font-weight:600;color:var(--muted);padding:6px}
+.start .go:focus-visible,.start .quiet:focus-visible,.again:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.post.loading::after{content:"";position:absolute;z-index:3;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+  border:3px solid rgba(255,255,255,.25);border-top-color:var(--fg);animation:spin .8s linear infinite;pointer-events:none}
+.speed{position:absolute;z-index:5;left:50%;top:calc(env(safe-area-inset-top,0px) + 56px);transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.55);font-weight:800;font-size:14px;pointer-events:none}
+.swipehint{position:absolute;z-index:5;left:50%;bottom:170px;transform:translateX(-50%);white-space:nowrap;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.55);font-weight:700;font-size:14px;pointer-events:none;animation:nudge 1.2s ease-in-out 3}
+@keyframes nudge{50%{translate:-14px 0}}
+.scrim{position:fixed;inset:0;z-index:8;background:rgba(0,0,0,.35)}
+.again{all:unset;cursor:pointer;position:absolute;z-index:4;left:50%;top:66%;transform:translateX(-50%);padding:12px 18px;border-radius:6px;background:rgba(255,255,255,.14);font-weight:700;font-size:15px}
 @media (prefers-reduced-motion:reduce){.burst,.hint,.disc,.music .track{animation:none}.sheet{transition:none}}
 </style>
 
 <div class="top"><span class="live">LIVE</span><span>Folge ich</span><b>Für dich</b></div>
 <main class="feed" id="feed"></main>
+<div class="start" id="start">
+  <div class="card">
+    <div class="notif"><i></i><div><b>unur hat etwas gepostet</b><span>20 neue beiträge · nur für dich</span></div></div>
+    <button class="go" id="goSound">▶ ansehen, mit ton</button>
+    <button class="quiet" id="goQuiet">ohne ton</button>
+  </div>
+</div>
+<div class="scrim" id="scrim" hidden></div>
 <div class="hint" id="hint"><svg viewBox="0 0 24 24"><path d="M12 4l-7 7h4v9h6v-9h4z"/></svg>nach oben wischen</div>
 <nav class="nav" aria-label="Navigation">
   <button class="navb on" id="nav-home"><svg viewBox="0 0 24 24"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>Startseite</button>
@@ -204,7 +230,7 @@ const POSTS = [
    desc:"smoothie-pause.", tags:"#roadtrip", likes:711, saves:30, shares:1, when:"02.07.",
    comments:[["🫶","unur","dj-wünsche bitte schriftlich","jetzt"]]},
   {bg:"t7", ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["handy weg.","geschenke."], cls:"low"},
-   desc:"alles gute, marina.", tags:"#fyp", likes:999999, saves:1, shares:0, when:"15.11.",
+   desc:"alles gute, marina.", tags:"#fyp", likes:1000000, saves:1, shares:0, when:"15.11.",
    comments:[["🫶","unur","dreh dich um","jetzt"]]}
 ];// Musik: Kevin MacLeod (incompetech.com), lizenziert unter CC BY 4.0
 const KM=' – Kevin MacLeod (incompetech.com) · CC BY 4.0';
@@ -262,7 +288,7 @@ POSTS.forEach((p,i)=>{
   const m=p.media||[];
   const one=x=>x.type==='video'
     ?`<video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
-    :`<img class="blur" src="${x.src.replace('.jpg','_b.jpg')}" alt="" decoding="async"><img class="photo" src="${x.src}" alt="" decoding="async">`;
+    :`<img class="blur" src="${x.src.replace('.jpg','_b.jpg')}" alt="" decoding="async"${i>1?' loading="lazy"':''}><img class="photo" src="${x.src}" alt="" decoding="async"${i>1?' loading="lazy"':''}>`;
   const media=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
   const isVid=m.some(x=>x.type==='video');
   s.innerHTML=`<div class="bg ${p.bg||''}">${media}</div><div class="shade"></div>
@@ -306,6 +332,7 @@ POSTS.forEach((p,i)=>{
   s.addEventListener('pointerup',e=>{
     if(e.target.closest('button,.rail,.cap,.sheet,.prog,.game'))return;
     if(Math.abs(e.clientX-dx)>10||Math.abs(e.clientY-dy)>10)return; // war ein Wischen, kein Tippen
+    if(s.dataset.lp){delete s.dataset.lp;return;} // war Gedrückthalten (2x)
     const now=Date.now();
     if(now-last<300){clearTimeout(timer);setLike(true);
       const b=document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -409,9 +436,11 @@ const sheet=document.getElementById('sheet');
 function openSheet(p){
   document.getElementById('sheetTitle').textContent=`${p.comments.length} Kommentar${p.comments.length>1?'e':''}`;
   document.getElementById('sheetBody').innerHTML=p.comments.map(c=>`<div class="c"><span class="a">${c[0]}</span><div><b>${esc(c[1])}</b>${esc(c[2])}<small>${esc(c[3])} · Antworten</small></div><span class="h">♡</span></div>`).join('');
-  sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');
+  sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');document.getElementById('scrim').hidden=false;
 }
-document.getElementById('closeSheet').addEventListener('click',()=>{sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');});
+function closeSheet(){sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');document.getElementById('scrim').hidden=true;}
+document.getElementById('closeSheet').addEventListener('click',closeSheet);
+document.getElementById('scrim').addEventListener('click',closeSheet);
 
 // Toast, Konfetti, Navigation
 const toastEl=document.getElementById('toast');let tt;
@@ -431,4 +460,84 @@ document.getElementById('nav-add').addEventListener('click',()=>toast('heute nic
 document.getElementById('nav-inbox').addEventListener('click',()=>toast('1 neue nachricht: alles gute.'));
 document.getElementById('nav-me').addEventListener('click',()=>toast('@marina · geburtstagskind · 15.11.'));
 feed.addEventListener('scroll',()=>{document.getElementById('hint').hidden=feed.scrollTop>40;},{passive:true});
+
+// ---------- Bedienung: Start, Speichern, Vorladen, Tastatur, 2x, Hinweise ----------
+const posts=[...document.querySelectorAll('.post')];
+const vib=ms=>{try{navigator.vibrate&&navigator.vibrate(ms);}catch(e){}};
+function setSound(on){soundOn=on;
+  document.querySelectorAll('.mute').forEach(b=>{b.textContent=on?'🔊 Ton aus':'🔇 Ton an';b.setAttribute('aria-label',on?'Ton aus':'Ton an');});
+  if(current){current.querySelectorAll('video').forEach(v=>{v.muted=!on;v.play().catch(()=>{});});
+    current.querySelectorAll('audio').forEach(a=>{if(on)a.play().catch(()=>{});else a.pause();});}
+}
+const startEl=document.getElementById('start');
+startEl.querySelector('.notif span').textContent=`${posts.length} neue beiträge · nur für dich`;
+const begin=on=>{startEl.hidden=true;current=current||posts[0];setSound(on);if(on)vib(10);};
+document.getElementById('goSound').addEventListener('click',()=>begin(true));
+document.getElementById('goQuiet').addEventListener('click',()=>begin(false));
+
+// Fortschritt merken (Likes, Gespeichert, Geschenke, Folgen) – nur auf diesem Gerät
+const KEY='marina-feed-v1';
+const st=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}})();
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+st.like=st.like||{};st.save=st.save||{};st.gift=st.gift||{};
+posts.forEach((post,i)=>{
+  const like=post.querySelector('.like'),save=post.querySelector('.save'),gift=post.querySelector('.gift:not(a)'),un=post.querySelector('.unlocked');
+  if(st.like[i])like.click(); if(st.save[i]){save.classList.add('saved');}
+  if(gift&&st.gift[i]){gift.hidden=true;un.hidden=false;}
+  like.addEventListener('click',()=>setTimeout(()=>{st.like[i]=like.classList.contains('liked');if(st.like[i])vib(12);persist();}));
+  save.addEventListener('click',()=>setTimeout(()=>{st.save[i]=save.classList.contains('saved');persist();}));
+  if(gift)gift.addEventListener('click',()=>{st.gift[i]=1;vib([20,40,20]);persist();});
+  // Doppeltipp-Like ebenfalls merken
+  new MutationObserver(()=>{const on=like.classList.contains('liked');if(!!st.like[i]!==on){st.like[i]=on;persist();}}).observe(like,{attributes:true,attributeFilter:['class']});
+});
+if(st.follow)document.querySelectorAll('.plus').forEach(b=>{b.classList.add('done');b.textContent='✓';});
+document.querySelectorAll('.plus').forEach(b=>b.addEventListener('click',()=>{st.follow=1;persist();}));
+
+// Nächsten Beitrag vorladen, aktuellen Beitrag vollständig laden
+const warm=post=>{if(!post)return;post.querySelectorAll('img[loading="lazy"]').forEach(im=>im.loading='eager');
+  post.querySelectorAll('video').forEach(v=>{if(v.preload!=='auto')v.preload='auto';});
+  post.querySelectorAll('audio').forEach(a=>{if(a.preload!=='auto')a.preload='auto';});};
+const warmIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){warm(e.target);let n=e.target.nextElementSibling;warm(n);warm(n&&n.nextElementSibling);}}),{threshold:.6});
+posts.forEach(p=>warmIO.observe(p));
+
+// Ladeanzeige bei Videos
+posts.forEach(post=>{const v=post.querySelector('video');if(!v)return;
+  v.addEventListener('waiting',()=>post.classList.add('loading'));
+  ['playing','canplay','pause'].forEach(ev=>v.addEventListener(ev,()=>post.classList.remove('loading')));});
+
+// Gedrückthalten = 2x Tempo (wie in der App)
+posts.forEach(post=>{const v=post.querySelector('video');if(!v)return;let t=null,badge=null;
+  post.addEventListener('pointerdown',e=>{if(e.target.closest('button,.rail,.cap,.prog,a'))return;
+    t=setTimeout(()=>{post.dataset.lp='1';v.playbackRate=2;badge=document.createElement('div');badge.className='speed';badge.textContent='2× ⏩';post.appendChild(badge);vib(8);},450);});
+  const up=()=>{clearTimeout(t);if(badge){badge.remove();badge=null;v.playbackRate=1;}};
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>post.addEventListener(ev,up));});
+
+// Hinweis beim ersten Karussell
+let hinted=(()=>{try{return localStorage.getItem('marina-feed-hint')==='1';}catch(e){return false;}})();
+const hintIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting||hinted||!e.target.querySelector('.slides'))return;
+  hinted=true;try{localStorage.setItem('marina-feed-hint','1');}catch(x){}
+  const h=document.createElement('div');h.className='swipehint';h.textContent='← zur seite wischen';e.target.appendChild(h);setTimeout(()=>h.remove(),3800);}),{threshold:.7});
+posts.forEach(p=>hintIO.observe(p));
+
+// Ende: von vorne
+const lastPost=posts[posts.length-1];
+const again=document.createElement('button');again.className='again';again.textContent='↑ von vorne';lastPost.appendChild(again);
+again.addEventListener('click',()=>feed.scrollTo({top:0,behavior:'smooth'}));
+
+// Tab im Hintergrund: alles pausieren, danach weiter
+document.addEventListener('visibilitychange',()=>{if(!current)return;
+  current.querySelectorAll('video,audio').forEach(m=>{if(document.hidden)m.pause();else if(m.tagName==='VIDEO'||soundOn)m.play().catch(()=>{});});});
+
+// Tastatur (Computer): ↑↓ blättern, ←→ Karussell, Leertaste Pause, m Ton
+document.addEventListener('keydown',e=>{
+  if(!startEl.hidden){if(e.key==='Enter'){begin(true);e.preventDefault();}return;}
+  if(e.target.closest&&e.target.closest('.prog'))return;
+  const i=Math.max(0,posts.indexOf(current));
+  if(e.key==='ArrowDown'||e.key==='j'){posts[Math.min(posts.length-1,i+1)].scrollIntoView({behavior:'smooth'});e.preventDefault();}
+  else if(e.key==='ArrowUp'||e.key==='k'){posts[Math.max(0,i-1)].scrollIntoView({behavior:'smooth'});e.preventDefault();}
+  else if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&current){const sl=current.querySelector('.slides');if(sl){sl.scrollBy({left:(e.key==='ArrowRight'?1:-1)*sl.clientWidth,behavior:'smooth'});e.preventDefault();}}
+  else if(e.key===' '&&current&&current.querySelector('video')){togglePause(current);e.preventDefault();}
+  else if(e.key==='m'){setSound(!soundOn);}
+  else if(e.key==='Escape'){closeSheet();}
+});
 </script>
