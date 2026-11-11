@@ -155,10 +155,10 @@ const M = x => ({type:"image", src:`media/${x}.jpg`});
 const POSTS = [
   {media:[M("m75")], ov:{lines:["es ist ihr geburtstag 🎂"], cls:"big"},
    desc:"heute gibt's nur einen account auf deiner fyp. wisch hoch ⬆️", tags:"#fyp #geburtstagskind #15november", likes:1511, saves:211, shares:15, when:"15.11.",
-   comments:[["🫶","unur","erster!! und für immer dein lieblingsfollower","jetzt"],["🍿","die_popcornmaschine","bin schon aufgeregt","2 Min."]]},
+   comments:[["🫶","unur","erster!!","jetzt"],["🍿","die_popcornmaschine","bin schon aufgeregt","2 Min."]]},
   {media:[{type:"video",src:"media/jahr.mp4",poster:"media/jahr.jpg"}],
    desc:"nov 2025 → nov 2026. mexiko, kreta, unser sofa und alles dazwischen 🫶", tags:"#recap #marinasjahr #einjahr", likes:3650, saves:365, shares:12, when:"15.11.",
-   comments:[["🫶","unur","jede sekunde davon würd ich nochmal machen","jetzt"],["🛋️","das_sofa","ich war auch dabei","5 Min."]]},
+   comments:[["🫶","unur","2.000 fotos gemacht, 30 haben es reingeschafft. hartes casting","jetzt"],["🛋️","das_sofa","ich war auch dabei","5 Min."]]},
   {media:["m01","m02","m06","m13","m33","m36","m28","m45","m50","m58","m63","m65","m75"].map(M), ov:{lines:["photo dump: unser jahr 📸"], cls:"low"},
    desc:"13 bilder, 0 schlechte. wisch zur seite ➡️", tags:"#photodump #mexiko #kreta #wir", likes:1313, saves:88, shares:4, when:"15.11.",
    comments:[["🫶","unur","bild 5: snack-model des jahres","jetzt"],["🫶","unur","das letzte ist mein lieblingsbild","jetzt"]]},
@@ -179,21 +179,21 @@ const POSTS = [
    desc:"silbergrau-core. du magst dinge, die glänzen und die jemand mit den händen gemacht hat ✨", tags:"#gunmetal #handmade #diy #aesthetic", likes:2311, saves:190, shares:7, when:"15.11.",
    comments:[["🫶","unur","deine servietten sind schöner als alles im laden","jetzt"]]},
   {bg:"t4", ov:{lines:["weißt du noch? 🏺","der töpferkurs"], cls:""},
-   desc:"ton war der anfang. jetzt kommt was, das bleibt.", tags:"#töpferkurs #levelup #throwback", likes:1204, saves:44, shares:2, when:"15.11.",
+   desc:"level 1: ton. level 2: silber. level 3: keine ahnung, was ich dir nächstes jahr schenk 😅", tags:"#töpferkurs #levelup #throwback", likes:1204, saves:44, shares:2, when:"15.11.",
    comments:[["🫶","unur","nächster halt: metall","jetzt"]]},
   {bg:"t5", ov:{lines:["wachs schnitzen.","in silber gießen.","dein eigener ring."], cls:"dark big"},
    gift:{label:"Geschenk 2 freischalten", title:"dein wax2silver-kurs 💍", note:"du schnitzt in wachs, daraus wird echtes 925er silber"},
-   desc:"von dir gemacht, für immer an dir.", tags:"#wax2silver #schmuck #925silber", likes:5925, saves:925, shares:25, when:"15.11.",
+   desc:"endlich schmuck, den du nicht online zurückschicken kannst.", tags:"#wax2silver #schmuck #925silber", likes:5925, saves:925, shares:25, when:"15.11.",
    comments:[["🫶","unur","ich will das erste foto davon sehen. und dann deinen post","jetzt"],["💍","silberring_in_spe","bald 👀","10 Min."]]},
   {bg:"t6", ov:{lines:["wenn deine garne endlich","ein zuhause haben 🧵"], cls:""},
    gift:{label:"Geschenk 3 freischalten", title:"dein diy-turm 🧵", note:"selbst gebaut, selbst befüllt"},
    desc:"die garne aus der barnabitengasse liegen überall. ab heute nicht mehr.", tags:"#sticken #yukimade #organization #diy", likes:968, saves:120, shares:5, when:"15.11.",
    comments:[["🫶","unur","ich halt beim zusammenbauen die schrauben. versprochen","jetzt"],["🗼","dein_diy_turm","ich brauch nur noch garn","8 Min."]]},
   {media:[{type:"video",src:"media/auto.mp4",poster:"media/auto.jpg"}],
-   desc:"smoothie-pause irgendwo zwischen a und b. mit dir ist jede fahrt ein roadtrip 🥤", tags:"#roadtrip #wir #smoothie", likes:711, saves:30, shares:1, when:"02.07.",
-   comments:[["🫶","unur","beifahrerin des jahres","jetzt"]]},
-  {bg:"t7", ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["nein, hast du nicht.","ich bin noch da ❤️"], cls:"low"},
-   desc:"kein algorithmus kennt dich so gut wie ich. alles liebe zum geburtstag, marina.", tags:"#fürimmer #fyp", likes:999999, saves:1, shares:0, when:"15.11.",
+   desc:"smoothie-pause irgendwo zwischen a und b. navi: aus. stimmung: an 🥤", tags:"#roadtrip #wir #smoothie", likes:711, saves:30, shares:1, when:"02.07.",
+   comments:[["🫶","unur","beifahrerin des jahres. dj leider auch","jetzt"]]},
+  {bg:"t7", ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["jetzt leg das handy weg.","deine geschenke warten 🎁"], cls:"low"},
+   desc:"bildschirmzeit heute: zu viel. aber heute zählt nicht. alles gute, marina 🎂", tags:"#fyp #geburtstag #handyweg", likes:999999, saves:1, shares:0, when:"15.11.",
    comments:[["🫶","unur","wisch nicht weiter. dreh dich um 🫶","jetzt"]]}
 ];
 // Musik: Kevin MacLeod (incompetech.com), lizenziert unter CC BY 4.0
@@ -206,24 +206,24 @@ const orig=POSTS.slice();
 const K=(pre,n)=>Array.from({length:n},(_,i)=>M(`${pre}${i+1}`));
 const song=(p,t)=>{p.song=t+KM;p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;return p;};
 const after=(i,...ps)=>POSTS.splice(POSTS.indexOf(orig[i])+1,0,...ps);
-after(1, song({media:K("love",8), ov:{lines:["8 dinge, die ich","an dir liebe 🫶"], cls:""},
-  desc:"wisch zur seite. nummer 8 ist die wichtigste.", tags:"#couple #liebe #dingedieichandirliebe", likes:8888, saves:808, shares:8, when:"15.11.",
-  comments:[["🫶","unur","die liste war eigentlich viel länger","jetzt"],["🐶","jeder_hund_in_wien","stimmt, sie ist die beste","4 Min."]]},"Carefree"));
+after(1, song({media:K("love",8), ov:{lines:["fakten über marina","(wissenschaftlich bewiesen)"], cls:""},
+  desc:"8 fakten, jahrelang erforscht. quelle: ich. wisch zur seite 🔬", tags:"#fakten #girlfriendfacts #wissenschaft", likes:8888, saves:808, shares:8, when:"15.11.",
+  comments:[["🫶","unur","fakt 9 hab ich mich nicht getraut","jetzt"],["🐶","jeder_hund_in_wien","stimmt, sie ist die beste","4 Min."]]},"Carefree"));
 after(3, song({media:K("pyr",10), ov:{lines:["ich: soll ich ein foto","vor der pyramide machen?","du: ja, eins."], cls:""},
   desc:"es wurden zehn. mindestens. wisch zur seite 📸😂", tags:"#pov #couplehumor #mexiko #chichenitza #fotograf", likes:4410, saves:310, shares:44, when:"10.12.2025",
   comments:[["🫶","unur","foto 7 ist das beste, foto 8 auch","jetzt"],["📸","unurs_kamerarolle","bitte keine weiteren pyramiden","1 Std."]]},"Fluffing a Duck"));
 after(6, song({media:K("fit",6), ov:{lines:["outfit check:","schwarz.","auch schwarz.","überraschung: schwarz."], cls:""},
   desc:"konsequent elegant. und das silbergraue tuch als statement 🖤", tags:"#outfitcheck #allblack #ootd #stil", likes:3010, saves:450, shares:12, when:"15.11.",
-  comments:[["🫶","unur","du siehst in jedem einzelnen davon toll aus","jetzt"],["🖤","schwarzer_pulli","ich arbeite hier sehr hart","2 Std."]]},"Hyperfun"));
+  comments:[["🫶","unur","ich hab gefragt, ob sie farbe mag. sie hat „gunmetal“ gesagt","jetzt"],["🖤","schwarzer_pulli","ich arbeite hier sehr hart","2 Std."]]},"Hyperfun"));
 after(9, song({media:[M("xmas")], ov:{lines:["weihnachten 2025 🎄"], cls:""},
-  desc:"der schönste anblick im wohnzimmer. der baum ist auch okay.", tags:"#weihnachten #christmas #zuhause", likes:2412, saves:120, shares:3, when:"24.12.2025",
-  comments:[["🫶","unur","nächstes jahr wieder so","jetzt"]]},"Easy Lemon"),
+  desc:"zwei schöne dinge im wohnzimmer. eins davon nadelt.", tags:"#weihnachten #christmas #zuhause", likes:2412, saves:120, shares:3, when:"24.12.2025",
+  comments:[["🫶","unur","ich mein den baum. (nein)","jetzt"]]},"Easy Lemon"),
   song({media:K("us",8), ov:{lines:["wir zwei,","ein jahr lang","in selfies"], cls:"low"},
-  desc:"flugzeug, pyramide, boot, spa, strand, auto. immer mit dir 🤳", tags:"#couple #selfies #wir #recap", likes:5205, saves:300, shares:10, when:"15.11.",
-  comments:[["🫶","unur","ich bin auf jedem foto der glücklichste","jetzt"]]},"Life of Riley"),
+  desc:"flugzeug, pyramide, boot, spa, strand, auto. mein arm ist auf jedem foto 🤳", tags:"#couple #selfies #wir #recap", likes:5205, saves:300, shares:10, when:"15.11.",
+  comments:[["🫶","unur","professioneller selfie-stick seit über 10 jahren","jetzt"],["💪","unurs_rechter_arm","ich will urlaub","3 Std."]]},"Life of Riley"),
   song({media:K("kreta",3), ov:{lines:["kreta, juni 2026 🇬🇷"], cls:""},
-  desc:"berge, meer, sonnenuntergang und du.", tags:"#kreta #crete #greece #urlaub", likes:2026, saves:140, shares:6, when:"26.06.",
-  comments:[["🫶","unur","nächster sommer: wieder?","jetzt"]]},"Bossa Antigua"));
+  desc:"30 grad, 0 schatten, 1 frau in komplett schwarz 🖤☀️", tags:"#kreta #crete #greece #urlaub", likes:2026, saves:140, shares:6, when:"26.06.",
+  comments:[["🫶","unur","sie hat nicht geschwitzt. ich schon","jetzt"]]},"Bossa Antigua"));
 after(10, song({media:[M("spa")], ov:{lines:["bademantel-core 🤍"], cls:"low"},
   desc:"unser spa-tag im märz. offiziell der bequemste dresscode.", tags:"#spaday #selfcare #couple", likes:1803, saves:96, shares:2, when:"28.03.",
   comments:[["🫶","unur","bitte wiederholen","jetzt"],["🛁","der_bademantel","ich vermiss euch","1 Tag"]]},"Wallpaper"));
