@@ -83,8 +83,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .burst{position:absolute;z-index:5;pointer-events:none;width:96px;height:96px;fill:var(--heart);transform:translate(-50%,-50%) scale(0);animation:pop .8s ease-out forwards}
 @keyframes pop{25%{transform:translate(-50%,-50%) scale(1.15) rotate(var(--r,-12deg));opacity:1}100%{transform:translate(-50%,-110%) scale(1.3);opacity:0}}
 /* Video */
-.prog{position:absolute;z-index:4;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.2)}
-.prog i{display:block;height:100%;width:0;background:var(--fg)}
+.prog{position:absolute;z-index:4;left:0;right:0;bottom:0;height:26px;touch-action:none;cursor:pointer}
+.prog::before{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.25);transition:height .15s}
+.prog i{position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--fg);transition:height .15s}
+.prog b{position:absolute;bottom:-4px;left:0;width:14px;height:14px;border-radius:50%;background:var(--fg);transform:translateX(-50%);opacity:0;transition:opacity .15s}
+.prog.drag::before,.prog.drag i{height:6px}
+.prog.drag b{opacity:1;bottom:-4px}
+.prog:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
+.time{position:absolute;z-index:5;left:50%;bottom:90px;transform:translateX(-50%);font:800 30px var(--tt);letter-spacing:.02em;text-shadow:0 1px 6px #000;pointer-events:none;white-space:nowrap}
+.time em{font-style:normal;color:var(--dim)}
+.post .cap,.post .rail,.post .ov{transition:opacity .15s}
+.post.scrub .cap,.post.scrub .rail,.post.scrub .ov{opacity:0}
 .paused{position:absolute;z-index:3;left:50%;top:50%;width:64px;height:64px;transform:translate(-50%,-50%);fill:rgba(255,255,255,.8);pointer-events:none}
 .mute{all:unset;cursor:pointer;position:absolute;z-index:4;left:max(12px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 52px);
   display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(0,0,0,.45);font-size:13px;font-weight:600}
@@ -219,7 +228,7 @@ POSTS.forEach((p,i)=>{
   s.innerHTML=`<div class="bg ${p.bg||''}">${media}</div><div class="shade"></div>
   ${ov(p.ov)}${ov(p.ov2)}
   ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div><div class="count">1/${m.length}</div>`:''}
-  <button class="mute" aria-label="Ton an">🔇 Ton an</button>${isVid?`<div class="prog"><i></i></div>`:''}
+  <button class="mute" aria-label="Ton an">🔇 Ton an</button>${isVid?`<div class="prog" role="slider" tabindex="0" aria-label="Video vorspulen" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><b></b></div><div class="time" hidden></div>`:''}
   ${p.audio?`<audio src="${p.audio}" loop preload="none"></audio>`:''}
   ${p.gift?`<button class="gift">${IC.gift}${p.gift.label}</button><div class="unlocked" hidden><span>${esc(p.gift.title)}</span><small>${esc(p.gift.note)}</small></div>`:''}
   <div class="rail">
@@ -253,7 +262,7 @@ POSTS.forEach((p,i)=>{
   let last=0,timer=null,dx=0,dy=0;
   s.addEventListener('pointerdown',e=>{dx=e.clientX;dy=e.clientY;},{passive:true});
   s.addEventListener('pointerup',e=>{
-    if(e.target.closest('button,.rail,.cap,.sheet'))return;
+    if(e.target.closest('button,.rail,.cap,.sheet,.prog'))return;
     if(Math.abs(e.clientX-dx)>10||Math.abs(e.clientY-dy)>10)return; // war ein Wischen, kein Tippen
     const now=Date.now();
     if(now-last<300){clearTimeout(timer);setLike(true);
@@ -286,7 +295,24 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
 document.querySelectorAll('.post').forEach(post=>{
   io.observe(post);
   const v=post.querySelector('video'),bar=post.querySelector('.prog i');
-  if(v&&bar)v.addEventListener('timeupdate',()=>{bar.style.width=(v.currentTime/(v.duration||1)*100)+'%';});
+  if(v&&bar){
+    const prog=post.querySelector('.prog'),knob=prog.querySelector('b'),tl=post.querySelector('.time');
+    const mmss=t=>`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`;
+    let dragging=false,wasPlaying=false;
+    const draw=f=>{const pc=(f*100).toFixed(2)+'%';bar.style.width=pc;knob.style.left=pc;prog.setAttribute('aria-valuenow',Math.round(f*100));};
+    (function loop(){if(!dragging&&v.duration)draw(v.currentTime/v.duration);requestAnimationFrame(loop);})();
+    const seekTo=x=>{const r=prog.getBoundingClientRect(),f=Math.min(1,Math.max(0,(x-r.left)/r.width));
+      if(v.duration){v.currentTime=f*v.duration;tl.innerHTML=`${mmss(f*v.duration)} <em>/ ${mmss(v.duration)}</em>`;}draw(f);};
+    prog.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();dragging=true;wasPlaying=!v.paused;v.pause();
+      prog.setPointerCapture(e.pointerId);prog.classList.add('drag');post.classList.add('scrub');tl.hidden=false;seekTo(e.clientX);});
+    prog.addEventListener('pointermove',e=>{if(dragging)seekTo(e.clientX);});
+    const end=()=>{if(!dragging)return;dragging=false;prog.classList.remove('drag');post.classList.remove('scrub');tl.hidden=true;
+      if(wasPlaying){v.play().catch(()=>{});const pi=post.querySelector('.paused');pi&&pi.remove();}};
+    prog.addEventListener('pointerup',end);prog.addEventListener('pointercancel',end);
+    prog.addEventListener('keydown',e=>{if(!v.duration)return;
+      if(e.key==='ArrowRight'){v.currentTime=Math.min(v.duration,v.currentTime+3);e.preventDefault();}
+      if(e.key==='ArrowLeft'){v.currentTime=Math.max(0,v.currentTime-3);e.preventDefault();}});
+  }
   const sl=post.querySelector('.slides'),dots=post.querySelectorAll('.dots i'),cnt=post.querySelector('.count');
   if(sl){let raf=0,lastK=0;sl.addEventListener('scroll',()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;const k=Math.round(sl.scrollLeft/sl.clientWidth);
     if(k!==lastK){lastK=k;dots.forEach((d,j)=>d.classList.toggle('on',j===k));cnt.textContent=`${k+1}/${dots.length}`;const o=post.querySelector('.ov');if(o)o.style.opacity=k?0:1;}});},{passive:true});}
