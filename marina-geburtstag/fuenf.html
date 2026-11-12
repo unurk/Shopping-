@@ -52,7 +52,7 @@ header h1 small{display:block;font-size:11px;font-weight:600;color:var(--muted);
 .k{all:unset;cursor:pointer;flex:1;max-width:44px;height:54px;border-radius:7px;background:var(--key);display:grid;place-items:center;font-weight:700;font-size:17px;text-transform:uppercase;touch-action:manipulation}
 .k.wide{max-width:66px;flex:1.5;font-size:13px}
 .k:active{filter:brightness(1.25)}
-.k.hit{background:var(--hit)} .k.near{background:var(--near)} .k.miss{background:var(--miss);color:#6F7680}
+.k.hit{background:var(--hit)} .k.near{background:var(--near)} .k.miss{background:var(--miss);color:#4A5058;opacity:.45;cursor:not-allowed}
 /* Ergebnis-Karte */
 .sheet{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:rgba(0,0,0,.6);padding:20px}
 .card{width:min(100%,380px);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 20px;display:grid;gap:12px;text-align:center}
@@ -177,7 +177,11 @@ function press(ch){
   if(ch==="←"){ pos=Math.max(0,pos-1); paintTyping(); return; }
   if(ch==="→"){ pos=Math.min(COLS-1,pos+1); paintTyping(); return; }
   if(ch==="↵"){ submit(); return; }
-  if(/^[A-Z]$/.test(ch)){ cur[pos]=ch; pos=nextPos(pos); paintTyping(); }
+  if(/^[A-Z]$/.test(ch)){
+    // graue Buchstaben kommen im Wort nicht vor und sind gesperrt
+    const key=document.querySelector(`.k[data-k="${ch}"]`);
+    if(key && key.classList.contains("miss")){ key.animate([{transform:"translateX(-4px)"},{transform:"translateX(4px)"},{transform:"none"}],{duration:200}); say(`${ch.toLowerCase()} kommt nicht vor.`, 1200); return; }
+    cur[pos]=ch; pos=nextPos(pos); paintTyping(); }
 }
 function submit(){
   const r = state.guesses.length, lv = LEVELS[state.level];
@@ -235,7 +239,7 @@ function help(){
       <div>errate das wort mit 5 buchstaben. du hast 6 versuche. ${LEVELS.length} wörter, alle aus deinem jahr.</div>
       <div class="ex"><b class="hit">B</b><b>L</b><b>U</b><b>M</b><b>E</b></div><div>grün: richtiger buchstabe, richtiger platz.</div>
       <div class="ex"><b>T</b><b class="near">A</b><b>N</b><b>T</b><b>E</b></div><div>gelb: kommt vor, aber woanders.</div>
-      <div class="ex"><b>R</b><b>A</b><b class="miss">D</b><b>I</b><b>O</b></div><div>grau: kommt nicht vor.</div>
+      <div class="ex"><b>R</b><b>A</b><b class="miss">D</b><b>I</b><b>O</b></div><div>grau: kommt nicht vor. diese buchstaben sind danach gesperrt.</div>
       <div>tipp auf ein feld, um genau dort einen buchstaben einzusetzen.</div>
       <div>nach 4 versuchen gibt's einen tipp. einen kleinen.</div>
     </div>
