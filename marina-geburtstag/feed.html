@@ -109,6 +109,44 @@ a.gift{text-decoration:none;top:66%}
 .unlocked{position:absolute;z-index:4;left:max(16px,env(safe-area-inset-left,0px));right:76px;top:56%;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
 .unlocked span{font-weight:800;font-size:clamp(18px,5vw,24px);padding:3px 10px;border-radius:7px;background:var(--heart);color:var(--fg)}
 .unlocked small{font-size:13px;color:var(--muted);text-shadow:0 1px 2px #000}
+/* Wrapped-Karten: Jahresbilanz im Feed */
+.wrap{position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:14px;
+  padding:calc(env(safe-area-inset-top,0px) + 92px) 84px 168px max(22px,env(safe-area-inset-left,0px));color:var(--wc);background:var(--wb)}
+.wrap::before,.wrap::after{content:"";position:absolute;border-radius:50%;background:var(--wx);z-index:0;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.wrap::before{width:70vmax;height:70vmax;right:-38vmax;top:-30vmax;transform:scale(.6)}
+.wrap::after{width:36vmax;height:36vmax;left:-14vmax;bottom:-12vmax;opacity:.55;transform:scale(.4)}
+.post.in .wrap::before{transform:scale(1)}.post.in .wrap::after{transform:scale(1)}
+.wrap > *{position:relative;z-index:1;margin:0}
+.wrap .k{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.wrap h2{font-size:clamp(42px,13vw,74px);font-weight:800;line-height:.95;letter-spacing:-.03em;white-space:pre-line}
+.wrap .num{font-size:clamp(84px,27vw,150px);font-weight:800;line-height:.85;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.wrap .unit{font-size:clamp(22px,6.4vw,32px);font-weight:800;line-height:1.05}
+.wrap p{font-size:16px;font-weight:600;line-height:1.35;max-width:30ch}
+.wrap .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;max-width:340px}
+.wrap .stats div{padding:10px 12px;border-radius:14px;background:var(--wt)}
+.wrap .stats b{display:block;font-size:clamp(24px,7vw,34px);font-weight:800;line-height:1;letter-spacing:-.02em}
+.wrap .stats span{font-size:13px;font-weight:700;opacity:.85}
+.wrap ol{list-style:none;padding:0;display:grid;gap:8px;max-width:340px}
+.wrap ol li{display:grid;grid-template-columns:38px 1fr auto;align-items:baseline;gap:8px;font-size:clamp(20px,5.8vw,27px);font-weight:800;line-height:1.1}
+.wrap ol li i{font-style:normal;opacity:.6}
+.wrap ol li small{font-size:14px;font-weight:700;opacity:.8}
+.wrap .bars{display:grid;grid-template-columns:repeat(13,1fr);align-items:end;gap:4px;height:min(34vh,230px);max-width:340px}
+.wrap .bars div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%}
+.wrap .bars i{display:block;flex:none;width:100%;border-radius:4px 4px 0 0;background:var(--wt);height:0;transition:height .9s cubic-bezier(.2,.8,.2,1)}
+.wrap .bars i.hi{background:var(--wx)}
+.post.in .wrap .bars i{height:var(--h)}
+.wrap .bars span{font-size:11px;font-weight:800;opacity:.75}
+.wrap .sw{display:flex;gap:8px}.wrap .sw i{width:34px;height:34px;border-radius:50%;background:#000;border:2px solid rgba(255,255,255,.35)}.wrap .sw i.g{background:#A9ADB3}
+.wrap .pic{width:min(22vw,88px);aspect-ratio:4/5;border-radius:10px;background:center/cover;box-shadow:0 10px 30px rgba(0,0,0,.35);transform:rotate(4deg)}
+.wrap .rv{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--d,0) * 130ms)}
+.post.in .wrap .rv{opacity:1;transform:none}
+.w1{--wb:#FF3E8A;--wc:#1B0630;--wx:#25F4EE;--wt:rgba(27,6,48,.12)}
+.w2{--wb:#170B3B;--wc:#fff;--wx:#C6F432;--wt:rgba(255,255,255,.12)}
+.w3{--wb:#C6F432;--wc:#111;--wx:#FF3E8A;--wt:rgba(0,0,0,.1)}
+.w4{--wb:#FF6A1A;--wc:#200A00;--wx:#FFD3B8;--wt:rgba(32,10,0,.12)}
+.w5{--wb:#25F4EE;--wc:#04161C;--wx:#FF3E8A;--wt:rgba(4,22,28,.1)}
+.w6{--wb:#0E0E10;--wc:#fff;--wx:#FE2C55;--wt:rgba(255,255,255,.14)}
+@media (prefers-reduced-motion:reduce){.wrap .rv,.wrap::before,.wrap::after,.wrap .bars i{transition:none}}
 /* Navigationsleiste */
 .nav{position:fixed;z-index:6;inset:auto 0 0;height:var(--nav);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:content-box;background:#000;border-top:1px solid #1f1f1f;
   display:grid;grid-template-columns:repeat(5,1fr);align-items:center;
@@ -721,6 +759,29 @@ const POSTS = [
    "cls": "top"
   },
   "audio": "media/a_Wallpaper.mp3"
+ },
+ {
+  "when": "22.12.2025",
+  "media": [],
+  "wrap": {
+   "t": "w4",
+   "h": "<span class=\"k rv\" style=\"--d:0\">mexiko wrapped</span><h2 class=\"rv\" style=\"--d:1\">18 tage.</h2><div class=\"stats rv\" style=\"--d:3\"><div><b>390</b><span>fotos</span></div><div><b>74</b><span>videos</span></div><div><b>1</b><span>pyramide</span></div><div><b>141</b><span>fotos an einem tag</span></div></div><p class=\"rv\" style=\"--d:5\">lieblingsfarbe vor ort: schwarz. bei 30 grad.</p>"
+  },
+  "desc": "05.–22.12. alles gezählt.",
+  "tags": "#mexikowrapped",
+  "song": "Carefree – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "141 an einem tag. ich sag nichts",
+    "jetzt"
+   ]
+  ],
+  "likes": 3400,
+  "saves": 341,
+  "shares": 13,
+  "audio": "media/a_Carefree.mp3"
  },
  {
   "when": "23.12.2025",
@@ -1397,13 +1458,13 @@ const POSTS = [
    }
   ],
   "desc": "es wurden 40.",
-  "tags": "#kreta #abreise",
+  "tags": "#kreta #urlaubsmodus",
   "song": "Life of Riley – Kevin MacLeod (incompetech.com) · CC BY 4.0",
   "comments": [
    [
     "🫶",
     "unur",
-    "wir haben den flieger trotzdem erwischt",
+    "frühstück gab es trotzdem",
     "jetzt"
    ]
   ],
@@ -1413,7 +1474,7 @@ const POSTS = [
   "ov": {
    "lines": [
     "30.06.",
-    "abreisetag.",
+    "urlaub, tag 11.",
     "sie: noch 5 minuten."
    ],
    "cls": "top"
@@ -1474,6 +1535,29 @@ const POSTS = [
   "likes": 2092,
   "saves": 368,
   "shares": 19
+ },
+ {
+  "when": "03.07.2026",
+  "media": [],
+  "wrap": {
+   "t": "w5",
+   "h": "<span class=\"k rv\" style=\"--d:0\">kreta wrapped</span><h2 class=\"rv\" style=\"--d:1\">2 wochen.</h2><div class=\"stats rv\" style=\"--d:3\"><div><b>96</b><span>fotos</span></div><div><b>30</b><span>videos</span></div><div><b>alle</b><span>katzen begrüßt</span></div><div><b>täglich</b><span>pool</span></div></div><p class=\"rv\" style=\"--d:5\">sonnenbrille: immer auf dem kopf. nie auf den augen.</p>"
+  },
+  "desc": "20.06.–03.07. ergebnisse liegen vor.",
+  "tags": "#kretawrapped",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "nächstes jahr wieder",
+    "jetzt"
+   ]
+  ],
+  "likes": 3100,
+  "saves": 382,
+  "shares": 16,
+  "audio": "media/a_Bossa_Antigua.mp3"
  },
  {
   "when": "10.07.2026",
@@ -2066,6 +2150,213 @@ const POSTS = [
    "cls": "top"
   },
   "audio": "media/a_Carefree.mp3"
+ },
+ {
+  "when": "07.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w3",
+   "h": "<span class=\"k rv\" style=\"--d:0\">lissabon wrapped</span><h2 class=\"rv\" style=\"--d:1\">6 tage.</h2><div class=\"stats rv\" style=\"--d:3\"><div><b>47</b><span>fotos</span></div><div><b>42</b><span>videos</span></div><div><b>1</b><span>atlantik</span></div><div><b>zu viele</b><span>hügel</span></div></div><p class=\"rv\" style=\"--d:5\">fast so viele videos wie fotos. lissabon muss man filmen.</p>"
+  },
+  "desc": "02.–07.11. die beine erinnern sich.",
+  "tags": "#lissabonwrapped",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "die tram hätten wir nehmen können",
+    "jetzt"
+   ]
+  ],
+  "likes": 2900,
+  "saves": 423,
+  "shares": 19,
+  "audio": "media/a_Bossa_Antigua.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w1",
+   "h": "<span class=\"k rv\" style=\"--d:0\">15.11.2026</span><h2 class=\"rv\" style=\"--d:1\">dein jahr.\nwrapped.</h2><p class=\"rv\" style=\"--d:2\">21.11.2025 bis heute. wir haben alles gezählt. ja, alles.</p>"
+  },
+  "desc": "jetzt kommen die zahlen.",
+  "tags": "#wrapped #marina",
+  "song": "Hyperfun – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "weiter wischen",
+    "jetzt"
+   ]
+  ],
+  "likes": 5200,
+  "saves": 464,
+  "shares": 22,
+  "audio": "media/a_Hyperfun.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w2",
+   "h": "<span class=\"k rv\" style=\"--d:0\">fotos &amp; videos</span><div class=\"num rv\" style=\"--d:1\" data-n=\"1027\">0</div><span class=\"unit rv\" style=\"--d:2\">fotos. dazu 195 videos.</span><p class=\"rv\" style=\"--d:3\">fast drei fotos pro tag. du bist auf vielen. der rest: essen und himmel.</p>"
+  },
+  "desc": "speicher: voll. reue: keine.",
+  "tags": "#wrapped",
+  "song": "Easy Lemon – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "und das sind nur die guten",
+    "jetzt"
+   ]
+  ],
+  "likes": 4800,
+  "saves": 505,
+  "shares": 25,
+  "audio": "media/a_Easy_Lemon.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w3",
+   "h": "<span class=\"k rv\" style=\"--d:0\">dein top-tag</span><div class=\"num rv\" style=\"--d:1\" data-n=\"141\">0</div><span class=\"unit rv\" style=\"--d:2\">fotos an einem tag.</span><div class=\"pic rv\" style=\"--d:3;background-image:url(media/c05_2.jpg)\"></div><p class=\"rv\" style=\"--d:4\">10.12., chichén itzá. bestellt war: eins.</p>"
+  },
+  "desc": "platz 2: 12.12., cenote. 71 fotos, 37 videos.",
+  "tags": "#wrapped #chichenitza",
+  "song": "Fluffing a Duck – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ich hab nur gemacht, was du gesagt hast",
+    "jetzt"
+   ]
+  ],
+  "likes": 5600,
+  "saves": 546,
+  "shares": 28,
+  "audio": "media/a_Fluffing_a_Duck.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w6",
+   "h": "<span class=\"k rv\" style=\"--d:0\">deine top-monate</span><h2 class=\"rv\" style=\"--d:1\">dezember.</h2><div class=\"bars rv\" style=\"--d:2\"><div><i class=\"\" style=\"--h:3%\"></i><span>n</span></div><div><i class=\"hi\" style=\"--h:82%\"></i><span>d</span></div><div><i class=\"\" style=\"--h:7%\"></i><span>j</span></div><div><i class=\"\" style=\"--h:3%\"></i><span>f</span></div><div><i class=\"\" style=\"--h:7%\"></i><span>m</span></div><div><i class=\"\" style=\"--h:8%\"></i><span>a</span></div><div><i class=\"\" style=\"--h:16%\"></i><span>m</span></div><div><i class=\"\" style=\"--h:20%\"></i><span>j</span></div><div><i class=\"\" style=\"--h:21%\"></i><span>j</span></div><div><i class=\"\" style=\"--h:8%\"></i><span>a</span></div><div><i class=\"\" style=\"--h:11%\"></i><span>s</span></div><div><i class=\"\" style=\"--h:17%\"></i><span>o</span></div><div><i class=\"\" style=\"--h:10%\"></i><span>n</span></div></div><p class=\"rv\" style=\"--d:3\">396 fotos. mexiko hat den schnitt ruiniert.</p>"
+  },
+  "desc": "platz 2: juli. platz 3: juni. sommer halt.",
+  "tags": "#wrapped",
+  "song": "Investigations – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "februar: 17. wir waren beschäftigt",
+    "jetzt"
+   ]
+  ],
+  "likes": 3900,
+  "saves": 587,
+  "shares": 31,
+  "audio": "media/a_Investigations.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w4",
+   "h": "<span class=\"k rv\" style=\"--d:0\">deine top-reiseziele</span><ol class=\"rv\" style=\"--d:1\"><li><i>1</i>mexiko<small>18 tage</small></li><li><i>2</i>kreta<small>14 tage</small></li><li><i>3</i>lissabon<small>6 tage</small></li></ol><div class=\"num rv\" style=\"--d:2\" data-n=\"38\">0</div><span class=\"unit rv\" style=\"--d:3\">tage weg.</span><p class=\"rv\" style=\"--d:4\">koffer: immer zu voll.</p>"
+  },
+  "desc": "nächstes jahr: platz 4.",
+  "tags": "#wrapped #reisen",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "wohin?",
+    "jetzt"
+   ]
+  ],
+  "likes": 4400,
+  "saves": 628,
+  "shares": 34,
+  "audio": "media/a_Bossa_Antigua.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w2",
+   "h": "<span class=\"k rv\" style=\"--d:0\">deine top-farbe</span><h2 class=\"rv\" style=\"--d:1\">schwarz.</h2><div class=\"sw rv\" style=\"--d:2\"><i></i><i></i><i></i><i></i><i class=\"g\"></i><i></i></div><p class=\"rv\" style=\"--d:3\">mexiko, kreta, 30 grad. konsequent. einmal silbergrau, am 02.06.</p>"
+  },
+  "desc": "die ausnahme bestätigt die regel.",
+  "tags": "#wrapped #allblack",
+  "song": "Monkeys Spinning Monkeys – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "steht dir. alles",
+    "jetzt"
+   ]
+  ],
+  "likes": 4100,
+  "saves": 669,
+  "shares": 37,
+  "audio": "media/a_Monkeys_Spinning_Monkeys.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w1",
+   "h": "<span class=\"k rv\" style=\"--d:0\">dein soundtrack</span><h2 class=\"rv\" style=\"--d:1\">top-songs.</h2><ol class=\"rv\" style=\"--d:2\"><li><i>1</i>bossa antigua<small>9×</small></li><li><i>2</i>easy lemon<small>9×</small></li><li><i>3</i>wallpaper<small>8×</small></li><li><i>4</i>hyperfun<small>5×</small></li><li><i>5</i>carefree<small>5×</small></li></ol><p class=\"rv\" style=\"--d:3\">100 % kevin macleod. kennst du nicht. hat dich trotzdem das ganze jahr begleitet.</p>"
+  },
+  "desc": "ton an, falls noch nicht.",
+  "tags": "#wrapped #soundtrack",
+  "song": "Sneaky Snitch – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "kevin, falls du das liest: danke",
+    "jetzt"
+   ]
+  ],
+  "likes": 3600,
+  "saves": 710,
+  "shares": 40,
+  "audio": "media/a_Sneaky_Snitch.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w6",
+   "h": "<span class=\"k rv\" style=\"--d:0\">dein persönlichkeitstyp</span><h2 class=\"rv\" style=\"--d:1\">main\ncharacter.</h2><p class=\"rv\" style=\"--d:2\">die kamera war ein jahr lang auf dich gerichtet. sorry, nicht sorry.</p><span class=\"unit rv\" style=\"--d:3\">alles gute zum geburtstag, marina.</span>"
+  },
+  "desc": "nächstes jahr wird wieder gezählt.",
+  "tags": "#wrapped #maincharacter",
+  "song": "Carefree – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ich bleib hinter der kamera",
+    "jetzt"
+   ]
+  ],
+  "likes": 9900,
+  "saves": 751,
+  "shares": 43,
+  "audio": "media/a_Carefree.mp3"
  }
 ];
 
@@ -2085,14 +2376,14 @@ const ov=o=>o?`<div class="ov ${o.cls||''}">${o.lines.map(l=>`<span>${esc(l)}</s
 const feed=document.getElementById('feed');
 POSTS.forEach((p,i)=>{
   const s=document.createElement('section');
-  s.className='post';s.setAttribute('aria-label',`Video ${i+1} von ${POSTS.length}`);
+  s.className='post'+(p.wrap?' wrapped':'');s.setAttribute('aria-label',`Video ${i+1} von ${POSTS.length}`);
   const m=p.media||[];
   const one=x=>x.type==='video'
     ?`<img class="blur" src="${x.poster}" alt=""><img class="photo vposter" src="${x.poster}" alt=""><video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
     :`<img class="blur" src="${x.src.replace('.jpg','_b.jpg')}" alt="" decoding="async"><img class="photo" src="${x.src}" alt="" decoding="async"${i>1?' loading="lazy"':''}>`;
   const media=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
   const isVid=m.some(x=>x.type==='video');
-  s.innerHTML=`<div class="bg ${p.bg||''}${p.dim?' dim':''}">${media}</div><div class="shade"></div>
+  s.innerHTML=`<div class="bg ${p.bg||''}${p.dim?' dim':''}">${p.wrap?`<div class="wrap ${p.wrap.t}">${p.wrap.h}</div>`:media}</div>${p.wrap?'':'<div class="shade"></div>'}
   ${ov(p.ov)}${ov(p.ov2)}
   ${m.length>1?`<div class="dots">${m.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div><div class="count">1/${m.length}</div>`:''}
   <button class="mute" aria-label="Ton an">🔇 Ton an</button>${isVid?`<div class="prog" role="slider" tabindex="0" aria-label="Video vorspulen" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><b></b></div><div class="time" hidden></div>`:''}
@@ -2148,6 +2439,15 @@ POSTS.forEach((p,i)=>{
     g.addEventListener('click',()=>{g.hidden=true;u.hidden=false;setLike(true);confetti(s);});}
 });
 
+
+// Wrapped: Animation und Hochzählen, sobald die Karte sichtbar ist
+const wio=new IntersectionObserver(es=>es.forEach(e=>{
+  e.target.classList.toggle('in',e.isIntersecting);
+  if(!e.isIntersecting)return;
+  e.target.querySelectorAll('[data-n]').forEach(el=>{const n=+el.dataset.n,t0=performance.now(),D=1300;
+    (function f(t){const k=Math.min(1,(t-t0)/D),v=Math.round(n*(1-Math.pow(1-k,3)));el.textContent=v.toLocaleString('de-DE');if(k<1)requestAnimationFrame(f);})(t0);});
+}),{threshold:.6});
+document.querySelectorAll('.post.wrapped').forEach(x=>wio.observe(x));
 // Videos: nur der sichtbare Post spielt; Fortschrittsbalken; Tippen pausiert
 let soundOn=false;
 function togglePause(s){const v=s.querySelector('video');if(!v)return;let pi=s.querySelector('.paused');
