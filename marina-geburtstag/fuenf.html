@@ -23,8 +23,8 @@ header h1{margin:0;text-align:center;font-size:22px;font-weight:800;letter-spaci
 header h1 small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
 .icon{all:unset;cursor:pointer;width:40px;height:40px;display:grid;place-items:center;border-radius:10px;color:var(--fg);font-size:20px;font-weight:700}
 .icon:focus-visible,.k:focus-visible,.btn:focus-visible{outline:2px solid var(--hit);outline-offset:2px}
-.progress{display:flex;justify-content:center;gap:6px}
-.progress i{width:26px;height:6px;border-radius:3px;background:var(--line)}
+.progress{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.progress i{width:22px;height:6px;border-radius:3px;background:var(--line)}
 .progress i.done{background:var(--hit)}
 .progress i.lost{background:var(--near)}
 .progress i.now{background:var(--fg)}
@@ -89,13 +89,15 @@ canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
 <script>
 // Lösungswörter mit Tipp (nach 3 Fehlversuchen) und Text nach dem Lösen
 const LEVELS = [
-  // Kreta: der Weg zwischen Olivenbäumen, 02.07. (du vorne, ich hinten)
-  {w:"OLIVE", tip:"kreta, 02.07. links und rechts vom weg.", win:"olive. kreta, der weg am abend. du vorne, ich hinten."},
-  // Popcorn: Mankell, Wallander, Krimiabende
-  {w:"YSTAD", tip:"dort ermittelt dein lieblingskommissar.", win:"ystad. wallanders stadt. geschenk 1: die popcornmaschine. für krimi-abende."},
-  // Silber: das silbergraue Tuch vom 02.06.
-  {w:"SCHAL", tip:"02.06. silbergrau.", win:"schal. silbergrau wie geschenk 2: dein wax2silver-kurs."},
-  // München
+  // chronologisch durch das jahr, passend zu den fotos im feed
+  {w:"LIANE", tip:"12.12. hängen von oben ins wasser.", win:"liane. die höhle in mexiko. du rein, ich kamera."},
+  {w:"TANNE", tip:"24.12. stand im wohnzimmer.", win:"tanne. weihnachten 2025."},
+  {w:"SCHAL", tip:"02.06. silbergrau.", win:"schal. silbergrau. passend dazu ein geschenk: dein wax2silver-kurs."},
+  {w:"KATZE", tip:"kreta, 28.06. die eigentlichen stars.", win:"katze. kreta. du hast jede begrüßt."},
+  {w:"OLIVE", tip:"kreta, 02.07. links und rechts vom weg.", win:"olive. der weg am abend. du vorne, ich hinten."},
+  {w:"DECKE", tip:"01.10. ab da: immer.", win:"decke. saison eröffnet."},
+  {w:"WELLE", tip:"05.11. atlantik. kam immer wieder.", win:"welle. du am atlantik, ich hab gefilmt."},
+  {w:"YSTAD", tip:"dort ermittelt dein lieblingskommissar.", win:"ystad. wallanders stadt. passend dazu ein geschenk: die popcornmaschine. für krimi-abende."},
   {w:"BREZN", tip:"hier zum frühstück. mundart.", win:"brezn. münchen. hier feiern wir dich."}
 ];
 const ROWS = 6, COLS = 5;
@@ -104,8 +106,8 @@ const $ = id => document.getElementById(id);
 let state = load() || {level:0, results:[], guesses:[]};
 let cur = Array(COLS).fill(""), pos = 0, busy = false;
 
-function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina")); } catch(e){ return null; } }
-function save(){ try { localStorage.setItem("fuenf-marina", JSON.stringify(state)); } catch(e){} }
+function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina-v2")); } catch(e){ return null; } }
+function save(){ try { localStorage.setItem("fuenf-marina-v2", JSON.stringify(state)); } catch(e){} }
 
 // Bewertung wie üblich: erst exakte Treffer, dann restliche Buchstaben nach Häufigkeit
 function score(guess, sol){
