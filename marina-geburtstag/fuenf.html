@@ -76,7 +76,7 @@ canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
 <div class="app">
   <header>
     <button class="icon" id="helpBtn" aria-label="Spielregeln">?</button>
-    <h1>Rate mal<small>für marina</small></h1>
+    <h1>Fünf<small>für marina</small></h1>
     <button class="icon" id="resetBtn" aria-label="Von vorne">↺</button>
   </header>
   <div class="progress" id="progress" aria-label="Fortschritt"></div>
@@ -89,20 +89,11 @@ canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
 <script>
 // Lösungswörter mit Tipp (nach 3 Fehlversuchen) und Text nach dem Lösen
 const LEVELS = [
-  // Mexiko
+  // immer 5 buchstaben, 6 versuche
   {w:"TACOS", tip:"mexiko. mit der hand gegessen.", win:"tacos. mexiko, dezember."},
-  {w:"CENOTE", tip:"12.12. schwimmen unter der erde.", win:"cenote. du im wasser, ich mit der kamera."},
-  // Kreta
-  {w:"KRETA", tip:"insel, juni 2026.", win:"kreta. 30 grad, du in schwarz."},
-  {w:"MEER", tip:"kreta. rundherum.", win:"meer. kreta, juni."},
-  // Popcorn: Reality-TV-Abende
-  {w:"REALITY", tip:"unser abendprogramm. ___ tv.", win:"reality tv. ohne geht der abend nicht."},
-  {w:"POPCORN", tip:"gehört zum reality tv dazu.", win:"popcorn. passend dazu ein geschenk: die popcornmaschine."},
-  // Silber: Schmuck selber machen
-  {w:"SCHMUCK", tip:"machst du bald selbst.", win:"schmuck. bald selbst gemacht."},
-  {w:"SILBER", tip:"925.", win:"silber. passend dazu ein geschenk: dein wax2silver-kurs."},
-  // München
-  {w:"DAHEIM", tip:"münchen. für uns.", win:"daheim. münchen. hier feiern wir dich."}
+  {w:"KRETA", tip:"insel, juni 2026. meer rundherum.", win:"kreta. das meer, 30 grad, du in schwarz."},
+  {w:"TRASH", tip:"___-tv. unser abendprogramm.", win:"trash-tv mit popcorn. passend dazu ein geschenk: die popcornmaschine."},
+  {w:"SKODA", tip:"bringt uns überall hin.", win:"skoda. bringt uns überall hin."}
 ];
 const ROWS = 6; let COLS = 5;
 const KEYS = ["QWERTZUIOP", "ASDFGHJKL", "↵YXCVBNM⌫"];
@@ -110,8 +101,8 @@ const $ = id => document.getElementById(id);
 let state = load() || {level:0, results:[], guesses:[]};
 let cur = Array(COLS).fill(""), pos = 0, busy = false;
 
-function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina-v3")); } catch(e){ return null; } }
-function save(){ try { localStorage.setItem("fuenf-marina-v3", JSON.stringify(state)); } catch(e){} }
+function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina-v4")); } catch(e){ return null; } }
+function save(){ try { localStorage.setItem("fuenf-marina-v4", JSON.stringify(state)); } catch(e){} }
 
 // Bewertung wie üblich: erst exakte Treffer, dann restliche Buchstaben nach Häufigkeit
 function score(guess, sol){
@@ -237,7 +228,7 @@ function help(){
   $("card").className = "card";
   $("card").innerHTML = `<h2>so geht's</h2>
     <div class="howto">
-      <div>errate das wort. die felder zeigen, wie lang es ist. du hast 6 versuche. ${LEVELS.length} wörter, alle aus deinem jahr.</div>
+      <div>errate das wort mit 5 buchstaben. du hast 6 versuche. ${LEVELS.length} wörter, alle aus deinem jahr.</div>
       <div class="ex"><b class="hit">B</b><b>L</b><b>U</b><b>M</b><b>E</b></div><div>grün: richtiger buchstabe, richtiger platz.</div>
       <div class="ex"><b>T</b><b class="near">A</b><b>N</b><b>T</b><b>E</b></div><div>gelb: kommt vor, aber woanders.</div>
       <div class="ex"><b>R</b><b>A</b><b class="miss">D</b><b>I</b><b>O</b></div><div>grau: kommt nicht vor.</div>
