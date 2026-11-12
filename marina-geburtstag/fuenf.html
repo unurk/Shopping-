@@ -230,9 +230,10 @@ function finale(){
   const wins = state.results.filter(r=>r==="win").length;
   $("card").className = "card";
   $("card").innerHTML = `<h2>${wins} von ${LEVELS.length}.</h2>
-    <p>${wins===LEVELS.length ? "alle. respekt." : "reicht völlig."}<br>alles gute, marina.</p>
-    <div class="word">${["H","A","N","D","Y"].map(c=>`<b>${c}</b>`).join("")}</div>
-    <p>weg damit. geschenke.</p>
+    <p>${wins===LEVELS.length ? "alle. respekt." : "reicht völlig."}<br>alles gute zum geburtstag, marina.</p>
+    <div class="word">${["F","R","E","I"].map(c=>`<b>${c}</b>`).join("")}</div>
+    <p>freigeschaltet: dein jahr als feed.<br>nov 2025 bis heute. einfach scrollen.</p>
+    <a class="btn" id="feedBtn" href="https://claude.ai/artifact/BaPv5mynUMj5QnWTjsgcy5" target="_blank" rel="noopener">feed öffnen</a>
     <button class="btn ghost" id="againBtn">nochmal spielen</button>`;
   $("sheet").hidden = false; $("msg").innerHTML = ""; if(wins) confetti();
   $("againBtn").addEventListener("click", reset);
@@ -242,7 +243,7 @@ function help(){
   $("card").className = "card";
   $("card").innerHTML = `<h2>so geht's</h2>
     <div class="howto">
-      <div>errate das wort mit 5 buchstaben. du hast 6 versuche. ${LEVELS.length} wörter, alle aus deinem jahr.</div>
+      <div>errate das wort mit 5 buchstaben. du hast 6 versuche. ${LEVELS.length} wörter. wenn du alle hast, wartet am ende eine überraschung.</div>
       <div class="ex"><b class="hit">B</b><b>L</b><b>U</b><b>M</b><b>E</b></div><div>grün: richtiger buchstabe, richtiger platz.</div>
       <div class="ex"><b>T</b><b class="near">A</b><b>N</b><b>T</b><b>E</b></div><div>gelb: kommt vor, aber woanders.</div>
       <div class="ex"><b>R</b><b>A</b><b class="miss">D</b><b>I</b><b>O</b></div><div>grau: kommt nicht vor. diese buchstaben sind danach gesperrt.</div>
