@@ -89,14 +89,14 @@ canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
 <script>
 // Lösungswörter mit Tipp (nach 3 Fehlversuchen) und Text nach dem Lösen
 const LEVELS = [
-  // Kreta
-  {w:"KRETA", tip:"insel. juni. 30 grad.", win:"kreta. du in schwarz, ich am schwitzen."},
-  // Popcorn
-  {w:"PLOPP", tip:"das geräusch, wenn mais aufgeht.", win:"popcorn. geschenk 1 freigeschaltet: die popcornmaschine."},
-  // Silber
-  {w:"RINGE", tip:"aus silber. trägt man am finger. mehrzahl.", win:"silber. geschenk 2 freigeschaltet: dein wax2silver-kurs."},
+  // Kreta: der Weg zwischen Olivenbäumen, 02.07. (du vorne, ich hinten)
+  {w:"OLIVE", tip:"kreta, 02.07. links und rechts vom weg.", win:"olive. kreta, der weg am abend. du vorne, ich hinten."},
+  // Popcorn: Mankell, Wallander, Krimiabende
+  {w:"YSTAD", tip:"dort ermittelt dein lieblingskommissar.", win:"ystad. wallanders stadt. geschenk 1: die popcornmaschine. für krimi-abende."},
+  // Silber: das silbergraue Tuch vom 02.06.
+  {w:"SCHAL", tip:"02.06. silbergrau.", win:"schal. silbergrau wie geschenk 2: dein wax2silver-kurs."},
   // München
-  {w:"BREZN", tip:"münchner gebäck. auf bayrisch.", win:"münchen. hier feiern wir dich."}
+  {w:"BREZN", tip:"hier zum frühstück. mundart.", win:"brezn. münchen. hier feiern wir dich."}
 ];
 const ROWS = 6, COLS = 5;
 const KEYS = ["QWERTZUIOP", "ASDFGHJKL", "↵YXCVBNM⌫"];
@@ -159,7 +159,7 @@ function updateKeys(){
 function say(t, ms=1600){ const m=$("msg"); m.innerHTML = `<span>${t}</span>`; clearTimeout(say.t); say.t=setTimeout(hintArea, ms); }
 function hintArea(){
   const lv = LEVELS[state.level], m = $("msg"); if(!lv){ m.innerHTML=""; return; }
-  if(state.guesses.length>=3){ m.innerHTML = `<button class="hint" id="hintBtn">tipp?</button>`;
+  if(state.guesses.length>=4){ m.innerHTML = `<button class="hint" id="hintBtn">tipp?</button>`;
     $("hintBtn").addEventListener("click", ()=>{ m.innerHTML = `<span>${lv.tip}</span>`; }); }
   else m.innerHTML = `<span style="background:none;color:var(--muted);font-weight:600">runde ${state.level+1} von ${LEVELS.length}</span>`;
 }
@@ -230,7 +230,7 @@ function help(){
       <div class="ex"><b>T</b><b class="near">A</b><b>N</b><b>T</b><b>E</b></div><div>gelb: kommt vor, aber woanders.</div>
       <div class="ex"><b>R</b><b>A</b><b class="miss">D</b><b>I</b><b>O</b></div><div>grau: kommt nicht vor.</div>
       <div>tipp auf ein feld, um genau dort einen buchstaben einzusetzen.</div>
-      <div>nach 3 versuchen gibt's einen tipp.</div>
+      <div>nach 4 versuchen gibt's einen tipp. einen kleinen.</div>
     </div>
     <button class="btn" id="okBtn">los</button>`;
   $("sheet").hidden = false; $("okBtn").addEventListener("click", ()=>{ $("sheet").hidden = true; });
