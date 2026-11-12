@@ -89,10 +89,14 @@ canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
 <script>
 // Lösungswörter mit Tipp (nach 3 Fehlversuchen) und Text nach dem Lösen
 const LEVELS = [
-  // immer 5 buchstaben, 6 versuche
+  // immer 5 buchstaben, 6 versuche – persönliche und zufällige wörter im wechsel
+  {w:"SONNE", tip:"scheint. manchmal.", win:"sonne. zum aufwärmen."},
   {w:"TACOS", tip:"mexiko. mit der hand gegessen.", win:"tacos. mexiko, dezember."},
+  {w:"REGEN", tip:"fällt von oben. nass.", win:"regen. gut, dass wir drinnen sind."},
   {w:"KRETA", tip:"insel, juni 2026. meer rundherum.", win:"kreta. das meer, 30 grad, du in schwarz."},
+  {w:"DECKE", tip:"abends auf dem sofa. immer.", win:"decke. saison eröffnet."},
   {w:"TRASH", tip:"___-tv. unser abendprogramm.", win:"trash-tv mit popcorn. passend dazu ein geschenk: die popcornmaschine."},
+  {w:"REISE", tip:"mexiko, kreta, portugal. alles eine ___.", win:"reise. nächste bitte bald."},
   {w:"SKODA", tip:"bringt uns überall hin.", win:"skoda. bringt uns überall hin."}
 ];
 const ROWS = 6; let COLS = 5;
@@ -101,8 +105,8 @@ const $ = id => document.getElementById(id);
 let state = load() || {level:0, results:[], guesses:[]};
 let cur = Array(COLS).fill(""), pos = 0, busy = false;
 
-function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina-v4")); } catch(e){ return null; } }
-function save(){ try { localStorage.setItem("fuenf-marina-v4", JSON.stringify(state)); } catch(e){} }
+function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina-v5")); } catch(e){ return null; } }
+function save(){ try { localStorage.setItem("fuenf-marina-v5", JSON.stringify(state)); } catch(e){} }
 
 // Bewertung wie üblich: erst exakte Treffer, dann restliche Buchstaben nach Häufigkeit
 function score(guess, sol){
