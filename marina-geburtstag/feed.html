@@ -193,93 +193,1446 @@ a.gift{text-decoration:none;top:66%}
 <div class="toast" id="toast" hidden></div>
 
 <script>
-const M = x => ({type:"image", src:`media/${x}.jpg`});
+// Chronologischer Rückblick Nov 2025 → Nov 2026 (erzeugt aus build_v8.py). Musik: Kevin MacLeod, CC BY 4.0
 const POSTS = [
-  {media:[M("hero")], ov:{lines:["es ist ihr geburtstag"], cls:"big top"},
-   desc:"heute nur ein account auf deiner fyp.", tags:"#fyp", likes:1511, saves:211, shares:15, when:"15.11.",
-   comments:[["🫶","unur","erster","jetzt"]]},
-  {media:[{type:"video",src:"media/jahr2.mp4",poster:"media/jahr2.jpg"}],
-   desc:"nov → nov.", tags:"#recap", likes:3650, saves:365, shares:12, when:"15.11.",
-   comments:[["🫶","unur","der rest kommt beim wischen","jetzt"]]},
-  {media:[{type:"video",src:"media/v_mexiko.mp4",poster:"media/v_mexiko.jpg"}],
-   desc:"dezember.", tags:"#mexiko", likes:2512, saves:120, shares:9, when:"12.12.2025",
-   comments:[["🫶","unur","ich war der kameramann. wie immer","jetzt"]]},
-  {media:[{type:"video",src:"media/v_nacht.mp4",poster:"media/v_nacht.jpg"},M("night1"),M("night2")], ov:{lines:["ich jeden abend um 21 uhr:"], cls:""},
-   desc:"nur noch ein video.", tags:"#meeverynightat9pm", likes:2100, saves:140, shares:21, when:"15.11.",
-   comments:[["🫶","unur","gilt auch für mich","jetzt"]]},
-  {bg:"t1", dim:1, media:[M("bg_10j")], ov:{lines:["sag mir, dass wir seit","über 10 jahren","zusammen sind,","ohne es zu sagen"], cls:"plain big"},
-   desc:"du schaust aus dem fenster, ich mach ein selfie. seit über 10 jahren.", tags:"#tellmewithouttellingme", likes:3653, saves:300, shares:10, when:"15.11.",
-   comments:[["🫶","unur","du hast nicht mal hergeschaut","jetzt"]]},
-  {bg:"t2", dim:1, media:[{type:"video",src:"media/v_strand.mp4",poster:"media/v_strand.jpg"}], ov:{lines:["pov: du liest mankell","nur am strand"], cls:""},
-   gift:{label:"Geschenk 1 freischalten", title:"die popcornmaschine", note:"für wallander-abende auf dem sofa"},
-   desc:"der nächste strand ist weit weg. also: sofa.", tags:"#wallander #booktok", likes:847, saves:66, shares:3, when:"15.11.",
-   comments:[["🫶","unur","ich mach das popcorn","jetzt"]]},
-  {bg:"t3", media:[M("fit2")], ov:{lines:["der algorithmus sagt, du magst:","gunmetal ✔︎","silbergrau ✔︎","handgemacht ✔︎"], cls:"low"},
-   desc:"stimmt.", tags:"#gunmetal #handmade", likes:2311, saves:190, shares:7, when:"15.11.",
-   comments:[["🫶","unur","der algorithmus bin ich","jetzt"]]},
-  {bg:"t5", dim:1, media:[M("bg_silber")], ov:{lines:["schmuck im museum.","deiner kommt bald."], cls:"dark"},
-   gift:{label:"Geschenk 2 freischalten", title:"dein wax2silver-kurs", note:"aus wachs wird 925er silber"},
-   desc:"wachs schnitzen, in silber gießen. diesmal machst du ihn selbst.", tags:"#wax2silver #schmuck", likes:5925, saves:925, shares:25, when:"15.11.",
-   comments:[["🫶","unur","foto davon bitte","jetzt"]]},
-  {bg:"t6", dim:1, media:[M("bg_diy")], ov:{lines:["wenn deine garne endlich","ein zuhause haben"], cls:""},
-   gift:{label:"Geschenk 3 freischalten", title:"dein diy-turm", note:"selbst bauen, selbst befüllen"},
-   desc:"die garne aus der barnabitengasse liegen überall. ab heute nicht mehr.", tags:"#sticken #diy", likes:968, saves:120, shares:5, when:"15.11.",
-   comments:[["🫶","unur","übung hab ich ja. siehe foto","jetzt"]]},
-  {media:[{type:"video",src:"media/v_auto.mp4",poster:"media/v_auto.jpg"}],
-   desc:"smoothie-pause.", tags:"#roadtrip", likes:711, saves:30, shares:1, when:"02.07.",
-   comments:[["🫶","unur","dj-wünsche bitte schriftlich","jetzt"]]},
-  {bg:"t7", dim:1, media:[{type:"video",src:"media/v_ende.mp4",poster:"media/v_ende.jpg"}], ov:{lines:["du hast das ende","deiner fyp erreicht."], cls:"plain big"}, ov2:{lines:["handy weg.","geschenke."], cls:"low"},
-   desc:"alles gute, marina.", tags:"#fyp", likes:1000000, saves:1, shares:0, when:"15.11.",
-   comments:[["🫶","unur","dreh dich um","jetzt"]]}
-];// Musik: Kevin MacLeod (incompetech.com), lizenziert unter CC BY 4.0
-const KM=' – Kevin MacLeod (incompetech.com) · CC BY 4.0';
-const SONGS=[["Hyperfun"],["Carefree",1],["Bossa Antigua",1],["Wallpaper"],["Easy Lemon"],["Sneaky Snitch",1],
-  ["Monkeys Spinning Monkeys"],["Hyperfun"],["Life of Riley"],["Wallpaper",1],["Carefree",1]];
-POSTS.forEach((p,i)=>{const [t,inVid]=SONGS[i];p.song=t+KM;if(!inVid)p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;});
-// Zusätzliche Beiträge, jeweils nach einem bestehenden eingefügt
-const orig=POSTS.slice();
-const K=(pre,n)=>Array.from({length:n},(_,i)=>M(`${pre}${i+1}`));
-const song=(p,t)=>{p.song=t+KM;p.audio=`media/a_${t.replace(/ /g,'_')}.mp3`;return p;};
-const after=(i,...ps)=>POSTS.splice(POSTS.indexOf(orig[i])+1,0,...ps);
-const vsong=(p,t)=>{p.song=t+KM;return p;}; // Musik steckt schon im Video
-const VID=n=>({type:"video",src:`media/${n}.mp4`,poster:`media/${n}.jpg`});
-after(1, song({media:K("fakt",8), ov:{lines:["fakten über marina"], cls:"top"},
-  desc:"liste unvollständig.", tags:"#girlfriendfacts", likes:8888, saves:808, shares:8, when:"15.11.",
-  comments:[["🫶","unur","fortsetzung folgt","jetzt"]]},"Carefree"));
-after(2, song({media:K("pyr",10), ov:{lines:["ich: soll ich ein foto","vor der pyramide machen?","du: ja, eins."], cls:""},
-  desc:"es wurden zehn.", tags:"#pov #mexiko", likes:4410, saves:310, shares:44, when:"10.12.2025",
-  comments:[["🫶","unur","ich hab nicht nein gesagt","jetzt"]]},"Fluffing a Duck"));
-after(5, song({media:[M("fit1"),M("fit3"),M("fit4")], ov:{lines:["outfit check:","schwarz.","schwarz.","schwarz."], cls:""},
-  desc:"konsequent.", tags:"#outfitcheck #allblack", likes:3010, saves:450, shares:12, when:"15.11.",
-  comments:[["🫶","unur","gunmetal zählt als farbe","jetzt"]]},"Hyperfun"));
-after(7, song({media:[M("xmas")], ov:{lines:["weihnachten 2025"], cls:""},
-  desc:"weihnachten.", tags:"#weihnachten", likes:2412, saves:120, shares:3, when:"24.12.2025",
-  comments:[["🫶","unur","frohe weihnachten. elf monate zu spät","jetzt"]]},"Easy Lemon"),
-  song({media:K("us",6), ov:{lines:["wir, in selfies"], cls:"low"},
-  desc:"mein arm war immer dabei.", tags:"#selfies", likes:5205, saves:300, shares:10, when:"15.11.",
-  comments:[["🫶","unur","die besten 6","jetzt"]]},"Life of Riley"),
-  song({media:[{type:"video",src:"media/v_pool.mp4",poster:"media/v_pool.jpg"},...K("kreta",3)], ov:{lines:["kreta, juni"], cls:""},
-  desc:"30 grad. sie in schwarz.", tags:"#kreta", likes:2026, saves:140, shares:6, when:"26.06.",
-  comments:[["🫶","unur","ich hab geschwitzt. sie nicht","jetzt"]]},"Bossa Antigua"),
-  song({media:[VID("v_hund"),M("cat1"),M("cat2"),M("cat3")], ov:{lines:["kreta.","die eigentlichen stars:"], cls:""},
-  desc:"ein hund, mehrere katzen. du hast jeden begrüßt.", tags:"#kreta #hunde #katzen", likes:3120, saves:260, shares:11, when:"28.06.",
-  comments:[["🫶","unur","ich wurde von keinem begrüßt","jetzt"]]},"Fluffing a Duck"));
-after(6, song({bg:"t8", dim:1, media:[M("bg_spiel")], ov:{lines:["neues spiel.","6 wörter.","3 geschenke."], cls:"plain big"},
-  link:{href:"https://claude.ai/artifact/EejowV1QmM7d8yRS8mr6Bw", label:"jetzt spielen"},
-  desc:"du spielst das eh gern. heute halt meine version.", tags:"#wortspiel #rätsel", likes:777, saves:70, shares:7, when:"15.11.",
-  comments:[["🫶","unur","kein tipp von mir. es gibt einen eingebauten","jetzt"]]},"Investigations"));
-after(4, vsong({media:[VID("v_vorne")], ov:{lines:["jeder urlaub:","du vorne.","ich hinten mit der kamera."], cls:""},
-  desc:"kreta, abends.", tags:"#kreta #pov", likes:1620, saves:90, shares:4, when:"02.07.",
-  comments:[["🫶","unur","ich komm ja schon","jetzt"]]},"Life of Riley"));
-after(9, vsong({media:[VID("v_atlantik")], ov:{lines:["portugal, november."], cls:"top"},
-  desc:"du am atlantik. ich hab gefilmt, statt reinzugehen.", tags:"#portugal #atlantik", likes:2205, saves:150, shares:6, when:"05.11.",
-  comments:[["🫶","unur","mir war's zu kalt","jetzt"]]},"Bossa Antigua"),
-  vsong({media:[VID("v_buch")], ov:{lines:["buchhandlung in lissabon."], cls:"top"},
-  desc:"krimis gibt's auch auf portugiesisch.", tags:"#lissabon #booktok", likes:1306, saves:210, shares:9, when:"06.11.",
-  comments:[["🫶","unur","das fahrrad an der decke war das highlight","jetzt"]]},"Easy Lemon"));
-after(8, song({media:[M("spa")], ov:{lines:["bademantel-core"], cls:"low"},
-  desc:"märz. spa. bester dresscode.", tags:"#spaday", likes:1803, saves:96, shares:2, when:"28.03.",
-  comments:[["🫶","unur","bitte wiederholen","jetzt"]]},"Wallpaper"));
+ {
+  "when": "21.11.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c00_1.jpg"
+   }
+  ],
+  "desc": "start: 21. november 2025. du tanzt.",
+  "tags": "#rückblick #fyp",
+  "song": "Hyperfun – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ab hier chronologisch",
+    "jetzt"
+   ]
+  ],
+  "likes": 900,
+  "saves": 40,
+  "shares": 1,
+  "ov": {
+   "lines": [
+    "es ist ihr geburtstag.",
+    "rückblick: dein jahr."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Hyperfun.mp3"
+ },
+ {
+  "when": "05.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c01_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c01_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c01_3.jpg"
+   }
+  ],
+  "desc": "richtung mexiko.",
+  "tags": "#mexiko",
+  "song": "Carefree – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "nächster halt: strand",
+    "jetzt"
+   ]
+  ],
+  "likes": 1633,
+  "saves": 137,
+  "shares": 8,
+  "ov": {
+   "lines": [
+    "05.12.",
+    "abflug."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Carefree.mp3"
+ },
+ {
+  "when": "06.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c02_1.jpg"
+   }
+  ],
+  "desc": "angekommen.",
+  "tags": "#mexiko",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "limonade: groß",
+    "jetzt"
+   ]
+  ],
+  "likes": 2366,
+  "saves": 234,
+  "shares": 15,
+  "ov": {
+   "lines": [
+    "06.12.",
+    "erster abend."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Bossa_Antigua.mp3"
+ },
+ {
+  "when": "07.12.2025",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_strand.mp4",
+    "poster": "media/v_strand.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c03_2.jpg"
+   }
+  ],
+  "desc": "liege, schirm, meer.",
+  "tags": "#strand #booktok",
+  "song": "Sneaky Snitch – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "mehr braucht es nicht",
+    "jetzt"
+   ]
+  ],
+  "likes": 3099,
+  "saves": 331,
+  "shares": 22,
+  "ov": {
+   "lines": [
+    "07.12.",
+    "pov: endlich ein strand",
+    "für deinen mankell"
+   ],
+   "cls": ""
+  }
+ },
+ {
+  "when": "09.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c04_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c04_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c04_3.jpg"
+   }
+  ],
+  "desc": "kirche, christbaum, und du.",
+  "tags": "#mexiko",
+  "song": "Easy Lemon – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "christbaum im t-shirt-wetter",
+    "jetzt"
+   ]
+  ],
+  "likes": 3832,
+  "saves": 428,
+  "shares": 29,
+  "ov": {
+   "lines": [
+    "09.12.",
+    "stadt-tag."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Easy_Lemon.mp3"
+ },
+ {
+  "when": "10.12.2025",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_echo.mp4",
+    "poster": "media/v_echo.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_5.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_6.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_7.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_8.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_9.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_10.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_11.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c05_12.jpg"
+   }
+  ],
+  "desc": "es wurden zehn. plus eins zu zweit.",
+  "tags": "#pov #chichenitza",
+  "song": "Fluffing a Duck – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "das klatschen war fürs echo",
+    "jetzt"
+   ]
+  ],
+  "likes": 4565,
+  "saves": 125,
+  "shares": 6,
+  "ov": {
+   "lines": [
+    "10.12. chichén itzá.",
+    "ich: soll ich ein foto machen?",
+    "du: ja, eins."
+   ],
+   "cls": "low"
+  },
+  "audio": "media/a_Fluffing_a_Duck.mp3"
+ },
+ {
+  "when": "11.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c06_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c06_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c06_3.jpg"
+   }
+  ],
+  "desc": "du vor jeder vitrine. hab ich mir gemerkt.",
+  "tags": "#museum",
+  "song": "Investigations – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "kommt am ende nochmal",
+    "jetzt"
+   ]
+  ],
+  "likes": 1198,
+  "saves": 222,
+  "shares": 13,
+  "ov": {
+   "lines": [
+    "11.12.",
+    "museum."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Investigations.mp3"
+ },
+ {
+  "when": "12.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c07_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c07_2.jpg"
+   }
+  ],
+  "desc": "vor gelb. konsequent.",
+  "tags": "#outfitcheck #allblack",
+  "song": "Hyperfun – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "bild 2 ist das eigentliche highlight",
+    "jetzt"
+   ]
+  ],
+  "likes": 1931,
+  "saves": 319,
+  "shares": 20,
+  "ov": {
+   "lines": [
+    "12.12.",
+    "outfit check: schwarz."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Hyperfun.mp3"
+ },
+ {
+  "when": "12.12.2025",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_cenote.mp4",
+    "poster": "media/v_cenote.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c08_2.jpg"
+   }
+  ],
+  "desc": "12.12. cenote. schwimmweste, but make it fashion.",
+  "tags": "#cenote #mexiko",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ich war der kameramann. wie immer",
+    "jetzt"
+   ]
+  ],
+  "likes": 2664,
+  "saves": 416,
+  "shares": 27
+ },
+ {
+  "when": "19.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c09_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c09_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c09_3.jpg"
+   }
+  ],
+  "desc": "essen, sitzen, schauen.",
+  "tags": "#mexiko",
+  "song": "Wallpaper – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "heimflug wollte keiner",
+    "jetzt"
+   ]
+  ],
+  "likes": 3397,
+  "saves": 113,
+  "shares": 4,
+  "ov": {
+   "lines": [
+    "13.–19.12.",
+    "letzte tage mexiko."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Wallpaper.mp3"
+ },
+ {
+  "when": "23.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c10_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c10_2.jpg"
+   }
+  ],
+  "desc": "jetlag oder dezember. schwer zu sagen.",
+  "tags": "#zuhause",
+  "song": "Wallpaper – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "beides",
+    "jetzt"
+   ]
+  ],
+  "likes": 4130,
+  "saves": 210,
+  "shares": 11,
+  "ov": {
+   "lines": [
+    "23.12.",
+    "wieder zuhause.",
+    "jedes sofa ist ihr sofa."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Wallpaper.mp3"
+ },
+ {
+  "when": "24.12.2025",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c11_1.jpg"
+   }
+  ],
+  "desc": "frohe weihnachten. elf monate zu spät.",
+  "tags": "#weihnachten",
+  "song": "Easy Lemon – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "der baum war echt",
+    "jetzt"
+   ]
+  ],
+  "likes": 4863,
+  "saves": 307,
+  "shares": 18,
+  "ov": {
+   "lines": [
+    "24.12.",
+    "weihnachten."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Easy_Lemon.mp3"
+ },
+ {
+  "when": "04.01.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c12_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c12_2.jpg"
+   }
+  ],
+  "desc": "zwei schatten. und ein bär.",
+  "tags": "#wien",
+  "song": "Life of Riley – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "der bär ist bild 2",
+    "jetzt"
+   ]
+  ],
+  "likes": 1496,
+  "saves": 404,
+  "shares": 25,
+  "ov": {
+   "lines": [
+    "04.01.2026",
+    "spaziergang."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Life_of_Riley.mp3"
+ },
+ {
+  "when": "14.01.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c13_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c13_2.jpg"
+   }
+  ],
+  "desc": "lichtschlauch am 11., dieses gesicht am 14.",
+  "tags": "#jänner",
+  "song": "Monkeys Spinning Monkeys – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "bild 2 bitte nicht löschen",
+    "jetzt"
+   ]
+  ],
+  "likes": 2229,
+  "saves": 101,
+  "shares": 2,
+  "ov": {
+   "lines": [
+    "jänner.",
+    "drinnen."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Monkeys_Spinning_Monkeys.mp3"
+ },
+ {
+  "when": "20.02.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c14_1.jpg"
+   }
+  ],
+  "desc": "februar halt.",
+  "tags": "#wien",
+  "song": "Wallpaper – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "weiter",
+    "jetzt"
+   ]
+  ],
+  "likes": 2962,
+  "saves": 198,
+  "shares": 9,
+  "ov": {
+   "lines": [
+    "20.02.",
+    "schnee."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Wallpaper.mp3"
+ },
+ {
+  "when": "07.03.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c15_1.jpg"
+   }
+  ],
+  "desc": "mit jacke.",
+  "tags": "#frühling",
+  "song": "Easy Lemon – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "du liest. ich fotografier",
+    "jetzt"
+   ]
+  ],
+  "likes": 3695,
+  "saves": 295,
+  "shares": 16,
+  "ov": {
+   "lines": [
+    "07.03.",
+    "draußen sitzen geht wieder."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Easy_Lemon.mp3"
+ },
+ {
+  "when": "28.03.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c16_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c16_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c16_3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c16_4.jpg"
+   }
+  ],
+  "desc": "bester dresscode.",
+  "tags": "#spaday",
+  "song": "Wallpaper – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "bitte wiederholen",
+    "jetzt"
+   ]
+  ],
+  "likes": 4428,
+  "saves": 392,
+  "shares": 23,
+  "ov": {
+   "lines": [
+    "28.03.",
+    "spa-tag.",
+    "bademantel-core."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Wallpaper.mp3"
+ },
+ {
+  "when": "17.04.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c17_1.jpg"
+   }
+  ],
+  "desc": "april.",
+  "tags": "#frühling",
+  "song": "Carefree – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "kamerawinkel: gewagt",
+    "jetzt"
+   ]
+  ],
+  "likes": 1061,
+  "saves": 89,
+  "shares": 30,
+  "ov": {
+   "lines": [
+    "17.04.",
+    "blauer himmel."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Carefree.mp3"
+ },
+ {
+  "when": "02.06.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c18_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c18_2.jpg"
+   }
+  ],
+  "desc": "das tuch. stimmt.",
+  "tags": "#silbergrau",
+  "song": "Monkeys Spinning Monkeys – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "der algorithmus bin ich",
+    "jetzt"
+   ]
+  ],
+  "likes": 1794,
+  "saves": 186,
+  "shares": 7,
+  "ov": {
+   "lines": [
+    "02.06.",
+    "der algorithmus sagt, du magst:",
+    "silbergrau ✔︎"
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Monkeys_Spinning_Monkeys.mp3"
+ },
+ {
+  "when": "07.06.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c19_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c19_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c19_3.jpg"
+   }
+  ],
+  "desc": "strauß, frühstück, und eine tasse, auf der schon kreta steht.",
+  "tags": "#vorfreude",
+  "song": "Life of Riley – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "bild 3: vorfreude",
+    "jetzt"
+   ]
+  ],
+  "likes": 2527,
+  "saves": 283,
+  "shares": 14,
+  "ov": {
+   "lines": [
+    "07.06.",
+    "blumen."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Life_of_Riley.mp3"
+ },
+ {
+  "when": "20.06.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c20_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c20_2.jpg"
+   }
+  ],
+  "desc": "abends dann schon das.",
+  "tags": "#kreta",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "bild 2",
+    "jetzt"
+   ]
+  ],
+  "likes": 3260,
+  "saves": 380,
+  "shares": 21,
+  "ov": {
+   "lines": [
+    "20.06.",
+    "kreta. anreise."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Bossa_Antigua.mp3"
+ },
+ {
+  "when": "26.06.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_pool.mp4",
+    "poster": "media/v_pool.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c21_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c21_3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c21_4.jpg"
+   }
+  ],
+  "desc": "konsequent, teil 2.",
+  "tags": "#kreta",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ich hab geschwitzt. sie nicht",
+    "jetzt"
+   ]
+  ],
+  "likes": 3993,
+  "saves": 77,
+  "shares": 28,
+  "ov": {
+   "lines": [
+    "kreta, juni.",
+    "sonne. sie in schwarz."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Bossa_Antigua.mp3"
+ },
+ {
+  "when": "28.06.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_hund.mp4",
+    "poster": "media/v_hund.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c22_2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c22_3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c22_4.jpg"
+   }
+  ],
+  "desc": "ein hund, mehrere katzen. du hast jeden begrüßt.",
+  "tags": "#kreta #hunde #katzen",
+  "song": "Fluffing a Duck – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ich wurde von keinem begrüßt",
+    "jetzt"
+   ]
+  ],
+  "likes": 4726,
+  "saves": 174,
+  "shares": 5,
+  "ov": {
+   "lines": [
+    "28.06.",
+    "die eigentlichen stars:"
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Fluffing_a_Duck.mp3"
+ },
+ {
+  "when": "02.07.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_vorne.mp4",
+    "poster": "media/v_vorne.jpg"
+   }
+  ],
+  "desc": "kreta, abends.",
+  "tags": "#kreta #pov",
+  "song": "Life of Riley – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ich komm ja schon",
+    "jetzt"
+   ]
+  ],
+  "likes": 1359,
+  "saves": 271,
+  "shares": 12,
+  "ov": {
+   "lines": [
+    "02.07.",
+    "du vorne.",
+    "ich hinten mit der kamera."
+   ],
+   "cls": ""
+  }
+ },
+ {
+  "when": "02.07.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_auto.mp4",
+    "poster": "media/v_auto.jpg"
+   }
+  ],
+  "desc": "02.07. smoothie-pause.",
+  "tags": "#roadtrip",
+  "song": "Wallpaper – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "dj-wünsche bitte schriftlich",
+    "jetzt"
+   ]
+  ],
+  "likes": 2092,
+  "saves": 368,
+  "shares": 19
+ },
+ {
+  "when": "10.07.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_nacht.mp4",
+    "poster": "media/v_nacht.jpg"
+   }
+  ],
+  "desc": "nur noch ein video.",
+  "tags": "#meeverynightat9pm",
+  "song": "Wallpaper – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "gilt auch für mich",
+    "jetzt"
+   ]
+  ],
+  "likes": 2825,
+  "saves": 65,
+  "shares": 26,
+  "ov": {
+   "lines": [
+    "10.07.",
+    "ich jeden abend um 21 uhr:"
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Wallpaper.mp3"
+ },
+ {
+  "when": "19.09.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c26_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c26_2.jpg"
+   }
+  ],
+  "desc": "13.09. küche. 19.09. umkleide.",
+  "tags": "#september",
+  "song": "Hyperfun – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "die jacke stand dir",
+    "jetzt"
+   ]
+  ],
+  "likes": 3558,
+  "saves": 162,
+  "shares": 3,
+  "ov": {
+   "lines": [
+    "september."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Hyperfun.mp3"
+ },
+ {
+  "when": "27.09.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c27_1.jpg"
+   }
+  ],
+  "desc": "schon wieder.",
+  "tags": "#hunde",
+  "song": "Fluffing a Duck – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "siehe kreta",
+    "jetzt"
+   ]
+  ],
+  "likes": 4291,
+  "saves": 259,
+  "shares": 10,
+  "ov": {
+   "lines": [
+    "27.09.",
+    "hunde > menschen."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Fluffing_a_Duck.mp3"
+ },
+ {
+  "when": "01.10.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c28_1.jpg"
+   }
+  ],
+  "desc": "decke: immer.",
+  "tags": "#couchmode",
+  "song": "Wallpaper – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "bis april",
+    "jetzt"
+   ]
+  ],
+  "likes": 924,
+  "saves": 356,
+  "shares": 17,
+  "ov": {
+   "lines": [
+    "01.10.",
+    "decken-saison eröffnet."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Wallpaper.mp3"
+ },
+ {
+  "when": "24.10.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c29_1.jpg"
+   }
+  ],
+  "desc": "ich mach ein selfie, du schaust woanders hin.",
+  "tags": "#wien",
+  "song": "Easy Lemon – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "klassiker",
+    "jetzt"
+   ]
+  ],
+  "likes": 1657,
+  "saves": 53,
+  "shares": 24,
+  "ov": {
+   "lines": [
+    "24.10.",
+    "öffis."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Easy_Lemon.mp3"
+ },
+ {
+  "when": "03.11.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c30_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c30_2.jpg"
+   }
+  ],
+  "desc": "lissabon. das tuch war dabei.",
+  "tags": "#lissabon",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "sonne im november",
+    "jetzt"
+   ]
+  ],
+  "likes": 2390,
+  "saves": 150,
+  "shares": 1,
+  "ov": {
+   "lines": [
+    "02.11.",
+    "portugal."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Bossa_Antigua.mp3"
+ },
+ {
+  "when": "05.11.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_atlantik.mp4",
+    "poster": "media/v_atlantik.jpg"
+   }
+  ],
+  "desc": "du am wasser. ich hab gefilmt, statt reinzugehen.",
+  "tags": "#portugal #atlantik",
+  "song": "Bossa Antigua – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "mir wars zu kalt",
+    "jetzt"
+   ]
+  ],
+  "likes": 3123,
+  "saves": 247,
+  "shares": 8,
+  "ov": {
+   "lines": [
+    "05.11.",
+    "atlantik."
+   ],
+   "cls": "top"
+  }
+ },
+ {
+  "when": "05.11.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c32_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c32_2.jpg"
+   }
+  ],
+  "desc": "bild 2: du schaust schon wieder woanders hin.",
+  "tags": "#selfie",
+  "song": "Life of Riley – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "siehe 24.10.",
+    "jetzt"
+   ]
+  ],
+  "likes": 3856,
+  "saves": 344,
+  "shares": 15,
+  "ov": {
+   "lines": [
+    "05.11.",
+    "beweisfoto: wir waren beide da."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Life_of_Riley.mp3"
+ },
+ {
+  "when": "06.11.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_buch.mp4",
+    "poster": "media/v_buch.jpg"
+   }
+  ],
+  "desc": "krimis gibt's auch auf portugiesisch.",
+  "tags": "#lissabon #booktok",
+  "song": "Easy Lemon – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "fahrrad an der decke",
+    "jetzt"
+   ]
+  ],
+  "likes": 4589,
+  "saves": 41,
+  "shares": 22,
+  "ov": {
+   "lines": [
+    "06.11.",
+    "buchhandlung in lissabon."
+   ],
+   "cls": "top"
+  }
+ },
+ {
+  "when": "07.11.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c34_1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "media/c34_2.jpg"
+   }
+  ],
+  "desc": "das nächste machen wir heute.",
+  "tags": "#wir",
+  "song": "Carefree – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "heute = 15.11.",
+    "jetzt"
+   ]
+  ],
+  "likes": 1222,
+  "saves": 138,
+  "shares": 29,
+  "ov": {
+   "lines": [
+    "07.11.",
+    "das letzte foto bisher."
+   ],
+   "cls": "top"
+  },
+  "audio": "media/a_Carefree.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c35_1.jpg"
+   }
+  ],
+  "desc": "du spielst das eh gern. heute halt meine version.",
+  "tags": "#wortspiel",
+  "song": "Investigations – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "es gibt einen eingebauten tipp",
+    "jetzt"
+   ]
+  ],
+  "likes": 1955,
+  "saves": 235,
+  "shares": 6,
+  "dim": 1,
+  "link": {
+   "href": "https://claude.ai/artifact/EejowV1QmM7d8yRS8mr6Bw",
+   "label": "jetzt spielen"
+  },
+  "ov": {
+   "lines": [
+    "15.11.2026. heute.",
+    "neues spiel.",
+    "6 wörter. 3 geschenke."
+   ],
+   "cls": "plain big"
+  },
+  "audio": "media/a_Investigations.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c36_1.jpg"
+   }
+  ],
+  "desc": "mankell geht auch ohne strand.",
+  "tags": "#wallander",
+  "song": "Sneaky Snitch – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "ich mach das popcorn",
+    "jetzt"
+   ]
+  ],
+  "likes": 2688,
+  "saves": 332,
+  "shares": 13,
+  "dim": 1,
+  "gift": {
+   "label": "Geschenk 1 freischalten",
+   "title": "die popcornmaschine",
+   "note": "für wallander-abende auf dem sofa"
+  },
+  "ov": {
+   "lines": [
+    "weißt du noch: jänner.",
+    "heimkino gibt es schon.",
+    "fehlt nur eins."
+   ],
+   "cls": ""
+  },
+  "audio": "media/a_Sneaky_Snitch.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c37_1.jpg"
+   }
+  ],
+  "desc": "wachs schnitzen, in silber gießen. diesmal machst du ihn selbst.",
+  "tags": "#wax2silver",
+  "song": "Hyperfun – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "foto davon bitte",
+    "jetzt"
+   ]
+  ],
+  "likes": 3421,
+  "saves": 429,
+  "shares": 20,
+  "dim": 1,
+  "gift": {
+   "label": "Geschenk 2 freischalten",
+   "title": "dein wax2silver-kurs",
+   "note": "aus wachs wird 925er silber"
+  },
+  "ov": {
+   "lines": [
+    "weißt du noch: 11.12.",
+    "schmuck im museum.",
+    "deiner kommt bald."
+   ],
+   "cls": "dark"
+  },
+  "audio": "media/a_Hyperfun.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [
+   {
+    "type": "image",
+    "src": "media/c38_1.jpg"
+   }
+  ],
+  "desc": "die garne aus der barnabitengasse liegen überall. ab heute nicht mehr.",
+  "tags": "#sticken #diy",
+  "song": "Life of Riley – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "übung hab ich ja",
+    "jetzt"
+   ]
+  ],
+  "likes": 4154,
+  "saves": 126,
+  "shares": 27,
+  "dim": 1,
+  "gift": {
+   "label": "Geschenk 3 freischalten",
+   "title": "dein diy-turm",
+   "note": "selbst bauen, selbst befüllen"
+  },
+  "ov": {
+   "lines": [
+    "26.10.: ich beim aufbauen.",
+    "der nächste turm gehört dir."
+   ],
+   "cls": ""
+  },
+  "audio": "media/a_Life_of_Riley.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [
+   {
+    "type": "video",
+    "src": "media/v_ende.mp4",
+    "poster": "media/v_ende.jpg"
+   }
+  ],
+  "desc": "alles gute, marina.",
+  "tags": "#fyp",
+  "song": "Carefree – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "dreh dich um",
+    "jetzt"
+   ]
+  ],
+  "likes": 4887,
+  "saves": 223,
+  "shares": 4,
+  "dim": 1,
+  "ov2": {
+   "lines": [
+    "handy weg.",
+    "das nächste fängt jetzt an."
+   ],
+   "cls": "low"
+  },
+  "ov": {
+   "lines": [
+    "du hast das ende",
+    "deines jahres erreicht."
+   ],
+   "cls": "plain big"
+  }
+ }
+];
 
 const IC={
  heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.3 2.4.8-1.3 2.3-2.4 4.4-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>',
@@ -489,7 +1842,7 @@ document.getElementById('goSound').addEventListener('click',()=>begin(true));
 document.getElementById('goQuiet').addEventListener('click',()=>begin(false));
 
 // Fortschritt merken (Likes, Gespeichert, Geschenke, Folgen) – nur auf diesem Gerät
-const KEY='marina-feed-v1';
+const KEY='marina-feed-v2';
 const st=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}})();
 const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
 st.like=st.like||{};st.save=st.save||{};st.gift=st.gift||{};
