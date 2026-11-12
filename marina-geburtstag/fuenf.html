@@ -89,21 +89,21 @@ canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
 <script>
 // Lösungswörter mit Tipp (nach 3 Fehlversuchen) und Text nach dem Lösen
 const LEVELS = [
-  // immer 5 buchstaben, 6 versuche – persönliche und zufällige wörter im wechsel
-  {w:"SONNE", tip:"steht morgens auf, bevor du es tust.", win:"sonne. zum aufwärmen."},
+  // immer 5 buchstaben, 6 versuche – alle wörter aus dem feed, chronologisch
   {w:"TACOS", tip:"dezember. gefaltet, gefüllt, nie ganz sauber gegessen.", win:"tacos. mexiko, dezember."},
-  {w:"APFEL", tip:"fiel angeblich einem physiker auf den kopf.", win:"apfel. einer am tag, sagt man."},
-  {w:"REGEN", tip:"perfekter grund, den ganzen tag auf dem sofa zu bleiben.", win:"regen. gut, dass wir drinnen sind."},
-  {w:"KRETA", tip:"juni. du in schwarz, ich am schwitzen.", win:"kreta. das meer, 30 grad, du in schwarz."},
-  {w:"KATZE", tip:"auf kreta hast du jede begrüßt.", win:"katze. kreta lässt grüßen."},
-  {w:"DECKE", tip:"liegt ab oktober nicht mehr im schrank.", win:"decke. saison eröffnet."},
-  {w:"HONIG", tip:"fleißige arbeit, klebt immer am glasrand.", win:"honig. süß. weiter."},
+  {w:"LATTE", tip:"10.12., 8 uhr: kam mit muster obendrauf. erst danach warst du ansprechbar.", win:"latte. ohne den keine pyramide."},
+  {w:"MAYAS", tip:"haben vor langer zeit etwas gebaut, vor dem du 141 mal posiert hast.", win:"mayas. danke für die kulisse."},
+  {w:"HUNDE", tip:"mexiko, kreta, september: sie finden dich. jedes mal.", win:"hunde. dein fanclub."},
+  {w:"TANNE", tip:"stand am 24.12. bei uns im zimmer. echt, nicht aus plastik.", win:"tanne. weihnachten, erledigt."},
+  {w:"SCHAL", tip:"silbergrau, um den hals. war beim kranksein dabei und in lissabon auch.", win:"schal. bzw. tuch. du weißt welches."},
+  {w:"KRETA", tip:"juni. du in schwarz, ich am schwitzen.", win:"kreta. 2 wochen, 30 grad, du in schwarz."},
+  {w:"KATZE", tip:"jeden morgen ein check. wurde zurückgeschnurrt.", win:"katze. kreta lässt grüßen."},
+  {w:"GRILL", tip:"25.07.: dein arbeitsplatz. ich hab zugeschaut.", win:"grill. grillmeisterin, offiziell."},
+  {w:"MARIO", tip:"seit august auf der neuen konsole unterwegs. trägt latzhose, fährt kart.", win:"mario. ergebnisse bleiben geheim."},
   {w:"TRASH", tip:"das, was wir abends schauen, aber keinem erzählen.", win:"trash-tv mit popcorn. passend dazu ein geschenk: die popcornmaschine."},
-  {w:"WOLKE", tip:"hängt oben und versteckt die sonne.", win:"wolke. zieht vorbei."},
-  {w:"REISE", tip:"dreimal dieses jahr. koffer inklusive.", win:"reise. nächste bitte bald."},
-  {w:"KNOPF", tip:"fehlt immer genau dann, wenn du los willst.", win:"knopf. annähen kannst du ja."},
-  {w:"FLUSS", tip:"daheim heißt er isar.", win:"fluss. die isar, daheim."},
-  {w:"SKODA", tip:"steht unten und wartet auf uns.", win:"skoda. bringt uns überall hin."}
+  {w:"DECKE", tip:"liegt ab oktober nicht mehr im schrank.", win:"decke. saison eröffnet."},
+  {w:"KRIMI", tip:"in lissabon gab es die auch auf portugiesisch. mankell schreibt so was.", win:"krimi. wallander wartet."},
+  {w:"NONNA", tip:"lissabon, dreimal. laut namen wird sie dabei verrückt.", win:"nonna goes crazy. dreimal. zu recht."}
 ];
 const ROWS = 6; let COLS = 5;
 const KEYS = ["QWERTZUIOP", "ASDFGHJKL", "↵YXCVBNM⌫"];
@@ -111,8 +111,8 @@ const $ = id => document.getElementById(id);
 let state = load() || {level:0, results:[], guesses:[]};
 let cur = Array(COLS).fill(""), pos = 0, busy = false;
 
-function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina-v6")); } catch(e){ return null; } }
-function save(){ try { localStorage.setItem("fuenf-marina-v6", JSON.stringify(state)); } catch(e){} }
+function load(){ try { return JSON.parse(localStorage.getItem("fuenf-marina-v7")); } catch(e){ return null; } }
+function save(){ try { localStorage.setItem("fuenf-marina-v7", JSON.stringify(state)); } catch(e){} }
 
 // Bewertung wie üblich: erst exakte Treffer, dann restliche Buchstaben nach Häufigkeit
 function score(guess, sol){
