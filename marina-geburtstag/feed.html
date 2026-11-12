@@ -27,6 +27,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .post{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:#111}
 .bg{position:absolute;inset:0}
 .bg video,.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bg video{opacity:0;transition:opacity .25s}
+.bg video.on{opacity:1}
 .bg img.blur{transform:scale(1.25)}
 .bg img.wide{object-fit:contain;transform:scale(1.12)}
 .bg.dim::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.32);pointer-events:none}
@@ -1095,14 +1097,14 @@ const POSTS = [
     "src": "media/c26_2.jpg"
    }
   ],
-  "desc": "13.09. küche. 19.09. umkleide.",
-  "tags": "#september",
+  "desc": "handschuhe an, erde überall. am 19.09. dann umkleide.",
+  "tags": "#pflanzen #september",
   "song": "Hyperfun – Kevin MacLeod (incompetech.com) · CC BY 4.0",
   "comments": [
    [
     "🫶",
     "unur",
-    "die jacke stand dir",
+    "die jacke am 19. stand dir",
     "jetzt"
    ]
   ],
@@ -1111,7 +1113,8 @@ const POSTS = [
   "shares": 3,
   "ov": {
    "lines": [
-    "september."
+    "13.09.",
+    "pflanzen umtopfen."
    ],
    "cls": "top"
   },
@@ -1398,7 +1401,7 @@ POSTS.forEach((p,i)=>{
   s.className='post';s.setAttribute('aria-label',`Video ${i+1} von ${POSTS.length}`);
   const m=p.media||[];
   const one=x=>x.type==='video'
-    ?`<video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
+    ?`<img class="blur" src="${x.poster}" alt=""><img class="photo vposter" src="${x.poster}" alt=""><video src="${x.src}" muted loop playsinline preload="metadata"${x.poster?` poster="${x.poster}"`:''}></video>`
     :`<img class="blur" src="${x.src.replace('.jpg','_b.jpg')}" alt="" decoding="async"><img class="photo" src="${x.src}" alt="" decoding="async"${i>1?' loading="lazy"':''}>`;
   const media=m.length>1?`<div class="slides">${m.map(x=>`<div>${one(x)}</div>`).join('')}</div>`:(m[0]?one(m[0]):'');
   const isVid=m.some(x=>x.type==='video');
@@ -1611,6 +1614,9 @@ const warm=post=>{if(!post)return;post.querySelectorAll('img[loading="lazy"]').f
 const warmIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){warm(e.target);let n=e.target.nextElementSibling;warm(n);warm(n&&n.nextElementSibling);}}),{threshold:.6});
 posts.forEach(p=>warmIO.observe(p));
 
+// Video erst einblenden, wenn wirklich Bilder kommen (sonst bleibt das Standbild sichtbar, nie schwarz)
+document.querySelectorAll('.bg video').forEach(v=>{const on=()=>{if(v.currentTime>0.05)v.classList.add('on');};
+  v.addEventListener('timeupdate',on);v.addEventListener('seeked',on);});
 // Ladeanzeige bei Videos
 posts.forEach(post=>{const v=post.querySelector('video');if(!v)return;
   v.addEventListener('waiting',()=>post.classList.add('loading'));
