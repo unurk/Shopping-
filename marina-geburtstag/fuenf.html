@@ -161,7 +161,7 @@ function hintArea(){
   const lv = LEVELS[state.level], m = $("msg"); if(!lv){ m.innerHTML=""; return; }
   if(state.guesses.length>=3){ m.innerHTML = `<button class="hint" id="hintBtn">tipp?</button>`;
     $("hintBtn").addEventListener("click", ()=>{ m.innerHTML = `<span>${lv.tip}</span>`; }); }
-  else m.innerHTML = `<span style="background:none;color:var(--muted);font-weight:600">wort ${state.level+1} von ${LEVELS.length}</span>`;
+  else m.innerHTML = `<span style="background:none;color:var(--muted);font-weight:600">runde ${state.level+1} von ${LEVELS.length}</span>`;
 }
 
 function press(ch){
@@ -185,17 +185,29 @@ function submit(){
 }
 const PRAISE = ["genial.", "stark.", "sauber.", "gut.", "knapp.", "puh."];
 function done(result){
-  const lv = LEVELS[state.level], n = state.guesses.length;
-  state.results[state.level] = result; save(); renderProgress();
-  const last = state.level === LEVELS.length-1;
+  const lv = LEVELS[state.level], n = state.guesses.length, r = state.level+1, last = state.level === LEVELS.length-1;
   $("card").className = "card" + (result==="lost" ? " lost" : "");
-  $("card").innerHTML = `<div class="word">${[...lv.w].map(c=>`<b>${c}</b>`).join("")}</div>
-    <h2>${result==="win" ? PRAISE[n-1] : "knapp daneben."}</h2>
-    <p>${lv.win}</p>
-    <div class="tries">${result==="win" ? `${n} von 6 versuchen` : "zählt trotzdem."}</div>
-    <button class="btn" id="nextBtn">${last ? "fertig" : "nächstes wort"}</button>`;
-  $("sheet").hidden = false; if(result==="win") confetti();
-  $("nextBtn").addEventListener("click", ()=>{ $("sheet").hidden = true; state.level++; state.guesses = []; save(); build(); });
+  if(result==="win"){
+    // Runde gewonnen: Runde ist beendet, die nächste startet automatisch
+    state.results[state.level] = "win"; save(); renderProgress();
+    $("card").innerHTML = `<div class="tries">runde ${r} von ${LEVELS.length} geschafft</div>
+      <div class="word">${[...lv.w].map(c=>`<b>${c}</b>`).join("")}</div>
+      <h2>${PRAISE[n-1]}</h2><p>${lv.win}</p>
+      <div class="tries">${n} von 6 versuchen</div>
+      <button class="btn" id="nextBtn">${last ? "fertig" : `weiter zu runde ${r+1}`}</button>
+      ${last ? "" : `<div class="tries" id="auto">runde ${r+1} startet gleich …</div>`}`;
+    $("sheet").hidden = false; confetti();
+    const go = ()=>{ clearTimeout(done.t); if($("sheet").hidden) return; $("sheet").hidden = true; state.level++; state.guesses = []; cur = Array(COLS).fill(""); pos = 0; save(); build(); if(LEVELS[state.level]) say(`runde ${state.level+1}`, 1400); };
+    $("nextBtn").addEventListener("click", go);
+    if(!last) done.t = setTimeout(go, 4500);
+  } else {
+    // Runde verloren: dieselbe Runde nochmal, erst ein richtiges Wort beendet die Runde
+    $("card").innerHTML = `<div class="tries">runde ${r} von ${LEVELS.length}</div>
+      <h2>6 versuche weg.</h2><p>die runde ist erst vorbei, wenn das wort stimmt.<br>tipp: ${lv.tip}</p>
+      <button class="btn" id="retryBtn">nochmal versuchen</button>`;
+    $("sheet").hidden = false;
+    $("retryBtn").addEventListener("click", ()=>{ $("sheet").hidden = true; state.guesses = []; cur = Array(COLS).fill(""); pos = 0; save(); build(); });
+  }
 }
 function finale(){
   const wins = state.results.filter(r=>r==="win").length;
