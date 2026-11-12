@@ -89,15 +89,14 @@ canvas.conf{position:fixed;inset:0;z-index:11;pointer-events:none}
 <script>
 // Lösungswörter mit Tipp (nach 3 Fehlversuchen) und Text nach dem Lösen
 const LEVELS = [
-  // Geschenk 1: Popcornmaschine (Krimiabend)
-  {w:"KRIMI", tip:"liest du nur am strand.", win:"erster hinweis auf geschenk 1."},
-  {w:"PLOPP", tip:"das geräusch, wenn mais aufgeht.", win:"geschenk 1 freigeschaltet: die popcornmaschine. auspacken."},
-  // Geschenk 2: Wax-to-Silver-Kurs
-  {w:"WACHS", tip:"daraus schnitzt man. später wird's metall.", win:"erster hinweis auf geschenk 2."},
-  {w:"RINGE", tip:"trägt man am finger. hier: mehrzahl.", win:"geschenk 2 freigeschaltet: dein wax2silver-kurs. aus wachs wird silber."},
-  // Geschenk 3: DIY-Turm für die Garne
-  {w:"GARNE", tip:"kaufst du in der barnabitengasse.", win:"erster hinweis auf geschenk 3."},
-  {w:"REGAL", tip:"da kommt alles rein. wird selbst gebaut.", win:"geschenk 3 freigeschaltet: dein diy-turm. für alle garne."}
+  // Kreta
+  {w:"KRETA", tip:"insel. juni. 30 grad.", win:"kreta. du in schwarz, ich am schwitzen."},
+  // Popcorn
+  {w:"PLOPP", tip:"das geräusch, wenn mais aufgeht.", win:"popcorn. geschenk 1 freigeschaltet: die popcornmaschine."},
+  // Silber
+  {w:"RINGE", tip:"aus silber. trägt man am finger. mehrzahl.", win:"silber. geschenk 2 freigeschaltet: dein wax2silver-kurs."},
+  // München
+  {w:"WIESN", tip:"münchens bekanntestes fest. auf bayrisch.", win:"münchen. hier feiern wir dich."}
 ];
 const ROWS = 6, COLS = 5;
 const KEYS = ["QWERTZUIOP", "ASDFGHJKL", "↵YXCVBNM⌫"];
@@ -214,7 +213,7 @@ function help(){
   $("card").className = "card";
   $("card").innerHTML = `<h2>so geht's</h2>
     <div class="howto">
-      <div>errate das wort mit 5 buchstaben. du hast 6 versuche. ${LEVELS.length} wörter. je zwei gehören zu einem deiner geschenke.</div>
+      <div>errate das wort mit 5 buchstaben. du hast 6 versuche. ${LEVELS.length} wörter, alle aus deinem jahr.</div>
       <div class="ex"><b class="hit">B</b><b>L</b><b>U</b><b>M</b><b>E</b></div><div>grün: richtiger buchstabe, richtiger platz.</div>
       <div class="ex"><b>T</b><b class="near">A</b><b>N</b><b>T</b><b>E</b></div><div>gelb: kommt vor, aber woanders.</div>
       <div class="ex"><b>R</b><b>A</b><b class="miss">D</b><b>I</b><b>O</b></div><div>grau: kommt nicht vor.</div>
