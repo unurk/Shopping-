@@ -146,6 +146,13 @@ a.gift{text-decoration:none;top:66%}
 .w4{--wb:#FF6A1A;--wc:#200A00;--wx:#FFD3B8;--wt:rgba(32,10,0,.12)}
 .w5{--wb:#25F4EE;--wc:#04161C;--wx:#FF3E8A;--wt:rgba(4,22,28,.1)}
 .w6{--wb:#0E0E10;--wc:#fff;--wx:#FE2C55;--wt:rgba(255,255,255,.14)}
+.wrap .open{all:unset;cursor:pointer;justify-self:start;align-self:flex-start;display:inline-flex;gap:8px;align-items:center;padding:13px 20px;border-radius:999px;background:var(--wc);color:var(--wb);font:800 16px var(--tt);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.wrap .open svg{width:18px;height:18px;fill:currentColor}
+.wrap .reveal{display:grid;gap:12px}
+.wrap .reveal[hidden]{display:none}
+.wrap a.lnk{align-self:flex-start;color:inherit;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.w7{--wb:linear-gradient(165deg,#3A3E45,#16181B);--wc:#fff;--wx:#B9BDC4;--wt:rgba(255,255,255,.13)}
+.w7::before{opacity:.35}.w7 .open{color:#16181B}
 @media (prefers-reduced-motion:reduce){.wrap .rv,.wrap::before,.wrap::after,.wrap .bars i{transition:none}}
 /* Navigationsleiste */
 .nav{position:fixed;z-index:6;inset:auto 0 0;height:var(--nav);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:content-box;background:#000;border-top:1px solid #1f1f1f;
@@ -203,7 +210,7 @@ a.gift{text-decoration:none;top:66%}
 .swipehint{position:absolute;z-index:5;left:50%;bottom:170px;transform:translateX(-50%);white-space:nowrap;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.55);font-weight:700;font-size:14px;pointer-events:none;animation:nudge 1.2s ease-in-out 3}
 @keyframes nudge{50%{translate:-14px 0}}
 .scrim{position:fixed;inset:0;z-index:8;background:rgba(0,0,0,.35)}
-.again{all:unset;cursor:pointer;position:absolute;z-index:4;left:50%;top:66%;transform:translateX(-50%);padding:12px 18px;border-radius:6px;background:rgba(255,255,255,.14);font-weight:700;font-size:15px}
+.again{all:unset;cursor:pointer;position:absolute;z-index:4;right:max(12px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 52px);padding:6px 11px;border-radius:999px;background:rgba(0,0,0,.45);font-weight:600;font-size:13px}
 @media (prefers-reduced-motion:reduce){.burst,.hint,.disc,.music .track{animation:none}.sheet{transition:none}}
 </style>
 
@@ -2357,6 +2364,29 @@ const POSTS = [
   "saves": 751,
   "shares": 43,
   "audio": "media/a_Carefree.mp3"
+ },
+ {
+  "when": "15.11.2026",
+  "media": [],
+  "wrap": {
+   "t": "w7",
+   "h": "<span class=\"k rv pre\" style=\"--d:0\">ach ja.</span><h2 class=\"rv pre\" style=\"--d:1\">noch ein\ngeschenk.</h2><button class=\"open rv\" style=\"--d:2\"><svg viewBox=\"0 0 24 24\"><path d=\"M20 7h-2.2A3 3 0 0 0 12 4.4 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h18V8a1 1 0 0 0-1-1zM9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v7a1 1 0 0 0 1 1h6v-8zm9 8h6a1 1 0 0 0 1-1v-7h-7z\"/></svg>gutschein öffnen</button><div class=\"reveal\" hidden><span class=\"k\">gutschein · 14.12.2026</span><h2>wax2silver.</h2><div class=\"stats\"><div><b>18–21</b><span>uhr, studio rausch</span></div><div><b>wachs</b><span>selbst schnitzen</span></div><div><b>silber</b><span>gegossen, recycelt</span></div><div><b>2–3</b><span>wochen später abholen</span></div></div><a class=\"lnk\" href=\"https://www.studiorausch.com/wax2silver\" target=\"_blank\" rel=\"noopener\">workshop ansehen</a></div>"
+  },
+  "desc": "dein schmuckstück, selbst gemacht. im museum in mexiko hast du nur geschaut. tandelmarktgasse 9, 1020 wien.",
+  "tags": "#wax2silver #geschenk",
+  "song": "Hyperfun – Kevin MacLeod (incompetech.com) · CC BY 4.0",
+  "comments": [
+   [
+    "🫶",
+    "unur",
+    "foto davon bitte. diesmal von dir",
+    "jetzt"
+   ]
+  ],
+  "likes": 12000,
+  "saves": 999,
+  "shares": 1,
+  "audio": "media/a_Hyperfun.mp3"
  }
 ];
 
@@ -2448,6 +2478,11 @@ const wio=new IntersectionObserver(es=>es.forEach(e=>{
     (function f(t){const k=Math.min(1,(t-t0)/D),v=Math.round(n*(1-Math.pow(1-k,3)));el.textContent=v.toLocaleString('de-DE');if(k<1)requestAnimationFrame(f);})(t0);});
 }),{threshold:.6});
 document.querySelectorAll('.post.wrapped').forEach(x=>wio.observe(x));
+
+// Wrapped-Geschenkkarte: Tippen öffnet den Gutschein
+document.addEventListener('click',e=>{const b=e.target.closest('.wrap .open');if(!b)return;
+  const w=b.closest('.wrap'),r=w.querySelector('.reveal'),post=b.closest('.post');
+  b.hidden=true;w.querySelectorAll('.pre').forEach(x=>x.hidden=true);r.hidden=false;if(typeof confetti==='function')confetti(post);});
 // Videos: nur der sichtbare Post spielt; Fortschrittsbalken; Tippen pausiert
 let soundOn=false;
 function togglePause(s){const v=s.querySelector('video');if(!v)return;let pi=s.querySelector('.paused');
